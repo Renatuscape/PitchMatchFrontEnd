@@ -7,7 +7,7 @@ function App() {
       <h1>PitchMatch</h1>
       <p className="read-the-docs">
         Product by FixedCreations
-      </p>
+       </p>
     </>
   )
 }
