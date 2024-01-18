@@ -1,5 +1,5 @@
  export function MyPage(){
     return <>
-    <h1>MyPage</h1>
+    <h1>MyPage :P</h1>
     </>
  }
