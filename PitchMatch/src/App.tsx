@@ -13,6 +13,7 @@ import { PitchPage } from './pages/PitchPage';
 import { CreatePitch } from './pages/CreatePitch';
 import { EditPitch } from './pages/EditPitch';
 import { LogIn } from './LogIn';
+import { Footer } from './components/Footer';
 
 function App() {
 
@@ -33,9 +34,7 @@ function App() {
           <Route path="/editpitch" element={<EditPitch/>} />
           <Route path="/login" element={<LogIn/>} />
         </Routes>
-        <p className="read-the-docs">
-          Product by FixedCreations
-        </p>
+        <Footer/>
         </BrowserRouter>
     </>
   )
