@@ -4,17 +4,25 @@
 }
 
 .header-container{
-  height: 90px;
+  height: 80px;
   display: flex;
   color: black;
   justify-content: space-between;
   box-shadow: 0px 5px 3px rgba(0, 0, 0, 0.269);
   padding: 10px;
-  padding-bottom: 15px;
+  padding-bottom: 25px;
+  border-bottom: solid;
+  border-color:  rgba(26, 125, 127, 0.564);
+  border-width: 1px;
+  margin-top: auto;
 }
 
 .header-container button{
-  font-size: 80%;
+  font-size: 90%;
+  font-weight: 500;
+  color: rgb(26,126,127);
+  text-transform: none;
+  padding: 0;
   margin: 10px;
   margin-bottom: 0px;
   margin-top: auto;
@@ -22,11 +30,20 @@
 
 .page-title {
   margin: 0px;
-  margin-bottom: -15px;
   padding-right: 25px;
   padding-left: 25px;
-  padding-top: 0px;
-  margin-top: auto;
-  font-size: 350%;
+  font-size: 400%;
   font-family: Optima,Segoe,Segoe UI,Candara,Calibri,Arial,sans-serif; 
+  color: rgb(26,126,127)
+}
+
+.page-background{
+  background: rgb(26,126,127);
+  background: linear-gradient(0deg, rgba(26,126,127,1) 0%, rgba(80,186,147,1) 32%, rgba(117,212,137,1) 100%);
+}
+
+
+/* CSS FOR HOMEPAGE */
+.home-picture{
+  width: 100vw;
 }
