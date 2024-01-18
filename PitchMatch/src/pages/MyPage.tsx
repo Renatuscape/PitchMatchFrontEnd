@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, CardHeader, Container, Divider, Grid, Paper, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardHeader, Container, Divider, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export function MyPage(){
