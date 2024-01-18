@@ -1,6 +1,6 @@
 import './App.css'
 import ResponsiveAppBar from './components/ResponsiveAppBar';
-import { BrowserRouter, Routes } from 'react-router-dom';
+import { BrowserRouter, Link, Routes } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { About } from './pages/About';
@@ -12,6 +12,7 @@ import { EditUser } from './pages/EditUser';
 import { PitchPage } from './pages/PitchPage';
 import { CreatePitch } from './pages/CreatePitch';
 import { EditPitch } from './pages/EditPitch';
+import { LogIn } from './LogIn';
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/pitchpage" element={<PitchPage/>} />
           <Route path="/createpitch" element={<CreatePitch/>} />
           <Route path="/editpitch" element={<EditPitch/>} />
+          <Route path="/login" element={<LogIn/>} />
         </Routes>
         <p className="read-the-docs">
           Product by FixedCreations
