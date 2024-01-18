@@ -9,6 +9,7 @@ export function SearchBar(){
                 fullWidth
                 variant="outlined"
                 placeholder="Search..."
+                size="small"
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
