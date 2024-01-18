@@ -1,5 +1,9 @@
+import { UserPageCard2, UserPageCard3, UserPageCard4 } from "../components/UserPageCard";
+
  export function UserPage(){
     return <>
-    <h1>UserPage</h1>
+    <UserPageCard4/>
+    <UserPageCard2/>
+    <UserPageCard3/>
     </>
  }

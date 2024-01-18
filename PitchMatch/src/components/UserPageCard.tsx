@@ -104,3 +104,53 @@ return<>
         </Container>
 </>
 }
+export function UserPageCard4(){
+    return<>
+     <Container>
+            <Card sx={style1}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <CardHeader title="About me" />
+                </Box>
+                <Divider orientation="horizontal" sx={{}} flexItem />
+                <CardContent sx={{justifyContent:"space-between", alignItems:"center"}}>
+                    <Grid container spacing={2} justifyContent="center" alignItems="center">
+                        {/* Image taking 60% of the space */}
+                        <Grid item xs={6} >
+                            <img src="https://picsum.photos/400/200" alt="profile" style={{ alignItems:"center", borderRadius:"15px" }} />
+                        </Grid>
+                        {/* Label for name */}
+                       <Grid item xs={2} style={{ marginTop: '20px', display: 'flex', flexDirection: 'column',rowGap:"25px" }}>
+                            <Typography variant="subtitle1" color="text.secondary">
+                                Full name
+                            </Typography>
+                            <Typography variant="subtitle1" color="text.secondary">
+                                Contact
+                            </Typography>
+                            <Typography variant="subtitle1" color="text.secondary">
+                                Add me
+                            </Typography>
+                            <Typography variant="subtitle1" color="text.secondary">
+                                CV
+                            </Typography>
+                        </Grid>
+                        {/* Name itself */}
+                           <Grid item xs={2} style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', rowGap:"25px" }}>
+                            <Typography variant="subtitle2" color="text.secondary">
+                                John Doe 
+                            </Typography>
+                            <Typography variant="subtitle2" color="text.secondary">
+                                user email
+                            </Typography>
+                            <Button variant="contained" color="success" sx={{ margin: '0 20px' }}>
+                            SocialMedia
+                        </Button>
+                        <Button variant="contained" color="success" sx={{ margin: '0 20px' }}>
+                            Click Me!
+                        </Button>
+                        </Grid>
+                    </Grid>
+                </CardContent>
+            </Card>
+        </Container>
+        </>
+}
