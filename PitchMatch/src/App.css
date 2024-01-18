@@ -3,6 +3,8 @@
   padding: 0;
 }
 
+
+/* REUSABLE HEADER CSS */
 .header-container{
   height: 80px;
   display: flex;
@@ -28,6 +30,9 @@
   margin-top: auto;
 }
 
+.header-container a{
+  margin-top: auto;
+}
 .page-title {
   margin: 0;
   padding: 0;
@@ -38,6 +43,8 @@
   color: rgb(26,126,127)
 }
 
+
+/* REUSABLE PAGE BACKGROUND CSS */
 .page-background{
   background: rgb(26,126,127);
   background: linear-gradient(0deg, rgba(26,126,127,1) 0%, rgba(80,186,147,1) 32%, rgba(117,212,137,1) 100%);
@@ -47,6 +54,28 @@
 /* CSS FOR HOMEPAGE */
 .home-picture{
   width: 100vw;
-  height: auto;
+  height: 400px;
   background-image: url('https://ncas.ac.uk/app/uploads/2022/08/DCMEX-Cloud-Formation-1280px.jpg');
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows:  auto;
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+}
+
+.goal-float {
+  font-size: 250%;
+  font-weight: 700;
+  color: white;
+  padding: 35px;
+}
+
+.goal-float p{
+  font-size: 70%;
+  font-weight: 500;
+}
+
+#goal-float-main{
+  font-size: 350%;
 }
