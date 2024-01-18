@@ -1,11 +1,12 @@
 import './App.css'
 import Button from '@mui/material/Button';
+import ResponsiveAppBar from './components/ResponsiveAppBar';
 
 function App() {
 
   return (
     <>
-      <h1>PitchMatch</h1>
+    <ResponsiveAppBar/>
       <p className="read-the-docs">
         Product by FixedCreations
       </p>
