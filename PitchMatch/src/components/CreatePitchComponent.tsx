@@ -22,11 +22,11 @@ async function createPitch(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title, summary, description, imgUrl, videoUrl, location, goal, pitchYield, category })
+      body: JSON.stringify({ title, summary, description, imgUrl, videoUrl, location, goal, pitchYield, category, userId: 6 })
     });
 
   if (!res.ok) {
-    throw new Error('could not create album');
+    throw new Error('could not create pitch');
   }
 
   const createdPitch = await res.json();
