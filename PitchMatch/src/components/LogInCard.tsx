@@ -29,7 +29,7 @@ export function LogInCard(){
                 />
                     <Link to="/forgottenPassword">Forgot you password?</Link>
                     <Link to="/mypage">
-                        <Button variant="contained" color="success" sx={{ margin: '0 20px' }}>
+                        <Button variant="contained" color="success" sx={{ margin: '0 20px', "&:focus":{outline: "none",} }}>
                             Log in
                         </Button>
                     </Link>

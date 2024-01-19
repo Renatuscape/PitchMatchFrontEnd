@@ -9,7 +9,7 @@ export function CreateUserCard() {
                 <Divider orientation="horizontal" />
                 <CardContent>
                     <Link to="/createuser">
-                        <Button variant="contained" color="success" sx={{ margin: '0 20px' }}>
+                        <Button variant="contained" color="success" sx={{ margin: '0 20px', "&:focus":{outline: "none",} }}>
                             Create User
                         </Button>
                     </Link>
