@@ -12,6 +12,7 @@ import { EditUser } from './pages/EditUser';
 import { PitchPage } from './PitchPage';
 import { CreatePitch } from './pages/CreatePitch';
 import { EditPitch } from './pages/EditPitch';
+import { Location } from './pages/Location';
 import { LogIn } from './LogIn';
 import { Footer } from './components/Footer';
 import { ForgotPassword } from './ForgotPassword';
@@ -34,6 +35,7 @@ function App() {
           <Route path="/pitchpage" element={<PitchPage/>} />
           <Route path="/createpitch" element={<CreatePitch/>} />
           <Route path="/editpitch" element={<EditPitch/>} />
+          <Route path="/location" element={<Location/>} />
           <Route path="/login" element={<LogIn/>} />
           <Route path="/forgottenpassword" element={<ForgotPassword/>} />
         </Routes>
