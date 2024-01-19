@@ -19,7 +19,7 @@ export function CreateUserCard() {
         </Container>
      </>
  }
-const style2 = {
+export const style2 = {
     margin: "35px",
     height: "200px",
     borderRadius: "10px",
