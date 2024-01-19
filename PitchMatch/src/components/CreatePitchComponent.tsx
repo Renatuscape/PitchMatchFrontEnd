@@ -193,6 +193,5 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
 const style1 = {
   marginTop: "0 35px",
   marginBottom: "35px",
-  borderRadius: "10px",
   boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 };
