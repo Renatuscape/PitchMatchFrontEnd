@@ -40,11 +40,13 @@ export function SearchBar(){
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-
     const filteredUsers = users.filter(user => {
       return user.name.toLowerCase().includes(inputValue.toLowerCase());
     });
-
+    const filteredPitchers = pitchers.filter(pitch => {
+        return pitch.title.toLowerCase().includes(inputValue.toLowerCase());
+      });
+    setFilteredPitchers(filteredPitchers);
     setFilteredUsers(filteredUsers);
   };
     return<>
