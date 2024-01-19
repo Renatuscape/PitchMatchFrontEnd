@@ -71,7 +71,7 @@ return<>
                 <Divider orientation="horizontal" sx={{}} flexItem />
                 <CardContent>
                     <Typography variant="body1" color="text.primary">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit
                         Suspendisse aliquam urna sit amet facilisis feugiat. 
                         Quisque in lorem euismod, accumsan odio at, feugiat nulla.
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
