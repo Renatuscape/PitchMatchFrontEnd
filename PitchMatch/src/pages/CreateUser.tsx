@@ -20,34 +20,54 @@ async function createUserAsync(user: CreateUserProps): Promise<CreateUserProps> 
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(user)
    })
+   if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(JSON.stringify(errorData));
+   }
 
-   if (!response.ok) { throw new Error(response.statusText) };
-   return response.json()
+   return response.json();
 }
 
 export function CreateUser() {
    const [user, setUser] = useState<CreateUserProps>({ name: '', email: '', password: '', bio: '', contact: '', soMe: '', imgUrl: '', cvUrl: '' })
+   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault()
-      createUserAsync({
-         name: user.name,
-         email: user.email,
-         password: user.password,
-         bio: user.bio,
-         contact: user.contact,
-         soMe: user.soMe,
-         imgUrl: user.imgUrl,
-         cvUrl: user.cvUrl
-      });
+
+   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setErrorMessage(null);
+      try {
+         const res = await createUserAsync({
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            bio: user.bio,
+            contact: user.contact,
+            soMe: user.soMe,
+            imgUrl: user.imgUrl,
+            cvUrl: user.cvUrl
+         });
+   
+         // Process the successful creation of the user
+      } catch (error: any) {
+         if (error.message) {
+            const errorData = JSON.parse(error.message);
+            if (errorData.errors) {
+               const errorMessages = Object.values(errorData.errors).flat();
+               setErrorMessage(errorMessages.join(' '));
+               return;
+            }
+         }
+         setErrorMessage('An unexpected error occurred.');
+      }
    }
 
    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setUser({ ...user, [e.target.name]: e.target.value })
    }
-   return <>
-      <Container maxWidth='sm'>
-         <h1>Create User</h1>
+   return <div className='page-background'>
+      <Container maxWidth='sm' sx={{backgroundColor: 'white', padding: 2}}>
+         <h2 style={{marginBottom: 10}}>Create User</h2>
          <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <div className='form-input-container'>
                <label htmlFor='name'>Full name <AutoAwesome color='success' fontSize="small" /></label>
@@ -69,7 +89,7 @@ export function CreateUser() {
                <p style={{ paddingBottom: 15 }}>This section is information that other users will be able to see on your profile page when they are logged in. These fields are not required, but will improve your chances of finding a match. You can update your profile with this information later, if you prefer.</p>
                <div>
                   <label htmlFor="bio"><p>Tell us about yourself!</p></label>
-                  <textarea value={user.bio} onChange={handleChange} id='bio' name='bio' style={{width: '100%'}}/>
+                  <textarea value={user.bio} onChange={handleChange} id='bio' name='bio' style={{ width: '100%' }} />
                </div>
                <div>
                   <label htmlFor="contact"><p>If you want other users to contact you directly, share your information here. If you leave it blank, other users will only be able to contact you through a pitch</p></label>
@@ -88,8 +108,9 @@ export function CreateUser() {
                   <input value={user.cvUrl} onChange={handleChange} id='cvUrl' name='cvUrl' type='text' />
                </div>
             </div>
+            {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
             <button>Submit</button>
          </form>
       </Container>
-   </>
+   </div>
 }
