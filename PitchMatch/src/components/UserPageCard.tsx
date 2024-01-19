@@ -2,6 +2,14 @@ import { Container, Card, Box, CardHeader, Button, Divider, CardContent, Grid, T
 import { Link } from "react-router-dom";
 import { PitchCard } from "./PitchCard";
 
+// type UserPageCard1Props = {
+//     name: string;
+//     contact: string;
+//     soMe: string;
+//     imgUrl: string;
+//     bio: string;
+// }
+
 export function UserPageCard1(){
     return<>
      <Container>
