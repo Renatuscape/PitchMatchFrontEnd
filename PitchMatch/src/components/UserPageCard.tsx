@@ -2,14 +2,6 @@ import { Container, Card, Box, CardHeader, Button, Divider, CardContent, Grid, T
 import { Link } from "react-router-dom";
 import { PitchCard } from "./PitchCard";
 
-// type UserPageCard1Props = {
-//     name: string;
-//     contact: string;
-//     soMe: string;
-//     imgUrl: string;
-//     bio: string;
-// }
-
 export function UserPageCard1(){
     return<>
      <Container>
@@ -79,7 +71,7 @@ return<>
                 <Divider orientation="horizontal" sx={{}} flexItem />
                 <CardContent>
                     <Typography variant="body1" color="text.primary">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Suspendisse aliquam urna sit amet facilisis feugiat. 
                         Quisque in lorem euismod, accumsan odio at, feugiat nulla.
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
