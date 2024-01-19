@@ -1,7 +1,7 @@
-import { Create } from "@mui/icons-material";
-import { CreateUserCard } from "./components/CreateUserCard";
+import { Create, Height } from "@mui/icons-material";
+import { CreateUserCard } from "../components/CreateUserCard";
 import { Container, Grid } from "@mui/material";
-import { LogInCard } from "./components/LogInCard";
+import { LogInCard } from "../components/LogInCard";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 type LoginProps={
@@ -21,7 +21,7 @@ const handlerSubmit=async(e:React.MouseEvent<HTMLButtonElement>)=>{
 
      
 return<>
-<div className='page-background'>
+<div className='page-background' style={{height:"700px"}}>
 <Container>
 <Grid container >
         

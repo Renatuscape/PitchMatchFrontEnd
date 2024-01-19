@@ -12,7 +12,7 @@ import { EditUser } from './pages/EditUser';
 import { PitchPage } from './pages/PitchPage';
 import { CreatePitch } from './pages/CreatePitch';
 import { EditPitch } from './pages/EditPitch';
-import { LogIn } from './LogIn';
+import { LogIn } from './pages/LogIn';
 import { Footer } from './components/Footer';
 import { ForgotPassword } from './ForgotPassword';
 import React from 'react';
