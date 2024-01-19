@@ -2,16 +2,18 @@ import { Container, IconButton, InputAdornment, Paper, TextField } from "@mui/ma
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useState } from "react";
 import { PitchCard } from "./PitchCard";
+import { UserSearchCard } from "./UserSearchCard";
+import { Link } from "react-router-dom";
 
-type UserSearchProps={
-    id: string;
+export type UserSearchProps={
+    id: number;
     name: string;
     email: string;
     location: string;
     profilePictureUrl: string;
-  }
+}
 type PitchSearchProps={
-    id: string;
+    id: number;
     title: string;
     content: string;
     imgUrl: string;
@@ -30,6 +32,7 @@ export function SearchBar(){
         setFilteredUsers(user);
         });
     },[]);
+
     useEffect(() => {
     getAllPitchesAsync().then(pitch => {
         setPitchers(pitch);
@@ -43,15 +46,15 @@ export function SearchBar(){
     const filteredUsers = users.filter(user => {
       return user.name.toLowerCase().includes(inputValue.toLowerCase());
     });
+    setFilteredUsers(filteredUsers);
     const filteredPitchers = pitchers.filter(pitch => {
         return pitch.title.toLowerCase().includes(inputValue.toLowerCase());
       });
     setFilteredPitchers(filteredPitchers);
-    setFilteredUsers(filteredUsers);
   };
     return<>
-    <Container style={{marginTop:"15px"}}>
-        <Paper elevation={3} style={{ padding: '10px', display: 'flex', alignItems: 'center' }}>
+    <Container style={{marginTop:"15px", alignItems:'center'}}>
+        <Paper elevation={3} style={{ padding: '10px', alignItems: 'center' }}>
             <TextField
                 fullWidth
                 onChange={handleSearch}
@@ -66,25 +69,17 @@ export function SearchBar(){
                             </IconButton>
                         </InputAdornment>),}}/>
         </Paper>
-            <div>
-                {filteredUsers.map((user:UserSearchProps) =>  <UserSearchComp key={user.id} {...user} />)}
-            </div>
-            <div>
-                {filteredPitchers.map((pitch:PitchSearchProps) =>  <PitchCard key={pitch.id} {...pitch} />)}
+        
+            <div style={{display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center', marginTop:'15px'}}>
+                
+                {filteredUsers.map((user:UserSearchProps) =>  <Link to={`/user/${user.id}`}> <UserSearchCard key={user.id} {...user} /></Link>)}
+                
+                
+                {filteredPitchers.map((pitch:PitchSearchProps) =>  <Link to={`/pitch/${pitch.id}`}><PitchCard key={pitch.id} {...pitch} /></Link>)}
+                
             </div>
         </Container>
     </>
-}
-
-export function UserSearchComp(user:UserSearchProps){
-return<>
-<div key={user.id}>
-                        <h3>{user.name}</h3>
-                        <p>{user.email}</p>
-                        <p>{user.location}</p>
-                        <img src={user.profilePictureUrl} alt="profile picture" />
-                    </div>
-</>
 }
 
 export async function getAllUsersAsync():Promise<UserSearchProps[]>{
