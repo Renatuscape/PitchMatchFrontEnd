@@ -1,9 +1,17 @@
 import { Container, Card, CardHeader, Divider, CardContent, Button, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import { style2 } from "./CreateUserCard";
+type LogInType={
+    email: string;
+    password: string;
+    onChangeEmail:React.Dispatch<React.SetStateAction<string>>
+    onChangePassword:React.Dispatch<React.SetStateAction<string>>
+    onSubmit:(e:React.MouseEvent<HTMLButtonElement>)=>void
+  }
+  
+export function LogInCard({email,password,onChangeEmail,onChangePassword, onSubmit}:LogInType){
 
 
-export function LogInCard(){
     return <>
     <Container>
             <Card sx={style3}>
@@ -12,24 +20,26 @@ export function LogInCard(){
                 <CardContent>
                     <p>Log in to your account</p>
                      <TextField
-                  name="summary"
+                  name="email"
                   label="Email"
                   variant="outlined"
                   margin="normal"
+                  value={email}
+                  onChange={e=>onChangeEmail(e.target.value)}
                   fullWidth
-                 
-              
                 />
                 <TextField
-                  name="summary"
+                  name="password"
                   label="Password"
                   variant="outlined"
                   margin="normal"
+                value={password}
+                onChange={e=>onChangePassword(e.target.value)}
                   fullWidth
                 />
                     <Link to="/forgottenPassword">Forgot you password?</Link>
                     <Link to="/mypage">
-                        <Button variant="contained" color="success" sx={{ margin: '0 20px', "&:focus":{outline: "none",} }}>
+                        <Button onClick={onSubmit} variant="contained" color="success" sx={{ margin: '0 20px', "&:focus":{outline: "none",}  }}>
                             Log in
                         </Button>
                     </Link>
