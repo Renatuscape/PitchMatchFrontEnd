@@ -1,6 +1,8 @@
 import { Container, Card, Box, CardHeader, Button, Divider, CardContent, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { PitchCard } from "./PitchCard";
+import { UserPageProps, getUser } from "../pages/UserPage";
+import { useEffect, useState } from "react";
 
 export function UserPageCard1(){
     return<>
@@ -63,7 +65,11 @@ const style1 = {
     borderRadius: "10px",
     boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 };
-export function UserPageCard2(){
+export function UserPageCard2(props:UserPageProps){
+     const [user, setUser] = useState<UserPageProps>({} as UserPageProps);
+    useEffect(() => {
+        getUser(user.id).then((user:UserPageProps) => setUser(user));
+    }, []);
 return<>
  <Container>
             <Card sx={style2}>
@@ -71,15 +77,7 @@ return<>
                 <Divider orientation="horizontal" sx={{}} flexItem />
                 <CardContent>
                     <Typography variant="body1" color="text.primary">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Suspendisse aliquam urna sit amet facilisis feugiat. 
-                        Quisque in lorem euismod, accumsan odio at, feugiat nulla.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Suspendisse aliquam urna sit amet facilisis feugiat. 
-                        Quisque in lorem euismod, accumsan odio at, feugiat nulla.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Suspendisse aliquam urna sit amet facilisis feugiat. 
-                        Quisque in lorem euismod, accumsan odio at, feugiat nulla.
+                        {user.bio}
                     </Typography>
                 </CardContent>
             </Card>
@@ -92,7 +90,11 @@ const style2 = {
     borderRadius: "10px",
     boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 };
-export function UserPageCard3(){
+export function UserPageCard3(props:UserPageProps){
+     const [user, setUser] = useState<UserPageProps>({} as UserPageProps);
+    useEffect(() => {
+        getUser(user.id).then((user:UserPageProps) => setUser(user));
+    }, []);
 return<>
  <Container>
             <Card sx={style2}>
@@ -107,7 +109,12 @@ return<>
         </Container>
 </>
 }
-export function UserPageCard4(){
+export function UserPageCard4(props:UserPageProps){
+    const [user, setUser] = useState<UserPageProps>({} as UserPageProps);
+    useEffect(() => {
+        getUser(user.id).then((user:UserPageProps) => setUser(user));
+    }, []);
+    
     return<>
      <Container>
             <Card sx={style1}>
@@ -139,15 +146,15 @@ export function UserPageCard4(){
                         {/* Name itself */}
                            <Grid item xs={2} style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', rowGap:"25px" }}>
                             <Typography variant="subtitle2" color="text.secondary">
-                                John Doe 
+                                {user.name}
                             </Typography>
                             <Typography variant="subtitle2" color="text.secondary">
-                                user email
+                                {user.contact}
                             </Typography>
-                            <Button variant="contained" color="success" sx={{ margin: '0 20px' }}>
+                            <Button variant="contained" href={user.soMe} color="success" sx={{ margin: '0 20px' }}>
                             SocialMedia
                         </Button>
-                        <Button variant="contained" color="success" sx={{ margin: '0 20px' }}>
+                        <Button variant="contained" href={user.cv}color="success" sx={{ margin: '0 20px' }}>
                             Click Me!
                         </Button>
                         </Grid>
