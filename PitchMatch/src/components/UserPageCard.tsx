@@ -1,5 +1,6 @@
 import { Container, Card, Box, CardHeader, Button, Divider, CardContent, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { PitchCard } from "./PitchCard";
 
 export function UserPageCard1(){
     return<>
@@ -70,7 +71,7 @@ return<>
                 <Divider orientation="horizontal" sx={{}} flexItem />
                 <CardContent>
                     <Typography variant="body1" color="text.primary">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit
                         Suspendisse aliquam urna sit amet facilisis feugiat. 
                         Quisque in lorem euismod, accumsan odio at, feugiat nulla.
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
@@ -98,7 +99,9 @@ return<>
                 <CardHeader title="Portfolio" />
                 <Divider orientation="horizontal" sx={{}} flexItem />
                 <CardContent>
-                    
+                    <PitchCard title={"Paint and Sip"} content={"Painting with friends and wine"} />
+                    <PitchCard title={"Empanadas Shop"} content={"Beste argentisnke empanadas"} />
+                    <PitchCard title={"WebApp SharkTank"} content={"A matchmaker between investors and dreamers"} />
                 </CardContent>
             </Card>
         </Container>
