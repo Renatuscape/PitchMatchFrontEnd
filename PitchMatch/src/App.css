@@ -87,3 +87,15 @@
 #goal-float-main{
   font-size: 350%;
 }
+
+/* CSS FOR FORM INPUT */
+.form-input-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.form-input-container input {
+  flex-grow: 3;
+  max-width: 60%;
+}
