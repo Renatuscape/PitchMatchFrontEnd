@@ -12,11 +12,14 @@ type UserSearchProps={
 
 export function SearchBar(){
      const[users,setUsers]=useState<UserSearchProps[]>([]);
+     const[searchValue,setSearchValue]=useState<string>("");
   
     useEffect(() => {
     getAllUsersAsync()
       .then(user => setUsers(user))
-    }, []);
+      setSearchValue("");
+    }, [searchValue]);
+
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         const searchValue = event.target.value;
         const filteredUsers = users.filter((user) => {
@@ -29,6 +32,7 @@ export function SearchBar(){
         <Paper elevation={3} style={{ padding: '10px', display: 'flex', alignItems: 'center' }}>
             <TextField
                 fullWidth
+                value={searchValue}
                 onChange={handleSearch}
                 variant="outlined"
                 placeholder="Search..."
