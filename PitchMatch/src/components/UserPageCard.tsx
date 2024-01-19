@@ -65,7 +65,7 @@ const style1 = {
     borderRadius: "10px",
     boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 };
-export function UserPageCard2(props:UserPageProps){
+export function UserPageCard2(){
      const [user, setUser] = useState<UserPageProps>({} as UserPageProps);
     useEffect(() => {
         getUser(user.id).then((user:UserPageProps) => setUser(user));
@@ -90,7 +90,7 @@ const style2 = {
     borderRadius: "10px",
     boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 };
-export function UserPageCard3(props:UserPageProps){
+export function UserPageCard3(){
      const [user, setUser] = useState<UserPageProps>({} as UserPageProps);
     useEffect(() => {
         getUser(user.id).then((user:UserPageProps) => setUser(user));
@@ -109,7 +109,7 @@ return<>
         </Container>
 </>
 }
-export function UserPageCard4(props:UserPageProps){
+export function UserPageCard4(){
     const [user, setUser] = useState<UserPageProps>({} as UserPageProps);
     useEffect(() => {
         getUser(user.id).then((user:UserPageProps) => setUser(user));

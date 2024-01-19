@@ -9,9 +9,9 @@ export type UserPageProps = {
 }
  export function UserPage(props:UserPageProps){
     return <>
-    <UserPageCard4 {...props}/>
-    <UserPageCard2 {...props}/>
-    <UserPageCard3 {...props}/>
+    <UserPageCard4 />
+    <UserPageCard2 />
+    <UserPageCard3 />
     </>
  }
  export async function getUser(id:number):Promise<UserPageProps>{
