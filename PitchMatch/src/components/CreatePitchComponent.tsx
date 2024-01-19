@@ -1,7 +1,7 @@
 import { Container, Card, Box, CardHeader, Button, Divider, CardContent, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export function PitchPageCard(){
+export function CreatePitchComponent(){
     return<>
      <Container>
             <Card sx={style1}>

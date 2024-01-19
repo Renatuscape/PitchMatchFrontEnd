@@ -1,5 +1,7 @@
- export function CreatePitch(){
+import { CreatePitchComponent } from "../components/CreatePitchComponent";
+
+export function CreatePitch(){
     return <>
-    <h1>CreatePitch</h1>
+    <CreatePitchComponent />
     </>
  }
