@@ -27,6 +27,7 @@ type UserParams = {
    
     return (
     <>
+    <div className='page-background'>
       {user ? (
         <>
          <UserPageCard4 {...user} />
@@ -37,6 +38,7 @@ type UserParams = {
         // Optionally, you can show a loading state or some other message
         <div>Loading...</div>
       )}
+      </div>
     </>
   );
  }
