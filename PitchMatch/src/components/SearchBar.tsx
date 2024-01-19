@@ -72,10 +72,10 @@ export function SearchBar(){
         
             <div style={{display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center', marginTop:'15px'}}>
                 
-                {filteredUsers.map((user:UserSearchProps) =>  <Link to="/user/:id"> <UserSearchCard key={user.id} {...user} /></Link>)}
+                {filteredUsers.map((user:UserSearchProps) =>  <Link to={`/user/${user.id}`}> <UserSearchCard key={user.id} {...user} /></Link>)}
                 
                 
-                {filteredPitchers.map((pitch:PitchSearchProps) =>  <Link to="/pitch/:id"><PitchCard key={pitch.id} {...pitch} /></Link>)}
+                {filteredPitchers.map((pitch:PitchSearchProps) =>  <Link to={`/pitch/${pitch.id}`}><PitchCard key={pitch.id} {...pitch} /></Link>)}
                 
             </div>
         </Container>
