@@ -26,7 +26,7 @@ async function createPitch(
     });
 
   if (!res.ok) {
-    throw new Error('could not create album');
+    throw new Error('could not create pitch');
   }
 
   const createdPitch = await res.json();
