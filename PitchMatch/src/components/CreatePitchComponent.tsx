@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import { Container, Card, CardHeader, Button, Divider, CardContent, TextField } from "@mui/material";
+import { Container, Card, CardHeader, Button, Divider, CardContent, TextField, Grid } from "@mui/material";
 
 type Pitch = {
     title: string; 
@@ -28,7 +28,7 @@ async function createPitch(
     ): Promise<Pitch> {
 
   const res = await fetch(
-    `${API_URL}/createpitch`,
+    `${API_URL}`,
     {
       method: 'POST',
       headers: {
@@ -41,7 +41,9 @@ async function createPitch(
     throw new Error('could not create album');
   }
 
-  return await res.json();
+  const createdPitch = await res.json();
+  
+  return createdPitch;
 }
 
 type CreatePitchFormProps = {
@@ -83,104 +85,114 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
         <Divider />
         <CardContent>
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <TextField
-              name="title"
-              label="Title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              variant="outlined"
-              margin="normal"
-              fullWidth
-            />
-            <TextField
-              name="summary"
-              label="Pitch Summary (this will be visible to everyone)"
-              value={summary}
-              onChange={(e) => setSummary(e.target.value)}
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              multiline
-              rows={4}
-            />
-            <TextField
-              name="description"
-              label="Write about your proposal (this will only be shown to verified users)"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              multiline
-              rows={6}
-            />
-            <TextField
-              name="picture"
-              label="Write about your proposal (this will only be shown to verified users)"
-              value={imgUrl}
-              onChange={(e) => setImgUrl(e.target.value)}
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              multiline
-              rows={6}
-            />
-            <TextField
-              name="video"
-              label="Write about your proposal (this will only be shown to verified users)"
-              value={videoUrl}
-              onChange={(e) => setVideoUrl(e.target.value)}
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              multiline
-              rows={6}
-            />
-            <TextField
-              name="location"
-              label="Write about your proposal (this will only be shown to verified users)"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              multiline
-              rows={6}
-            />
-            <TextField
-              name="goal"
-              label="Write about your proposal (this will only be shown to verified users)"
-              value={goal}
-              onChange={(e) => setGoal(Number(e.target.value))}
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              multiline
-              rows={6}
-            />
-            <TextField
-              name="pitchYield"
-              label="Write about your proposal (this will only be shown to verified users)"
-              value={pitchYield}
-              onChange={(e) => setPitchYield(Number(e.target.value))}
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              multiline
-              rows={6}
-            />
-            <TextField
-              name="category"
-              label="Write about your proposal (this will only be shown to verified users)"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              multiline
-              rows={6}
-            />
-            <Button type="submit" variant="contained" color="primary">
+          <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  name="title"
+                  label="Title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="summary"
+                  label="Pitch Summary (this will be visible to everyone)"
+                  value={summary}
+                  onChange={(e) => setSummary(e.target.value)}
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  multiline
+                  rows={4}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="description"
+                  label="Write about your proposal (this will only be shown to verified users)"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  multiline
+                  rows={6}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  name="picture"
+                  label="Add a picture URL"
+                  value={imgUrl}
+                  onChange={(e) => setImgUrl(e.target.value)}
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  name="video"
+                  label="Add a video URL"
+                  value={videoUrl}
+                  onChange={(e) => setVideoUrl(e.target.value)}
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  name="goal"
+                  label="Goal Capital"
+                  type="number"
+                  value={goal}
+                  onChange={(e) => setGoal(Number(e.target.value))}
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  name="pitchYield"
+                  label="Projected annual yield"
+                  type="number"
+                  value={goal}
+                  onChange={(e) => setPitchYield(Number(e.target.value))}
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  name="location"
+                  label="Location"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="category"
+                  label="Category"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                />
+              </Grid>
+              </Grid>
+            <Button type="submit" variant="contained" color="primary" sx={{ marginTop: 2 }}>
               Create
             </Button>
           </form>
