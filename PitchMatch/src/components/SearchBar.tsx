@@ -30,6 +30,7 @@ export function SearchBar(){
         setFilteredUsers(user);
         });
     },[]);
+
     useEffect(() => {
     getAllPitchesAsync().then(pitch => {
         setPitchers(pitch);
@@ -43,11 +44,11 @@ export function SearchBar(){
     const filteredUsers = users.filter(user => {
       return user.name.toLowerCase().includes(inputValue.toLowerCase());
     });
+    setFilteredUsers(filteredUsers);
     const filteredPitchers = pitchers.filter(pitch => {
         return pitch.title.toLowerCase().includes(inputValue.toLowerCase());
       });
     setFilteredPitchers(filteredPitchers);
-    setFilteredUsers(filteredUsers);
   };
     return<>
     <Container style={{marginTop:"15px"}}>
@@ -66,10 +67,10 @@ export function SearchBar(){
                             </IconButton>
                         </InputAdornment>),}}/>
         </Paper>
-            <div>
+            <div style={{width: '100vw', display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center'}}>
                 {filteredUsers.map((user:UserSearchProps) =>  <UserSearchComp key={user.id} {...user} />)}
             </div>
-            <div>
+            <div style={{width: '100vw', display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center'}}>
                 {filteredPitchers.map((pitch:PitchSearchProps) =>  <PitchCard key={pitch.id} {...pitch} />)}
             </div>
         </Container>
