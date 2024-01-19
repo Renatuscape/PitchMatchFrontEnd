@@ -1,19 +1,7 @@
 import React, { FormEvent, useState } from 'react';
 import { Container, Card, CardHeader, Button, Divider, CardContent, TextField, Grid } from "@mui/material";
 
-type Pitch = {
-    title: string; 
-    summary: string; 
-    description: string;
-    imgUrl: string;
-    videoUrl: string;
-    location: string;
-    goal: number;
-    pitchYield: number;
-    category: string;
-  };
-
-const API_URL = 'https://purple-mushroom-04dc86703.4.azurestaticapps.net/';
+const API_URL = 'https://pitchmatch.azurewebsites.net/Pitch';
 
 async function createPitch(
     title: string,
@@ -162,7 +150,7 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
                   name="pitchYield"
                   label="Projected annual yield"
                   type="number"
-                  value={goal}
+                  value={pitchYield}
                   onChange={(e) => setPitchYield(Number(e.target.value))}
                   variant="outlined"
                   margin="normal"
@@ -180,7 +168,7 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
                   fullWidth
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={6}>
                 <TextField
                   name="category"
                   label="Category"
