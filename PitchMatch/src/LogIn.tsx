@@ -1,5 +1,10 @@
+import { Create } from "@mui/icons-material";
+import { CreateUserCard } from "./components/CreateUserCard";
+
+
 export function LogIn() {
-    return <>
-        <h1>LogIn</h1>
-    </>;
+return<>
+ <CreateUserCard/>
+</>
 }
+
