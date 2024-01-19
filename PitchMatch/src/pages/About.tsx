@@ -2,7 +2,7 @@ import { Container } from "@mui/material";
 
 export function About() {
     return <div className='page-background'>
-        <Container maxWidth='sm' sx={{ backgroundColor: 'white', padding: 2, display: 'flex', alignItems: 'flex-end' }}>
+        <Container maxWidth='md' sx={{ backgroundColor: 'white', padding: 2, display: 'flex', alignItems: 'flex-end' }}>
             <div>
                 <h2>What is PitchMatch?</h2>
                 <p>
