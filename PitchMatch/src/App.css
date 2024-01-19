@@ -40,9 +40,22 @@
   padding-left: 25px;
   font-size: 400%;
   font-family: Optima,Segoe,Segoe UI,Candara,Calibri,Arial,sans-serif; 
-  color: rgb(26,126,127)
+  color: rgb(26,126,127);
 }
 
+/* REUSABLE FOOTER CSS */
+.footer-container{
+  display:flex;
+  padding-top: 10px;
+  justify-content: center;
+  border-top: solid;
+  border-color:  rgba(26, 125, 127, 0.564);
+  border-width: 1px;
+  font-size: 90%;
+  font-style: italic;
+  letter-spacing: 2px;
+  color: rgb(26,126,127);
+}
 
 /* REUSABLE PAGE BACKGROUND CSS */
 .page-background{
