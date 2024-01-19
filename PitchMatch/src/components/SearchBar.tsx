@@ -2,14 +2,15 @@ import { Container, IconButton, InputAdornment, Paper, TextField } from "@mui/ma
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useState } from "react";
 import { PitchCard } from "./PitchCard";
+import { UserSearchCard } from "./UserSearchCard";
 
-type UserSearchProps={
+export type UserSearchProps={
     id: string;
     name: string;
     email: string;
     location: string;
     profilePictureUrl: string;
-  }
+}
 type PitchSearchProps={
     id: string;
     title: string;
@@ -68,25 +69,23 @@ export function SearchBar(){
                         </InputAdornment>),}}/>
         </Paper>
             <div style={{width: '100vw', display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center'}}>
-                {filteredUsers.map((user:UserSearchProps) =>  <UserSearchComp key={user.id} {...user} />)}
-            </div>
-            <div style={{width: '100vw', display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center'}}>
+                {filteredUsers.map((user:UserSearchProps) =>  <UserSearchCard key={user.id} {...user} />)}
                 {filteredPitchers.map((pitch:PitchSearchProps) =>  <PitchCard key={pitch.id} {...pitch} />)}
             </div>
         </Container>
     </>
 }
 
-export function UserSearchComp(user:UserSearchProps){
-return<>
-<div key={user.id}>
-                        <h3>{user.name}</h3>
-                        <p>{user.email}</p>
-                        <p>{user.location}</p>
-                        <img src={user.profilePictureUrl} alt="profile picture" />
-                    </div>
-</>
-}
+// export function UserSearchComp(user:UserSearchProps){
+// return<>
+// <div key={user.id}>
+//                         <h3>{user.name}</h3>
+//                         <p>{user.email}</p>
+//                         <p>{user.location}</p>
+//                         <img src={user.profilePictureUrl} alt="profile picture" />
+//                     </div>
+// </>
+// }
 
 export async function getAllUsersAsync():Promise<UserSearchProps[]>{
 const res = await fetch("https://pitchmatch.azurewebsites.net/user")
