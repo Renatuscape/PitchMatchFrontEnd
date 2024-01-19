@@ -11,3 +11,14 @@ type Pitch = {
     category: string;
     userId: number;
   };
+
+  type LogInType={
+    email: string;
+    password: string;
+  }
+  
+type TokenAndId={
+    accessToken:string,
+    Id:number
+  }
+ 

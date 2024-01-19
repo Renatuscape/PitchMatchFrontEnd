@@ -53,7 +53,8 @@ export function SearchBar(){
     setFilteredPitchers(filteredPitchers);
   };
     return<>
-    <Container style={{marginTop:"15px", alignItems:'center'}}>
+    <div className='page-background'>
+    <Container style={{alignItems:'center'}}>
         <Paper elevation={3} style={{ padding: '10px', alignItems: 'center' }}>
             <TextField
                 fullWidth
@@ -70,7 +71,7 @@ export function SearchBar(){
                         </InputAdornment>),}}/>
         </Paper>
         
-            <div style={{display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center', marginTop:'15px'}}>
+            <div style={{display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center', marginTop:'15p'}}>
                 
                 {filteredUsers.map((user:UserSearchProps) =>  <Link to={`/user/${user.id}`}> <UserSearchCard key={user.id} {...user} /></Link>)}
                 
@@ -79,6 +80,7 @@ export function SearchBar(){
                 
             </div>
         </Container>
+        </div>
     </>
 }
 

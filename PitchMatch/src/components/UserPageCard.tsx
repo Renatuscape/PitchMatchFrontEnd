@@ -60,7 +60,7 @@ export function UserPageCard1(){
         </>
 }
 const style1 = {
-    margin: "35px",
+    margin: "0 35px",
     height: "400px",
     borderRadius: "10px",
     boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
@@ -121,7 +121,7 @@ export function UserPageCard4({name,contact,soMe,cv,}: UserPageProps){
                             <img src="https://picsum.photos/400/200" alt="profile" style={{ alignItems:"center", borderRadius:"15px" }} />
                         </Grid>
                         {/* Label for name */}
-                       <Grid item xs={2} style={{ marginTop: '20px', display: 'flex', flexDirection: 'column',rowGap:"25px" }}>
+                       <Grid item xs={2} style={{ display: 'flex', flexDirection: 'column',rowGap:"25px" }}>
                             <Typography variant="subtitle1" color="text.secondary">
                                 Full name
                             </Typography>
