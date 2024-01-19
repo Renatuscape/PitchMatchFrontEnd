@@ -2,8 +2,8 @@ import { Container } from "@mui/material";
 
 export function About() {
     return <div className='page-background'>
-        <Container maxWidth='md' sx={{ backgroundColor: 'white', padding: 2, display: 'flex', alignItems: 'flex-end' }}>
-            <div>
+        <Container maxWidth='md' sx={{ backgroundColor: 'white', padding: 2, display: 'flex', alignItems: 'flex-end'}}>
+            <div style={{marginBottom: 15}}>
                 <h2>What is PitchMatch?</h2>
                 <p>
                     PitchMatch is a platform that connects early startups with investors.
