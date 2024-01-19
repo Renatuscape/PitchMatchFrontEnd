@@ -52,8 +52,8 @@ export function SearchBar(){
     setFilteredPitchers(filteredPitchers);
   };
     return<>
-    <Container style={{marginTop:"15px"}}>
-        <Paper elevation={3} style={{ padding: '10px', display: 'flex', alignItems: 'center' }}>
+    <Container style={{marginTop:"15px", alignItems:'center'}}>
+        <Paper elevation={3} style={{ padding: '10px', alignItems: 'center' }}>
             <TextField
                 fullWidth
                 onChange={handleSearch}
@@ -68,24 +68,14 @@ export function SearchBar(){
                             </IconButton>
                         </InputAdornment>),}}/>
         </Paper>
-            <div style={{width: '100vw', display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center'}}>
+        
+            <div style={{display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center', marginTop:'15px'}}>
                 {filteredUsers.map((user:UserSearchProps) =>  <UserSearchCard key={user.id} {...user} />)}
                 {filteredPitchers.map((pitch:PitchSearchProps) =>  <PitchCard key={pitch.id} {...pitch} />)}
             </div>
         </Container>
     </>
 }
-
-// export function UserSearchComp(user:UserSearchProps){
-// return<>
-// <div key={user.id}>
-//                         <h3>{user.name}</h3>
-//                         <p>{user.email}</p>
-//                         <p>{user.location}</p>
-//                         <img src={user.profilePictureUrl} alt="profile picture" />
-//                     </div>
-// </>
-// }
 
 export async function getAllUsersAsync():Promise<UserSearchProps[]>{
 const res = await fetch("https://pitchmatch.azurewebsites.net/user")
