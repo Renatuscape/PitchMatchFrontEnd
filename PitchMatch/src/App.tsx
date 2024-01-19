@@ -9,7 +9,7 @@ import { UserPage } from './pages/UserPage';
 import { MyPage } from './pages/MyPage';
 import { CreateUser } from './pages/CreateUser';
 import { EditUser } from './pages/EditUser';
-import { PitchPage } from './PitchPage';
+import { PitchPage } from './pages/PitchPage';
 import { CreatePitch } from './pages/CreatePitch';
 import { EditPitch } from './pages/EditPitch';
 import { LogIn } from './LogIn';
