@@ -3,16 +3,17 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useState } from "react";
 import { PitchCard } from "./PitchCard";
 import { UserSearchCard } from "./UserSearchCard";
+import { Link } from "react-router-dom";
 
 export type UserSearchProps={
-    id: string;
+    id: number;
     name: string;
     email: string;
     location: string;
     profilePictureUrl: string;
 }
 type PitchSearchProps={
-    id: string;
+    id: number;
     title: string;
     content: string;
     imgUrl: string;
@@ -70,8 +71,12 @@ export function SearchBar(){
         </Paper>
         
             <div style={{display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center', marginTop:'15px'}}>
-                {filteredUsers.map((user:UserSearchProps) =>  <UserSearchCard key={user.id} {...user} />)}
-                {filteredPitchers.map((pitch:PitchSearchProps) =>  <PitchCard key={pitch.id} {...pitch} />)}
+                
+                {filteredUsers.map((user:UserSearchProps) =>  <Link to="/user/:id"> <UserSearchCard key={user.id} {...user} /></Link>)}
+                
+                
+                {filteredPitchers.map((pitch:PitchSearchProps) =>  <Link to="/pitch/:id"><PitchCard key={pitch.id} {...pitch} /></Link>)}
+                
             </div>
         </Container>
     </>
