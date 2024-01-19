@@ -1,6 +1,7 @@
 import { Container, IconButton, InputAdornment, Paper, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useState } from "react";
+import { PitchCard } from "./PitchCard";
 
 type UserSearchProps={
     id: string;
@@ -9,19 +10,35 @@ type UserSearchProps={
     location: string;
     profilePictureUrl: string;
   }
+type PitchSearchProps={
+    id: string;
+    title: string;
+    content: string;
+    imgUrl: string;
+}
 
 export function SearchBar(){
      const[users,setUsers]=useState<UserSearchProps[]>([]);
      const[filteredUsers,setFilteredUsers]=useState<UserSearchProps[]>([]);
+     const[pitchers,setPitchers]=useState<PitchSearchProps[]>([]);
+     const[filteredPitchers,setFilteredPitchers]=useState<PitchSearchProps[]>([]);
+
   
     useEffect(() => {
     getAllUsersAsync().then(user => {
         setUsers(user);
         setFilteredUsers(user);
         });
-    }, []);
+    },[]);
+    useEffect(() => {
+    getAllPitchesAsync().then(pitch => {
+        setPitchers(pitch);
+        setFilteredPitchers(pitch);
+        });
+    },[]);
+    
 
-     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
 
     const filteredUsers = users.filter(user => {
@@ -50,6 +67,9 @@ export function SearchBar(){
             <div>
                 {filteredUsers.map((user:UserSearchProps) =>  <UserSearchComp key={user.id} {...user} />)}
             </div>
+            <div>
+                {filteredPitchers.map((pitch:PitchSearchProps) =>  <PitchCard key={pitch.id} {...pitch} />)}
+            </div>
         </Container>
     </>
 }
@@ -65,8 +85,13 @@ return<>
 </>
 }
 
-export async function getAllUsersAsync(){
+export async function getAllUsersAsync():Promise<UserSearchProps[]>{
 const res = await fetch("https://pitchmatch.azurewebsites.net/user")
+const resObject = await res.json();
+return resObject;
+}
+export async function getAllPitchesAsync():Promise<PitchSearchProps[]>{
+const res = await fetch("https://pitchmatch.azurewebsites.net/pitch")
 const resObject = await res.json();
 return resObject;
 }
