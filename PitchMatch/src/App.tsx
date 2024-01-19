@@ -14,6 +14,7 @@ import { CreatePitch } from './pages/CreatePitch';
 import { EditPitch } from './pages/EditPitch';
 import { LogIn } from './LogIn';
 import { Footer } from './components/Footer';
+import { ForgotPassword } from './ForgotPassword';
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
           <Route path="/createpitch" element={<CreatePitch/>} />
           <Route path="/editpitch" element={<EditPitch/>} />
           <Route path="/login" element={<LogIn/>} />
+          <Route path="/forgottenpassword" element={<ForgotPassword/>} />
         </Routes>
         <Footer/>
         </BrowserRouter>

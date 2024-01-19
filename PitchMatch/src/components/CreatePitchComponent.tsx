@@ -180,7 +180,7 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
                 />
               </Grid>
               </Grid>
-            <Button type="submit" variant="contained" color="primary" sx={{ marginTop: 2 }}>
+            <Button type="submit" variant="contained" color="primary" sx={{ marginTop: 2 , "&:focus":{outline: "none",}}}>
               Create
             </Button>
           </form>

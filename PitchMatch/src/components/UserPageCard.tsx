@@ -143,10 +143,10 @@ export function UserPageCard4({name,contact,soMe,cv,}: UserPageProps){
                             <Typography variant="subtitle2" color="text.secondary">
                                 {contact}
                             </Typography>
-                            <Button variant="contained" href={soMe} color="success" sx={{ margin: '0 20px' }}>
+                            <Button variant="contained" href={soMe} color="success" sx={{ margin: '0 20px' , "&:focus":{outline: "none",}}}>
                             SocialMedia
                         </Button>
-                        <Button variant="contained" href={cv}color="success" sx={{ margin: '0 20px' }}>
+                        <Button variant="contained" href={cv}color="success" sx={{ margin: '0 20px' , "&:focus":{outline: "none",}}}>
                             Click Me!
                         </Button>
                         </Grid>
