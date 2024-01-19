@@ -53,6 +53,7 @@ console.log(LoginResponse)
           <Route path="/pitchpage" element={<PitchPage/>} />
           <Route path="/createpitch" element={<CreatePitch/>} />
           <Route path="/editpitch" element={<EditPitch/>} />
+          <Route path="/location" element={<Location/>} />
           <Route path="/login" element={<LogIn LoginFunctionality={LogInFunctionality}/>} />
           <Route path="/forgottenpassword" element={<ForgotPassword/>} />
         </Routes>
