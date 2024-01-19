@@ -50,6 +50,11 @@
   background: linear-gradient(0deg, rgba(26,126,127,1) 0%, rgba(80,186,147,1) 32%, rgba(117,212,137,1) 100%);
 }
 
+/* REUSABLE PITCH CARD CSS */
+.pitch-card-image{
+  max-width: 350px;
+  border-radius: 4px 4px 0 0;
+}
 
 /* CSS FOR HOMEPAGE */
 .home-picture{
