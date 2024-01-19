@@ -16,7 +16,7 @@ export function About() {
                 <p>
                     PitchMatch is provided by FixedConnections.
                     The three of us are a team of students at Brights/Academic Work who are passionate about bringing people together.
-                    As soon as we started pitching ideas for our graduation project, we realised that the major interest that we all have in common is that we want to foster good, lasting relationships.
+                    As soon as we started pitching ideas for our graduation project, we realised that our major common interest is that we want to foster good, lasting relationships.
                     What could we do to help people connect with each other in a meaningful way?
                     By creating or funding local initiatives with us, you will build experiences and opportunities that establish lasting bonds.
                     PitchMatch doesn't just bring people together - it builds communities.
