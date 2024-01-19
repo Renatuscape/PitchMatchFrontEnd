@@ -1,8 +1,8 @@
 import { Container, Card, Box, CardHeader, Button, Divider, CardContent, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { PitchCard } from "./PitchCard";
-import { UserPageProps, getUser } from "../pages/UserPage";
-import { useEffect, useState } from "react";
+import { UserPageProps } from "../pages/UserPage";
+
 
 export function UserPageCard1(){
     return<>
@@ -65,11 +65,8 @@ const style1 = {
     borderRadius: "10px",
     boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 };
-export function UserPageCard2(){
-     const [user, setUser] = useState<UserPageProps>({} as UserPageProps);
-    useEffect(() => {
-        getUser(user.id).then((user:UserPageProps) => setUser(user));
-    }, []);
+export function UserPageCard2({ bio }: UserPageProps){
+    
 return<>
  <Container>
             <Card sx={style2}>
@@ -77,7 +74,7 @@ return<>
                 <Divider orientation="horizontal" sx={{}} flexItem />
                 <CardContent>
                     <Typography variant="body1" color="text.primary">
-                        {user.bio}
+                        {bio}
                     </Typography>
                 </CardContent>
             </Card>
@@ -90,31 +87,26 @@ const style2 = {
     borderRadius: "10px",
     boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 };
-export function UserPageCard3(){
-     const [user, setUser] = useState<UserPageProps>({} as UserPageProps);
-    useEffect(() => {
-        getUser(user.id).then((user:UserPageProps) => setUser(user));
-    }, []);
+export function UserPageCard3({ portfolio }: UserPageProps){
+   
 return<>
  <Container>
             <Card sx={style2}>
                 <CardHeader title="Portfolio" />
                 <Divider orientation="horizontal" sx={{}} flexItem />
                 <CardContent>
-                    <PitchCard title={"Paint and Sip"} content={"Painting with friends and wine"} />
-                    <PitchCard title={"Empanadas Shop"} content={"Beste argentisnke empanadas"} />
-                    <PitchCard title={"WebApp SharkTank"} content={"A matchmaker between investors and dreamers"} />
+                    {portfolio && portfolio.map((pitch:Pitch) => {
+                        return <PitchCard title={pitch.title} content={pitch.description} />;
+                    })}
+                    
+              
                 </CardContent>
             </Card>
         </Container>
 </>
 }
-export function UserPageCard4(){
-    const [user, setUser] = useState<UserPageProps>({} as UserPageProps);
-    useEffect(() => {
-        getUser(user.id).then((user:UserPageProps) => setUser(user));
-    }, []);
-    
+export function UserPageCard4({name,contact,soMe,cv,}: UserPageProps){
+
     return<>
      <Container>
             <Card sx={style1}>
@@ -146,15 +138,15 @@ export function UserPageCard4(){
                         {/* Name itself */}
                            <Grid item xs={2} style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', rowGap:"25px" }}>
                             <Typography variant="subtitle2" color="text.secondary">
-                                {user.name}
+                                {name}
                             </Typography>
                             <Typography variant="subtitle2" color="text.secondary">
-                                {user.contact}
+                                {contact}
                             </Typography>
-                            <Button variant="contained" href={user.soMe} color="success" sx={{ margin: '0 20px' }}>
+                            <Button variant="contained" href={soMe} color="success" sx={{ margin: '0 20px' }}>
                             SocialMedia
                         </Button>
-                        <Button variant="contained" href={user.cv}color="success" sx={{ margin: '0 20px' }}>
+                        <Button variant="contained" href={cv}color="success" sx={{ margin: '0 20px' }}>
                             Click Me!
                         </Button>
                         </Grid>
