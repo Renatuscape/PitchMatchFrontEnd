@@ -12,27 +12,29 @@ type UserSearchProps={
 
 export function SearchBar(){
      const[users,setUsers]=useState<UserSearchProps[]>([]);
-     const[searchValue,setSearchValue]=useState<string>("");
+     const[filteredUsers,setFilteredUsers]=useState<UserSearchProps[]>([]);
   
     useEffect(() => {
-    getAllUsersAsync()
-      .then(user => setUsers(user))
-      setSearchValue("");
-    }, [searchValue]);
-
-    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const searchValue = event.target.value;
-        const filteredUsers = users.filter((user) => {
-            return user.name.toLowerCase().includes(searchValue.toLowerCase());
+    getAllUsersAsync().then(user => {
+        setUsers(user);
+        setFilteredUsers(user);
         });
-        setUsers(filteredUsers);
-    }
+    }, []);
+
+     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = event.target.value;
+
+    const filteredUsers = users.filter(user => {
+      return user.name.toLowerCase().includes(inputValue.toLowerCase());
+    });
+
+    setFilteredUsers(filteredUsers);
+  };
     return<>
     <Container style={{marginTop:"15px"}}>
         <Paper elevation={3} style={{ padding: '10px', display: 'flex', alignItems: 'center' }}>
             <TextField
                 fullWidth
-                value={searchValue}
                 onChange={handleSearch}
                 variant="outlined"
                 placeholder="Search..."
@@ -46,7 +48,7 @@ export function SearchBar(){
                         </InputAdornment>),}}/>
         </Paper>
             <div>
-                {users.map((user:UserSearchProps) =>  <UserSearchComp key={user.id} {...user} />)}
+                {filteredUsers.map((user:UserSearchProps) =>  <UserSearchComp key={user.id} {...user} />)}
             </div>
         </Container>
     </>
