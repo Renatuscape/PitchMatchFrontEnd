@@ -36,6 +36,7 @@ export function LogInCard({email,password,onChangeEmail,onChangePassword, onSubm
                 value={password}
                 onChange={e=>onChangePassword(e.target.value)}
                   fullWidth
+                   type='password'
                 />
                     <Link to="/forgottenPassword">Forgot you password?</Link>
                     <Link to="/mypage">

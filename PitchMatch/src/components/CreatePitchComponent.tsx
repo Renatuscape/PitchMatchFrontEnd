@@ -15,7 +15,7 @@ async function createPitch(
     category: string
     ): Promise<Pitch> {
 
-  const res = await fetch(
+const res = await fetch(
     `${API_URL}`,
     {
       method: 'POST',
