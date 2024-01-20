@@ -61,7 +61,7 @@ export function PitchEditCard(props: EditPitchProps){
 return<>
  <Container>
       <Card sx={style1}>
-        <CardHeader title="Edit" sx={{ textAlign: 'center' }} />
+        <CardHeader title="Edit your pitch" />
         <Divider />
         <CardContent>
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
