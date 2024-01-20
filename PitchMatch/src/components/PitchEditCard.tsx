@@ -1,9 +1,8 @@
-import React, { FormEvent, useState } from 'react';
-import { Container, Card, CardHeader, Button, Divider, CardContent, TextField, Grid } from "@mui/material";
+import { Container, Card, CardContent, TextField, CardHeader, Divider, Button, Grid } from "@mui/material";
+import { style1 } from "./CreatePitchComponent";
+import { FormEvent, useState } from "react";
 
-const API_URL = 'https://pitchmatch.azurewebsites.net/Pitch';
-
-async function createPitch(
+export async function updatePitchAsync(id:number,
     title: string,
     summary: string, 
     description: string,
@@ -12,33 +11,27 @@ async function createPitch(
     location: string,
     goal: number,
     pitchYield: number,
-    category: string
-    ): Promise<Pitch> {
-
-const res = await fetch(
-    `${API_URL}`,
+    category: string ):Promise<Pitch>{
+    const res= await fetch("https://pitchmatch.azurewebsites.net/editpitch/"+id,
     {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ title, summary, description, imgUrl, videoUrl, location, goal, pitchYield, category, userId: 6 })
-    });
+        method:'PUT',
+        headers:{
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({id,title, summary, description, imgUrl, videoUrl, location, goal, pitchYield, category})
+    })
+    if(!res.ok){
+        throw new Error (res.statusText)
+    }
+    return await res.json();
+};
 
-  if (!res.ok) {
-    throw new Error('could not create pitch');
-  }
-
-  const createdPitch = await res.json();
-  
-  return createdPitch;
+type EditPitchProps={
+    id:number,
+    editPitch: (pitch:Pitch) => void;
 }
 
-type CreatePitchFormProps = {
-    addPitch: (pitch: Pitch) => void;
-  }
-
-export default function CreatePitchComponent(props: CreatePitchFormProps) {
+export function PitchEditCard(props: EditPitchProps){
   const [title, setTitle] = useState('');
   const [summary, setSummary] = useState('');
   const [description, setDescription] = useState('');
@@ -48,11 +41,10 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
   const [goal, setGoal] = useState<number>(0);
   const [pitchYield, setPitchYield] = useState<number>(0);
   const [category, setCategory] = useState('');
-
-
+  
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const createdPitch = await createPitch(
+    const updatedPitch = await updatePitchAsync(props.id,
         title,
         summary,
         description,
@@ -61,15 +53,15 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
         location,
         goal,
         pitchYield,
-        category
-    );
-    props.addPitch(createdPitch);
+        category);
+    
+    props.editPitch(updatedPitch);
   };
 
-  return (
-    <Container>
+return<>
+ <Container>
       <Card sx={style1}>
-        <CardHeader title="Create Pitch" sx={{ textAlign: 'center' }} />
+        <CardHeader title="Edit" sx={{ textAlign: 'center' }} />
         <Divider />
         <CardContent>
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -180,17 +172,12 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
                 />
               </Grid>
               </Grid>
-            <Button type="submit" variant="contained" color="primary" sx={{ marginTop: 2 , "&:focus":{outline: "none",}}}>
-              Create
+            <Button type="submit" variant="contained" color="success" sx={{ marginTop: 2 , "&:focus":{outline: "none",}}}>
+              Save
             </Button>
           </form>
         </CardContent>
       </Card>
     </Container>
-  );
+</>
 }
-
-export const style1 = {
-  margin: "0 35px",
-  boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-};
