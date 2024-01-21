@@ -12,13 +12,13 @@ export type UserPageProps = {
    portfolio:Pitch[],
 }
 
-type UserParams = {
+export type UserParamsType = {
    id: string
 }
 
  export function UserPage(){
    const[user, setUser] = useState<UserPageProps>();
-   const {id} = useParams<keyof UserParams>() as UserParams;
+   const {id} = useParams<keyof UserParamsType>() as UserParamsType;
 
    useEffect(()=>{
          getUser(parseInt(id)).then((res) => setUser(res));

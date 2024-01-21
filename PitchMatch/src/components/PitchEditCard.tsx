@@ -1,8 +1,8 @@
 import { Container, Card, CardContent, TextField, CardHeader, Divider, Button, Grid } from "@mui/material";
 import { style1 } from "./CreatePitchComponent";
 import { FormEvent, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-
+import { Link, useParams} from "react-router-dom";
+import { UserParamsType } from "../pages/UserPage";
 type EditPitchProps = {
     Id: number;
     title: string; 
@@ -17,7 +17,7 @@ type EditPitchProps = {
     }
 
 export async function updatePitchAsync(newPitch:EditPitchProps, id:number ):Promise<EditPitchProps>{
-    const res= await fetch("https://pitchmatch.azurewebsites.net/Pitch/"+id,
+    const res= await fetch(`https://pitchmatch.azurewebsites.net/Pitch/${id}`,
     {
         method:'PUT',
         headers:{
@@ -33,7 +33,8 @@ export async function updatePitchAsync(newPitch:EditPitchProps, id:number ):Prom
 
 
 export function PitchEditCard(){
-  const [errorMessages, setErrorMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const {id} = useParams<keyof UserParamsType>() as UserParamsType;
   const [newPitch, setNewPitch] = useState<EditPitchProps>({
     Id: NaN,
     title: "",
@@ -51,29 +52,15 @@ export function PitchEditCard(){
     e.preventDefault();
     setErrorMessage(null);
     try {
-      const res = await updatePitchAsync(
-        {
-            Id: newPitch.Id,
-            title: newPitch.title,
-            summary: newPitch.summary,
-            description: newPitch.description,
-            imgUrl: newPitch.imgUrl,
-            videoUrl: newPitch.videoUrl,
-            location: newPitch.location,
-            goal: newPitch.goal,
-            pitchYield: newPitch.pitchYield,
-            category: newPitch.category,
-        }
-        , newPitch.Id
-        );
-        setNewPitch(res);
+      const res = await updatePitchAsync(newPitch, parseInt(id, 10));
+      setNewPitch(res);
       
     } catch (error: any) {
       if (error.message) {
         const errorData = JSON.parse(error.message);
         if (errorData.errors) {
-          const errorMessages = Object.values(errorData.errors).flat();
-          setErrorMessage(errorMessages.join(" "));
+          const errorMessage = Object.values(errorData.errors).flat();
+          setErrorMessage(errorMessage.join(" "));
           return;
         }
       }
@@ -145,7 +132,7 @@ return<>
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  name="video"
+                  name="videoUrl"
                   label="Add a video URL"
                   value={newPitch.videoUrl}
                   type="url"
@@ -203,7 +190,7 @@ return<>
               </Grid>
               </Grid>
           </form>
-              <Link to="/editpitch/:id">
+              <Link to={`/pitch/${id}`}>
             <Button type="submit" variant="contained" color="success" sx={{ marginTop: 2 , "&:focus":{outline: "none",}}}>
               Save
             </Button>
@@ -212,8 +199,5 @@ return<>
       </Card>
     </Container>
 </>
-}
-function setErrorMessage(arg0: null) {
-    throw new Error("Function not implemented.");
 }
 
