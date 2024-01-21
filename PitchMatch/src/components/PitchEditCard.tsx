@@ -57,8 +57,8 @@ export function PitchEditCard(){
       if (error.message) {
         const errorData = JSON.parse(error.message);
         if (errorData.errors) {
-          const errorMessage = Object.values(errorData.errors).flat();
-          setErrorMessage(errorMessage.join(" "));
+          const errorMessages = Object.values(errorData.errors).flat();
+          setErrorMessage(errorMessages.join(" "));
           return;
         }
       }
@@ -187,12 +187,13 @@ return<>
                 />
               </Grid>
               </Grid>
-          </form>
+                {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
               <Link to={`/pitch/${id}`}>
             <Button type="submit" variant="contained" color="success" sx={{ marginTop: 2 , "&:focus":{outline: "none",}}}>
               Save
             </Button>
             </Link>
+          </form>
         </CardContent>
       </Card>
     </Container>
