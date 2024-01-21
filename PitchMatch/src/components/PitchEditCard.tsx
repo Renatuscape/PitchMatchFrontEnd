@@ -133,6 +133,7 @@ return<>
                 <TextField
                   name="picture"
                   label="Add a picture URL"
+                type="url"
                   value={newPitch.imgUrl}
                   onChange={onChange}
                   variant="outlined"
@@ -145,6 +146,7 @@ return<>
                   name="video"
                   label="Add a video URL"
                   value={newPitch.videoUrl}
+                  type="url"
                    onChange={onChange}
                   variant="outlined"
                   margin="normal"
