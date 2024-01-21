@@ -1,7 +1,7 @@
 import { Container, Card, CardContent, TextField, CardHeader, Divider, Button, Grid } from "@mui/material";
 import { style1 } from "./CreatePitchComponent";
 import { FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 type EditPitchProps = {
     Id: number;
@@ -16,8 +16,8 @@ type EditPitchProps = {
     category: string;
     }
 
-export async function updatePitchAsync(newPitch:EditPitchProps ):Promise<Pitch>{
-    const res= await fetch("https://pitchmatch.azurewebsites.net/Pitch/"+newPitch.Id,
+export async function updatePitchAsync(newPitch:EditPitchProps, id:number ):Promise<EditPitchProps>{
+    const res= await fetch("https://pitchmatch.azurewebsites.net/Pitch/"+id,
     {
         method:'PUT',
         headers:{
@@ -33,9 +33,9 @@ export async function updatePitchAsync(newPitch:EditPitchProps ):Promise<Pitch>{
 
 
 export function PitchEditCard(){
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorMessages, setErrorMessage] = useState<string | null>(null);
   const [newPitch, setNewPitch] = useState<EditPitchProps>({
-    Id: 0,
+    Id: NaN,
     title: "",
     summary: "",
     description: "",
@@ -64,7 +64,9 @@ export function PitchEditCard(){
             pitchYield: newPitch.pitchYield,
             category: newPitch.category,
         }
+        , newPitch.Id
         );
+        setNewPitch(res);
       
     } catch (error: any) {
       if (error.message) {
@@ -131,7 +133,7 @@ return<>
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  name="picture"
+                  name="imgUrl"
                   label="Add a picture URL"
                 type="url"
                   value={newPitch.imgUrl}
@@ -200,12 +202,12 @@ return<>
                 />
               </Grid>
               </Grid>
-              <Link to="/pitch/:id">
+          </form>
+              <Link to="/editpitch/:id">
             <Button type="submit" variant="contained" color="success" sx={{ marginTop: 2 , "&:focus":{outline: "none",}}}>
               Save
             </Button>
             </Link>
-          </form>
         </CardContent>
       </Card>
     </Container>
