@@ -53,17 +53,17 @@ export function PitchEditCard(){
       const res = await updatePitchAsync(newPitch, parseInt(id, 10));
       setNewPitch(res);
       
-    } catch (error: any) {
-      if (error.message) {
-        const errorData = JSON.parse(error.message);
-        if (errorData.errors) {
-          const errorMessages = Object.values(errorData.errors).flat();
-          setErrorMessage(errorMessages.join(" "));
-          return;
-        }
+   } catch (error: any) {
+         if (error.message) {
+            const errorData = JSON.parse(error.message);
+            if (errorData.errors) {
+               const errorMessages = Object.values(errorData.errors).flat();
+               setErrorMessage(errorMessages.join(' '));
+               return;
+            }
+         }
+         setErrorMessage('An unexpected error occurred.');
       }
-      setErrorMessage(error.message);
-    }
 
   };
 
@@ -188,11 +188,9 @@ return<>
               </Grid>
               </Grid>
                 {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-              <Link to={`/pitch/${id}`}>
             <Button type="submit" variant="contained" color="success" sx={{ marginTop: 2 , "&:focus":{outline: "none",}}}>
               Save
             </Button>
-            </Link>
           </form>
         </CardContent>
       </Card>
