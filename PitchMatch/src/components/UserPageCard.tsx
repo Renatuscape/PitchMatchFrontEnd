@@ -19,14 +19,14 @@ export function UserPageCardTop({name,contact,soMe,cv,isLogged}: UserPageProps){
                 }
                 </Box>
                 <Divider orientation="horizontal" sx={{}} flexItem />
-                <CardContent sx={{justifyContent:"space-between", alignItems:"center"}}>
-                    <Grid container spacing={2} justifyContent="center" alignItems="center">
+                <CardContent style={{ display: 'flex', justifyContent: 'space-between',alignItems:'flex-end' }}>
+                    <Grid container>
                         {/* Image taking 60% of the space */}
-                        <Grid item xs={6} >
-                            <img src="https://picsum.photos/400/200" alt="profile" style={{ alignItems:"center", borderRadius:"15px" }} />
+                        <Grid item xs={6} sx={{display: 'flex', alignItems:'flex-end'}}>
+                            <img src="https://picsum.photos/400/200" alt="profile" style={{ borderRadius:"5px" }} />
                         </Grid>
                         {/* Label for name */}
-                       <Grid item xs={2} style={{ display: 'flex', flexDirection: 'column',rowGap:"25px" }}>
+                       <Grid item xs={3} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between',alignItems:'center' }}>
                             <Typography variant="subtitle1" color="text.secondary">
                                 Full name
                             </Typography>
@@ -34,25 +34,25 @@ export function UserPageCardTop({name,contact,soMe,cv,isLogged}: UserPageProps){
                                 Contact
                             </Typography>
                             <Typography variant="subtitle1" color="text.secondary">
-                                Add me
+                                CV
                             </Typography>
                             <Typography variant="subtitle1" color="text.secondary">
-                                CV
+                                Add me
                             </Typography>
                         </Grid>
                         {/* Name itself */}
-                           <Grid item xs={2} style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', rowGap:"25px" }}>
-                            <Typography variant="subtitle2" color="text.secondary">
+                           <Grid item xs={3} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between',alignItems:'center' }}>
+                            <Typography variant="subtitle1" color="text.secondary">
                                 {name}
                             </Typography>
-                            <Typography variant="subtitle2" color="text.secondary">
+                            <Typography variant="subtitle1" color="text.secondary">
                                 {contact}
                             </Typography>
-                            <Button variant="contained" href={soMe} color="success" sx={{ margin: '0 20px' , "&:focus":{outline: "none",}}}>
-                            SocialMedia
-                        </Button>
                         <Button variant="contained" href={cv}color="success" sx={{ margin: '0 20px' , "&:focus":{outline: "none",}}}>
                             Click Me!
+                        </Button>
+                            <Button variant="contained" href={soMe} color="success" sx={{margin: '0 20px' , "&:focus":{outline: "none",}}}>
+                            SocialMedia
                         </Button>
                         </Grid>
                     </Grid>
@@ -81,14 +81,17 @@ export function UserPageCardBottom({ portfolio }: UserPageProps){
    
 return<>
  <Container>
-            <Card sx={style2}>
+            <Card sx={style3}>
                 <CardHeader title="Portfolio" />
                 <Divider orientation="horizontal" sx={{}} flexItem />
                 <CardContent>
-                    {portfolio && portfolio.map((pitch:Pitch) => {
-                        return <PitchCard title={pitch.title} content={pitch.description} />;
-                    })}
-                    
+                   {portfolio ? (
+  portfolio.map((pitch: Pitch) => {
+    return <PitchCard title={pitch.title} content={pitch.description} />;
+  })
+) : (
+  <PitchCard title="No pitches yet" content="You have no pitches yet. Create one now!" />
+)}
               
                 </CardContent>
             </Card>
@@ -97,14 +100,20 @@ return<>
 }
 
 const style1 = {
-    margin: "0 35px",
-    height: "400px",
+    margin: "5px 35px",
+    height: "310px",
     borderRadius: "10px",
     boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 };
 const style2 = {
     margin: "35px",
     height: "200px",
+    borderRadius: "10px",
+    boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+};
+const style3 = {
+    margin: "0 35px 15px",
+    height: "450px",
     borderRadius: "10px",
     boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 };
