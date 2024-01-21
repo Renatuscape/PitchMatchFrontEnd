@@ -20,24 +20,33 @@ export function PitchPageComponent(props: PitchPageProps) {
         <Card sx={{ maxWidth: 'lg', mx: 'auto', mt: 4, mb: 4, boxShadow: 3, position: 'relative' }}>
           <CardMedia
             component="img"
-            height="140"
             image={props.imageUrl}
             alt="Background"
             sx={{ width: '100%', height: 'auto', opacity: 0.5 }}
           />
-          <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, p: 4, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <Typography gutterBottom variant="h3" component="div" color="primary.contrastText" sx={{ fontWeight: 'bold' }}>
+          <Box sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            p: 4,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between'
+          }}>
+            <Typography gutterBottom variant="h3" component="div" sx={{ fontWeight: 'bold', color: 'white' }}>
               {props.title}
             </Typography>
-            <Typography variant="h6" color="primary.contrastText" sx={{ mb: 2 }}>
+            <Typography variant="h6" sx={{ mb: 2, color: 'white' }}>
               {props.category}
             </Typography>
-            <Button variant="contained" color="secondary" size="large">
+            <Button variant="contained" color="secondary" size="large" sx={{ alignSelf: 'flex-start' }}>
               Interested
             </Button>
-            <Divider sx={{ bgcolor: 'primary.contrastText', my: 2 }} />
-            <CardContent>
-              <Grid container spacing={3}>
+            <Divider sx={{ bgcolor: 'white', my: 2 }} />
+            <CardContent sx={{ bgcolor: 'white', opacity: 0.95 }}>
+              <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle1">Creator:</Typography>
                   <Typography>{props.creator}</Typography>
@@ -45,6 +54,22 @@ export function PitchPageComponent(props: PitchPageProps) {
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle1">Goals:</Typography>
                   <Typography>{props.goals}</Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="subtitle1">Investors:</Typography>
+                  <Typography>{props.investors}</Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="subtitle1">Funding:</Typography>
+                  <Typography>{props.funding}</Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="subtitle1">Risk:</Typography>
+                  <Typography>{props.risk}</Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="subtitle1">Projected Annual Yield:</Typography>
+                  <Typography>{props.projectedYield}</Typography>
                 </Grid>
               </Grid>
               <Typography variant="body1" sx={{ mt: 2 }}>
