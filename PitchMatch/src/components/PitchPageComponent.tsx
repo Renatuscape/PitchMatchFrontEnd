@@ -16,64 +16,47 @@ export type PitchPageProps = {
 
 export function PitchPageComponent(props: PitchPageProps) {
     return (
-        <Container maxWidth="sm">
-          <Card sx={{ position: 'relative' }}>
-            <CardMedia
-              component="img"
-              height="140"
-              image={props.imageUrl}
-              alt="Background"
-              sx={{ opacity: 0.5 }}
-            />
-            <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, padding: 2 }}>
-              <Typography gutterBottom variant="h5" component="div" color="primary.contrastText">
-                {props.title}
-              </Typography>
-              <Typography variant="body2" color="primary.contrastText">
-                {props.category}
-              </Typography>
-              <CardActions>
-                <Button variant="contained" color="secondary">
-                  Interested
-                </Button>
-              </CardActions>
-              <Divider sx={{ bgcolor: 'primary.contrastText' }} />
-              <CardContent>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <Typography variant="subtitle1">Creator:</Typography>
-                    <Typography>{props.creator}</Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography variant="subtitle1">Goals:</Typography>
-                    <Typography>{props.goals}</Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography variant="subtitle1">Investors:</Typography>
-                    <Typography>{props.investors}</Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography variant="subtitle1">Funding:</Typography>
-                    <Typography>{props.funding}</Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography variant="subtitle1">Risk:</Typography>
-                    <Typography>{props.risk}</Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography variant="subtitle1">Projected Annual Yield:</Typography>
-                    <Typography>{props.projectedYield}</Typography>
-                  </Grid>
+      <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
+        <Card sx={{ maxWidth: 'lg', mx: 'auto', mt: 4, mb: 4, boxShadow: 3, position: 'relative' }}>
+          <CardMedia
+            component="img"
+            height="140"
+            image={props.imageUrl}
+            alt="Background"
+            sx={{ width: '100%', height: 'auto', opacity: 0.5 }}
+          />
+          <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, p: 4, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <Typography gutterBottom variant="h3" component="div" color="primary.contrastText" sx={{ fontWeight: 'bold' }}>
+              {props.title}
+            </Typography>
+            <Typography variant="h6" color="primary.contrastText" sx={{ mb: 2 }}>
+              {props.category}
+            </Typography>
+            <Button variant="contained" color="secondary" size="large">
+              Interested
+            </Button>
+            <Divider sx={{ bgcolor: 'primary.contrastText', my: 2 }} />
+            <CardContent>
+              <Grid container spacing={3}>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="subtitle1">Creator:</Typography>
+                  <Typography>{props.creator}</Typography>
                 </Grid>
-                <Typography variant="body1" sx={{ marginTop: 2 }}>
-                  {props.description}
-                </Typography>
-              </CardContent>
-            </Box>
-          </Card>
-        </Container>
-      );
-    }
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="subtitle1">Goals:</Typography>
+                  <Typography>{props.goals}</Typography>
+                </Grid>
+              </Grid>
+              <Typography variant="body1" sx={{ mt: 2 }}>
+                {props.description}
+              </Typography>
+            </CardContent>
+          </Box>
+        </Card>
+      </Box>
+    );
+  }
+
 
 
 export const style1 = {
