@@ -4,7 +4,6 @@ import { FormEvent, useState } from "react";
 import { Link, useParams} from "react-router-dom";
 import { UserParamsType } from "../pages/UserPage";
 type EditPitchProps = {
-    Id: number;
     title: string; 
     summary: string; 
     description: string;
@@ -36,7 +35,6 @@ export function PitchEditCard(){
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const {id} = useParams<keyof UserParamsType>() as UserParamsType;
   const [newPitch, setNewPitch] = useState<EditPitchProps>({
-    Id: NaN,
     title: "",
     summary: "",
     description: "",
