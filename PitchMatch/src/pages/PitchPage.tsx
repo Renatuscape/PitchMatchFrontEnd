@@ -27,6 +27,7 @@ export function PitchPage() {
 
   return (
     <div className='page-background'>
+      <h1>{project.title}</h1>
       <PitchPageComponent {...project} />
     </div>
   );
