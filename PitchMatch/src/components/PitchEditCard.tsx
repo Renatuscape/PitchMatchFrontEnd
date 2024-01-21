@@ -16,7 +16,7 @@ type EditPitchProps = {
     }
 
 export async function updatePitchAsync(newPitch:EditPitchProps, id:number ):Promise<EditPitchProps>{
-    const res= await fetch(`https://pitchmatch.azurewebsites.net/Pitch/${id}?pitchId=${id}`,
+    const res= await fetch(`https://pitchmatch.azurewebsites.net/Pitch/${id}`,
     {
         method:'PUT',
         headers:{
