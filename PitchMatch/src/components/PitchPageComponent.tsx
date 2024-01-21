@@ -14,7 +14,6 @@ export type PitchPageProps = {
   imageUrl: string;
 };
 
-// This is the component that displays the project details
 export function PitchPageComponent(props: PitchPageProps) {
     return (
         <Container maxWidth="sm">
@@ -24,7 +23,7 @@ export function PitchPageComponent(props: PitchPageProps) {
               height="140"
               image={props.imageUrl}
               alt="Background"
-              sx={{ opacity: 0.5 }} // Makes the image more subtle
+              sx={{ opacity: 0.5 }}
             />
             <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, padding: 2 }}>
               <Typography gutterBottom variant="h5" component="div" color="primary.contrastText">

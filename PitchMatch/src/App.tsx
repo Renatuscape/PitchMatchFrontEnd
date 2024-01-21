@@ -50,6 +50,7 @@ console.log(LoginResponse)
           <Route path="/mypage" element={<MyPage/>} />
           <Route path="/createuser" element={<CreateUser/>} />
           <Route path="/edituser" element={<EditUser/>} />
+          <Route path="/pitch/:id" element={<PitchPage/>} />
           <Route path="/pitch/" element={<PitchPage/>} />
           <Route path="/createpitch" element={<CreatePitch/>} />
           <Route path="/editpitch/:id" element={<EditPitch/>} />
