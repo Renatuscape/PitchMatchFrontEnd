@@ -1,6 +1,7 @@
 import { Container, Card, CardContent, TextField, CardHeader, Divider, Button, Grid } from "@mui/material";
 import { style1 } from "./CreatePitchComponent";
 import { FormEvent, useState } from "react";
+import { Link } from "react-router-dom";
 
 export async function updatePitchAsync(id:number,
     title: string,
@@ -182,9 +183,11 @@ return<>
                 />
               </Grid>
               </Grid>
+              <Link to="/pitch/:id">
             <Button type="submit" variant="contained" color="success" sx={{ marginTop: 2 , "&:focus":{outline: "none",}}}>
               Save
             </Button>
+            </Link>
           </form>
         </CardContent>
       </Card>
