@@ -12,7 +12,7 @@ export async function updatePitchAsync(id:number,
     goal: number,
     pitchYield: number,
     category: string ):Promise<Pitch>{
-    const res= await fetch("https://pitchmatch.azurewebsites.net/editpitch/"+id,
+    const res= await fetch("https://pitchmatch.azurewebsites.net/Pitch/"+id,
     {
         method:'PUT',
         headers:{
@@ -27,36 +27,46 @@ export async function updatePitchAsync(id:number,
 };
 
 type EditPitchProps={
-    id:number,
     editPitch: (pitch:Pitch) => void;
 }
 
+
+
 export function PitchEditCard(props: EditPitchProps){
-  const [title, setTitle] = useState('');
-  const [summary, setSummary] = useState('');
-  const [description, setDescription] = useState('');
-  const [imgUrl, setImgUrl] = useState('');
-  const [videoUrl, setVideoUrl] = useState('');
-  const [location, setLocation] = useState('');
-  const [goal, setGoal] = useState<number>(0);
-  const [pitchYield, setPitchYield] = useState<number>(0);
-  const [category, setCategory] = useState('');
+  const [newPitch, setNewPitch] = useState<Pitch>({
+    Id: 0,
+    title: "",
+    summary: "",
+    description: "",
+    imgUrl: "",
+    videoUrl: "",
+    location: "",
+    goal: 0,
+    pitchYield: 0,
+    category: "",
+    userId: 0,
+  });
   
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const updatedPitch = await updatePitchAsync(props.id,
-        title,
-        summary,
-        description,
-        imgUrl,
-        videoUrl,
-        location,
-        goal,
-        pitchYield,
-        category);
-    
+    const updatedPitch = await updatePitchAsync(
+        newPitch!.Id ,
+        newPitch?.title,
+        newPitch?.summary,
+        newPitch?.description,
+        newPitch?.imgUrl,
+        newPitch?.videoUrl,
+        newPitch?.location,
+        newPitch?.goal,
+        newPitch?.pitchYield ,
+        newPitch?.category
+    );
     props.editPitch(updatedPitch);
   };
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewPitch({ ...newPitch!, [e.target.name]: e.target.value });
+  }
 
 return<>
  <Container>
@@ -70,8 +80,8 @@ return<>
                 <TextField
                   name="title"
                   label="Title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  value={newPitch.title}
+                  onChange={onChange}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -81,8 +91,8 @@ return<>
                 <TextField
                   name="summary"
                   label="Pitch Summary (this will be visible to everyone)"
-                  value={summary}
-                  onChange={(e) => setSummary(e.target.value)}
+                  value={newPitch.summary}
+                  onChange={onChange}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -94,8 +104,8 @@ return<>
                 <TextField
                   name="description"
                   label="Write about your proposal (this will only be shown to verified users)"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  value={newPitch.description}
+                  onChange={onChange}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -107,8 +117,8 @@ return<>
                 <TextField
                   name="picture"
                   label="Add a picture URL"
-                  value={imgUrl}
-                  onChange={(e) => setImgUrl(e.target.value)}
+                  value={newPitch.imgUrl}
+                  onChange={onChange}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -118,8 +128,8 @@ return<>
                 <TextField
                   name="video"
                   label="Add a video URL"
-                  value={videoUrl}
-                  onChange={(e) => setVideoUrl(e.target.value)}
+                  value={newPitch.videoUrl}
+                   onChange={onChange}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -130,8 +140,8 @@ return<>
                   name="goal"
                   label="Goal Capital"
                   type="number"
-                  value={goal}
-                  onChange={(e) => setGoal(Number(e.target.value))}
+                  value={newPitch.goal}
+                   onChange={onChange}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -142,8 +152,8 @@ return<>
                   name="pitchYield"
                   label="Projected annual yield"
                   type="number"
-                  value={pitchYield}
-                  onChange={(e) => setPitchYield(Number(e.target.value))}
+                  value={newPitch.pitchYield}
+                  onChange={onChange}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -153,8 +163,8 @@ return<>
                 <TextField
                   name="location"
                   label="Location"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
+                  value={newPitch.location}
+                  onChange={onChange}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -164,8 +174,8 @@ return<>
                 <TextField
                   name="category"
                   label="Category"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
+                  value={newPitch.category}
+                  onChange={onChange}
                   variant="outlined"
                   margin="normal"
                   fullWidth
