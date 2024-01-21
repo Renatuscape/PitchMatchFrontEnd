@@ -3,23 +3,27 @@ import { style1 } from "./CreatePitchComponent";
 import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
 
-export async function updatePitchAsync(id:number,
-    title: string,
-    summary: string, 
-    description: string,
-    imgUrl: string,
-    videoUrl: string,
-    location: string,
-    goal: number,
-    pitchYield: number,
-    category: string ):Promise<Pitch>{
-    const res= await fetch("https://pitchmatch.azurewebsites.net/Pitch/"+id,
+type EditPitchProps = {
+    Id: number;
+    title: string; 
+    summary: string; 
+    description: string;
+    imgUrl: string;
+    videoUrl: string;
+    location: string;
+    goal: number;
+    pitchYield: number;
+    category: string;
+    }
+
+export async function updatePitchAsync(newPitch:EditPitchProps ):Promise<Pitch>{
+    const res= await fetch("https://pitchmatch.azurewebsites.net/Pitch/"+newPitch.Id,
     {
         method:'PUT',
         headers:{
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({id,title, summary, description, imgUrl, videoUrl, location, goal, pitchYield, category})
+        body: JSON.stringify(newPitch)
     })
     if(!res.ok){
         throw new Error (res.statusText)
@@ -27,14 +31,10 @@ export async function updatePitchAsync(id:number,
     return await res.json();
 };
 
-type EditPitchProps={
-    editPitch: (pitch:Pitch) => void;
-}
 
-
-
-export function PitchEditCard(props: EditPitchProps){
-  const [newPitch, setNewPitch] = useState<Pitch>({
+export function PitchEditCard(){
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [newPitch, setNewPitch] = useState<EditPitchProps>({
     Id: 0,
     title: "",
     summary: "",
@@ -45,28 +45,43 @@ export function PitchEditCard(props: EditPitchProps){
     goal: 0,
     pitchYield: 0,
     category: "",
-    userId: 0,
   });
   
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const updatedPitch = await updatePitchAsync(
-        newPitch!.Id ,
-        newPitch?.title,
-        newPitch?.summary,
-        newPitch?.description,
-        newPitch?.imgUrl,
-        newPitch?.videoUrl,
-        newPitch?.location,
-        newPitch?.goal,
-        newPitch?.pitchYield ,
-        newPitch?.category
-    );
-    props.editPitch(updatedPitch);
+    setErrorMessage(null);
+    try {
+      const res = await updatePitchAsync(
+        {
+            Id: newPitch.Id,
+            title: newPitch.title,
+            summary: newPitch.summary,
+            description: newPitch.description,
+            imgUrl: newPitch.imgUrl,
+            videoUrl: newPitch.videoUrl,
+            location: newPitch.location,
+            goal: newPitch.goal,
+            pitchYield: newPitch.pitchYield,
+            category: newPitch.category,
+        }
+        );
+      
+    } catch (error: any) {
+      if (error.message) {
+        const errorData = JSON.parse(error.message);
+        if (errorData.errors) {
+          const errorMessages = Object.values(errorData.errors).flat();
+          setErrorMessage(errorMessages.join(" "));
+          return;
+        }
+      }
+      setErrorMessage(error.message);
+    }
+
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewPitch({ ...newPitch!, [e.target.name]: e.target.value });
+    setNewPitch({ ...newPitch, [e.target.name]: e.target.value });
   }
 
 return<>
@@ -194,3 +209,7 @@ return<>
     </Container>
 </>
 }
+function setErrorMessage(arg0: null) {
+    throw new Error("Function not implemented.");
+}
+
