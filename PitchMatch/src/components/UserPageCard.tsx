@@ -77,27 +77,29 @@ return<>
 </>
 }
 
-export function UserPageCardBottom({ portfolio }: UserPageProps){
+export function UserPageCardBottom({ portfolio, isLogged }: UserPageProps){
    
-return<>
- <Container>
-            <Card sx={style3}>
-                <CardHeader title="Portfolio" />
-                <Divider orientation="horizontal" sx={{}} flexItem />
-                <CardContent>
-                   {portfolio ? (
-  portfolio.map((pitch: Pitch) => {
-    return <PitchCard title={pitch.title} content={pitch.description} />;
-  })
-) : (
-  <PitchCard title="No pitches yet" content="You have no pitches yet. Create one now!" />
+return (
+  <>
+    <Container>
+      <Card sx={style3}>
+        <CardHeader title="Portfolio" />
+        <Divider orientation="horizontal" sx={{}} flexItem />
+        <CardContent>
+          {portfolio ? (
+            portfolio.map((pitch: Pitch) => (
+              <PitchCard title={pitch.title} content={pitch.description} />
+            ))
+          ) : isLogged ? (
+            <PitchCard title="No pitches yet" content="You have no pitches yet. Create one now!" />
+          ) : (
+            <PitchCard title="No pitches yet" content="This user has no pitches yet" />
+          )}
+        </CardContent>
+      </Card>
+    </Container>
+  </>
 )}
-              
-                </CardContent>
-            </Card>
-        </Container>
-</>
-}
 
 const style1 = {
     margin: "5px 35px",
