@@ -74,13 +74,13 @@ export function SearchBar(){
             <div style={{display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center', marginTop:'15p'}}>
                  {filteredUsers.map((user: UserSearchProps) => (
               <Link key={user.id} to={`/user/${user.id}`}>
-                <UserSearchCard key={user.id}{...user} />
+                <UserSearchCard key={user.id} id={user.id} name={user.name} email={user.email} location={user.location} profilePictureUrl={user.profilePictureUrl} />
               </Link>
             ))}
 
             {filteredPitchers.map((pitch: PitchSearchProps) => (
               <Link key={pitch.id} to={`/pitch/${pitch.id}`}>
-                <PitchCard key={pitch.id} {...pitch} />
+                <PitchCard key={pitch.id} title={pitch.title} content={pitch.content} imgUrl={pitch.imgUrl}/>
               </Link>
             ))}
                 

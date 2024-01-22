@@ -25,7 +25,7 @@ export function UserPageCardTop({name,contact,soMe,cv,isLogged,imgUrl}: UserPage
                     <Grid container>
                         {/* Image taking 60% of the space */}
                         <Grid item xs={6} sx={{display: 'flex', alignItems:'flex-end'}}>
-                            <img src={imgUrl} alt="profile" style={{ borderRadius:"5px" }} />
+                            <img src={imgUrl} alt="profile" style={{ width: '300px',borderRadius:"5px" }} />
                         </Grid>
                         {/* Label for name */}
                        <Grid item xs={3} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between',alignItems:'center' }}>
