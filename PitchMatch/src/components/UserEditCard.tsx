@@ -3,6 +3,7 @@ import { style1 } from "./CreatePitchComponent";
 import { FormEvent, useState } from "react";
 import { Link, useParams} from "react-router-dom";
 import { UserParamsType } from "../pages/UserPage";
+import { DeleteUserButtom } from "./DeleteUserComponent";
 
 type EditUserProps = {
     name: string;
@@ -170,6 +171,7 @@ export function UserEditCard() {
                 </form>
               </CardContent>
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
+                <DeleteUserButtom/>
                 <Link to={`/user/${id}`} style={{ textDecoration: 'none' }}>
                   <Button variant="contained" color="secondary">
                     Cancel

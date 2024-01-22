@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { PitchCard } from "./PitchCard";
 import { UserPageProps } from "../pages/UserPage";
 import { Pitch } from "./types";
-import { DeleteUserButtom } from "./DeleteUserComponent";
+
 
 export function UserPageCardTop({name,contact,soMe,cv,isLogged}: UserPageProps){
 
@@ -19,7 +19,6 @@ export function UserPageCardTop({name,contact,soMe,cv,isLogged}: UserPageProps){
                         </Button>
                     </Link>
                 }
-                <DeleteUserButtom/>
                 </Box>
                 <Divider orientation="horizontal" sx={{}} flexItem />
                 <CardContent style={{ display: 'flex', justifyContent: 'space-between',alignItems:'flex-end' }}>
