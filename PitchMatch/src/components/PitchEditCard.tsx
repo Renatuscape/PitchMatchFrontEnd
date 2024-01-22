@@ -24,9 +24,11 @@ export async function updatePitchAsync(newPitch:EditPitchProps, id:number ):Prom
         },
         body: JSON.stringify(newPitch)
     })
-    if(!res.ok){
-        throw new Error (res.statusText)
-    }
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(JSON.stringify(errorData));
+   }
+
     return await res.json();
 };
 
