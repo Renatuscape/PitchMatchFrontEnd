@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react";
 import { PitchCard, PitchCardProps } from "../components/PitchCard";
+import { Pitch } from "../components/types";
+import { Link } from "react-router-dom";
 
 
 export function Home(){
-    const[pitches,setPitches]=useState<PitchCardProps[]>([])
+    const[pitches,setPitches]=useState<Pitch[]>([])
    
 
    useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("https://pitchmatch.azurewebsites.net/Home/TopPitches");
-        const pitchesData = await res.json();
-        setPitches(pitchesData);
+        const pitchesData = await getPitchesAsync();
+        setPitches([pitchesData]);
       } catch (error) {
         console.error("Error fetching pitches:", error);
       }
     };
 
     fetchData();
-  }, []); 
+  }, []);
+
 
     return <div className="page-background" style={{minHeight:'75vh'}}>
         <div className="home-picture">
@@ -28,13 +30,15 @@ export function Home(){
         </div>
         <div style={{width: '100vw', display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center'}}>
             {pitches.map((pitch, index) => (
-            <PitchCard key={index} title={pitch.title} content={pitch.content} imgUrl={pitch.imgUrl}/>
+                <Link to="/login">
+            <PitchCard key={index} title={pitch.title} content={pitch.summary} imgUrl={pitch.imgUrl}/>
+            </Link>
         ))}
         </div>
     </div>
 }
 
-export async function getPitchesAsync():Promise<PitchCardProps>{
+export async function getPitchesAsync():Promise<Pitch>{
    const res = await fetch("https://pitchmatch.azurewebsites.net/Home")
    const resObject = await res.json();
    return resObject;
