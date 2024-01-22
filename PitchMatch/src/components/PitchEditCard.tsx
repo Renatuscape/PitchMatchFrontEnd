@@ -169,7 +169,8 @@ return<>
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  name="location"
+                  nam
+                  e="location"
                   label="Location"
                   value={newPitch.location}
                   onChange={onChange}
@@ -191,9 +192,11 @@ return<>
               </Grid>
               </Grid>
                 {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+                <Link to={`/pitch/${id}`} style={{ margin:'2',textDecoration: 'none' }}>
             <Button type="submit" variant="contained" color="success" sx={{ margin: 2 , "&:focus":{outline: "none",}}}>
               Save
             </Button>
+            </Link>
           </form>
         </CardContent>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
@@ -204,7 +207,7 @@ return<>
                   <Button variant="contained" color="secondary">
                     Cancel
                   </Button>
-                </Link>
+          </Link>
         </Box>
       </Card>
     </Container>
