@@ -6,7 +6,6 @@ import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { Search } from './pages/Search';
 import { UserPage } from './pages/UserPage';
-import { MyPage } from './pages/MyPage';
 import { CreateUser } from './pages/CreateUser';
 import { EditUser } from './pages/EditUser';
 import { PitchPage } from './pages/PitchPage';
@@ -48,7 +47,6 @@ console.log(LoginResponse)
           <Route path="/search" element={<Search />} />
           <Route path="/user/:id" element={<UserPage/>} />
           <Route path="/user" element={<UserPage/>} />
-          <Route path="/mypage" element={<MyPage/>} />
           <Route path="/createuser" element={<CreateUser/>} />
           <Route path="/edituser/:id" element={<EditUser/>} />
           <Route path="/pitch/:id" element={<PitchPage/>} />

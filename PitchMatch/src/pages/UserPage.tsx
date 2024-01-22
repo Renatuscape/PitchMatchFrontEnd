@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { UserPageCard2, UserPageCard3, UserPageCard4 } from "../components/UserPageCard";
+import { UserPageCardBottom, UserPageCardMiddle, UserPageCardTop } from "../components/UserPageCard";
 import { useParams } from "react-router-dom";
 import { Pitch } from "../components/types";
 
@@ -9,6 +9,7 @@ export type UserPageProps = {
    contact:string,
    soMe:string,
    cv:string,
+   isLogged:boolean,
    bio:string,
    portfolio:Pitch[],
 }
@@ -31,9 +32,9 @@ export type UserParamsType = {
     <div className='page-background'>
       {user ? (
         <>
-         <UserPageCard4 {...user} />
-         <UserPageCard2 {...user} />
-         <UserPageCard3 {...user} />
+         <UserPageCardTop {...user} />
+         <UserPageCardMiddle {...user} />
+         <UserPageCardBottom {...user} />
         </>
       ) : (
         // Optionally, you can show a loading state or some other message
