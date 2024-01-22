@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { PitchCard, PitchCardProps } from "../components/PitchCard";
+import { Link } from "react-router-dom";
 
 
 export function Home(){
@@ -27,7 +28,9 @@ export function Home(){
         </div>
         <div style={{width: '100vw', display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center'}}>
             {pitches.map((pitch, index) => (
+                <Link to="/pitch/:id}">
           <PitchCard key={index} title={pitch.title} content={pitch.content} />
+            </Link>
         ))}
         </div>
     </div>
