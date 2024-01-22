@@ -12,7 +12,7 @@ import { PitchPage } from './pages/PitchPage';
 import { CreatePitch } from './pages/CreatePitch';
 import { EditPitch } from './pages/EditPitch';
 import { LogIn } from './pages/LogIn';
-import { Location } from './pages/Location';
+import { Verificaiton } from './pages/Verification';
 import { Footer } from './components/Footer';
 import { ForgotPassword } from './ForgotPassword';
 import React from 'react';
@@ -53,7 +53,7 @@ console.log(LoginResponse)
           <Route path="/pitch/" element={<PitchPage/>} />
           <Route path="/createpitch" element={<CreatePitch/>} />
           <Route path="/editpitch/:id" element={<EditPitch/>} />
-          <Route path="/location" element={<Location/>} />
+          <Route path="/verification" element={<Verificaiton/>} />
           <Route path="/login" element={<LogIn LoginFunctionality={LogInFunctionality}/>} />
           <Route path="/forgottenpassword" element={<ForgotPassword/>} />
         </Routes>

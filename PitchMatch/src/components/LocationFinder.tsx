@@ -7,11 +7,18 @@ import {
     Pin,
     MapMouseEvent, // Import the MapMouseEvent type
 } from '@vis.gl/react-google-maps';
+import { Button } from "@mui/material";
 
-export function LocationFinder() {
+interface LocationFinderProps {
+    onRegisterAddress: (address: string) => void;
+}
+
+export function LocationFinder({ onRegisterAddress }: LocationFinderProps) {
     const initialPosition = { lat: 60.76696785977024, lng: 11.075835828837834 };
     const [markerPosition, setMarkerPosition] = useState(initialPosition);
+    const [mapCenter, setMapCenter] = useState(initialPosition);
     const [address, setAddress] = useState('');
+    const [inputAddress, setInputAddress] = useState('');
 
     const handleMapClick = (event: MapMouseEvent) => {
         if (event.detail && event.detail.latLng) {
@@ -48,22 +55,78 @@ export function LocationFinder() {
         }
     };
 
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setInputAddress(event.target.value);
+    };
+
+    const handleGoToAddress = async () => {
+        try {
+            const response = await fetch(
+                `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+                    inputAddress
+                )}&key=AIzaSyCGCRxrgJ4nKcTNhTaXk3p0izYu_nes3qg`
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch coordinates for the entered address");
+            }
+
+            const data = await response.json();
+
+            if (data.results && data.results.length > 0) {
+                const location = data.results[0].geometry.location;
+                const newMarkerPosition = {
+                    lat: location.lat,
+                    lng: location.lng,
+                };
+
+                setMarkerPosition(newMarkerPosition);
+                setAddress(data.results[0].formatted_address); // Update the address state here
+
+                setMapCenter(newMarkerPosition);
+            } else {
+                setAddress("Address not found");
+            }
+        } catch (error) {
+            console.error("Error fetching coordinates for the entered address:", error);
+            setAddress("Error fetching coordinates for the entered address");
+        }
+    };
+
+    const handleRegisterAddress = () => {
+        onRegisterAddress(address);
+    };
+
     return (
         <APIProvider apiKey='AIzaSyCGCRxrgJ4nKcTNhTaXk3p0izYu_nes3qg'>
-            <div style={{ height: 350, width: 800 }}>
+            <div style={{ display: 'flex', margin: '10px 0px 0px 0px' }}>
+                <input style={{ flexGrow: '8', height: 20, padding: 10, fontSize: '100%', margin: '0px 10px 0px 0px' }}
+                    type="text"
+                    placeholder="Enter an address"
+                    value={inputAddress}
+                    onChange={handleInputChange}
+                />
+                <Button onClick={handleGoToAddress} sx={{ flexGrow: 1, padding: 0, backgroundColor: "rgb(26,126,127)", color: "lightgreen" }}>Go to Address</Button>
+            </div>
+            <div style={{ height: 350, width: '100%', margin: '15px 0px 15px 0px' }}>
                 <Map
                     zoom={18}
-                    center={initialPosition}
+                    center={mapCenter}
                     mapId={'9741a1a12a9f0608'}
                     onClick={handleMapClick}
                 >
                     <AdvancedMarker position={markerPosition}>
-                        <Pin background={"green"} borderColor={"darkGreen"} glyphColor={"lightGreen"} />
+                        <Pin background={"rgb(26,126,127)"} borderColor={"darkGreen"} glyphColor={"lightGreen"} />
                     </AdvancedMarker>
                 </Map>
             </div>
             <p>Lat: {markerPosition.lat}, Lng: {markerPosition.lng}</p>
-            <p>Address: {address}</p>
+            <h2 style={{ margin: 'auto', marginBottom: 10 }}>{address}</h2>
+            {address &&
+                <Button
+                    onClick={handleRegisterAddress}
+                    sx={{ backgroundColor: "rgb(26,126,127)", color: "lightgreen" }}>Register this address
+                </Button>}
         </APIProvider>
     );
 }
