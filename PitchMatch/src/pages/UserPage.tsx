@@ -12,6 +12,7 @@ export type UserPageProps = {
    isVerified:boolean,
        isLogged:boolean,
    bio:string,
+   imgUrl:string,
    portfolio:Pitch[],
 }
 
