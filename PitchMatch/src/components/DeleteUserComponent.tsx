@@ -11,8 +11,12 @@ async function deleteUserAsync(id: number): Promise<void> {
   }
 }
 
-export function DeleteUserButtom(){
-    const { id } = useParams<keyof UserParamsType>() as UserParamsType;
+type DeleteUserProps = {
+    id: string;
+    }
+
+export function DeleteUserButton({id}:DeleteUserProps){
+  
     const handleDelete = async () => {
         try {
         await deleteUserAsync(parseInt(id, 10));
@@ -24,9 +28,7 @@ export function DeleteUserButtom(){
     
     return (
         <div>
-        <Link to="/">
-        <Button onClick={handleDelete}>Delete</Button>
-        </Link>
+        <Button type="submit" variant="contained" color="success" sx={{ margin: 2 , "&:focus":{outline: "none",}}}onClick={handleDelete}>Delete</Button>
         </div>
     );
-    }
+}

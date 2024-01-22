@@ -3,6 +3,7 @@ import { style1 } from "./CreatePitchComponent";
 import { FormEvent, useState } from "react";
 import { Link, useParams} from "react-router-dom";
 import { UserParamsType } from "../pages/UserPage";
+import { DeletePitchButton } from "./DeletePitchComponent";
 type EditPitchProps = {
     title: string; 
     summary: string; 
@@ -190,13 +191,16 @@ return<>
               </Grid>
               </Grid>
                 {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-            <Button type="submit" variant="contained" color="success" sx={{ marginTop: 2 , "&:focus":{outline: "none",}}}>
+            <Button type="submit" variant="contained" color="success" sx={{ margin: 2 , "&:focus":{outline: "none",}}}>
               Save
             </Button>
           </form>
         </CardContent>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
-          <Link to={`/pitch/${id}`} style={{ textDecoration: 'none' }}>
+          <Link to={"/"} style={{ textDecoration: 'none' }}>
+          <DeletePitchButton id={id}/>
+          </Link>
+          <Link to={`/pitch/${id}`} style={{ margin:'2',textDecoration: 'none' }}>
                   <Button variant="contained" color="secondary">
                     Cancel
                   </Button>
