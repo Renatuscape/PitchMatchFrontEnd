@@ -9,7 +9,8 @@ export type UserPageProps = {
    contact:string,
    soMe:string,
    cv:string,
-   isLogged:boolean,
+   isVerified:boolean,
+       isLogged:boolean,
    bio:string,
    portfolio:Pitch[],
 }
