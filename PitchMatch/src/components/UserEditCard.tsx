@@ -16,7 +16,7 @@ type EditUserProps = {
     }
 
 export async function updateUserAsync(newUser:EditUserProps, id:number ):Promise<EditUserProps>{
-    const res= await fetch(`https://pitchmatch.azurewebsites.net/User/${id}?userId=${id}`,
+    const res= await fetch(`https://pitchmatch.azurewebsites.net/User?id=${id}`,
     {
         method:'PUT',
         headers:{
