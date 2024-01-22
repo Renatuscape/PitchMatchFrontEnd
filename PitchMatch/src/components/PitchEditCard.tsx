@@ -169,8 +169,7 @@ return<>
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  nam
-                  e="location"
+                  name="location"
                   label="Location"
                   value={newPitch.location}
                   onChange={onChange}
