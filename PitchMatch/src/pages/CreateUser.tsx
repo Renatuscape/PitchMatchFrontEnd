@@ -1,7 +1,7 @@
 import { AutoAwesome, Visibility, VisibilityOff } from "@mui/icons-material";
 import { Container, IconButton } from "@mui/material";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 type CreateUserProps = {
    name: string;
@@ -134,7 +134,9 @@ export function CreateUser() {
                </div>
             </div>
             {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+            <Link to={'/login'} style={{ textDecoration: 'none' }}>
             <button>Submit</button>
+            </Link>
          </form>
       </Container>
    </div>
