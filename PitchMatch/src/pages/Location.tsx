@@ -1,12 +1,14 @@
 import React from 'react';
-import LocationInputMap from '../components/LocationFinder';
 import { Container } from '@mui/material';
+import { LocationFinder } from '../components/LocationFinder';
 
-export const Location: React.FC = () => {
+export function Location(){
+
     return <div className='page-background'>
-        <Container maxWidth='md' sx={{ minHeight: '70vh', backgroundColor: 'white', padding: 2, display: 'flex', flexDirection:'column'}}>
-            <h2>Find your location</h2>
-            <LocationInputMap onLocationChange={(location) => console.log(location)} />
-        </Container>
+      <Container maxWidth='md' sx={{ minHeight: '70vh', backgroundColor: 'white', padding: 2, display: 'flex', flexDirection: 'column' }}>
+        <h2>Find your location</h2>
+        <LocationFinder />
+      </Container>
     </div>
-  };
+  
+}
