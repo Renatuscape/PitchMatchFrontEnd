@@ -10,7 +10,7 @@ export type UserSearchProps={
     name: string;
     email: string;
     location: string;
-    profilePictureUrl: string;
+    imgUrl: string;
 }
 type PitchSearchProps={
     id: number;
@@ -74,7 +74,7 @@ export function SearchBar(){
             <div style={{display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center', marginTop:'15p'}}>
                  {filteredUsers.map((user: UserSearchProps) => (
               <Link key={user.id} to={`/user/${user.id}`}>
-                <UserSearchCard key={user.id} id={user.id} name={user.name} email={user.email} location={user.location} profilePictureUrl={user.profilePictureUrl} />
+                <UserSearchCard key={user.id} id={user.id} name={user.name} email={user.email} location={user.location} imgUrl={user.imgUrl} />
               </Link>
             ))}
 

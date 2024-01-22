@@ -34,7 +34,7 @@ export type UserParamsType = {
     <div className='page-background'>
       {user ? (
         <>
-         <UserPageCardTop {...user} />
+         <UserPageCardTop id={user.id} name={user.name} contact={user.contact} soMe={user.contact} cv={user.cv} isVerified={user.isVerified} isLogged={user.isLogged} bio={user.bio} imgUrl={user.imgUrl} portfolio={user.portfolio}  />
          <UserPageCardMiddle {...user} />
          <UserPageCardBottom {...user} />
         </>
