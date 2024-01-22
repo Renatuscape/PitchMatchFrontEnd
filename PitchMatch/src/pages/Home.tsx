@@ -12,7 +12,7 @@ export function Home(){
     const fetchData = async () => {
       try {
         const pitchesData = await getPitchesAsync();
-        setPitches([pitchesData]);
+        setPitches(pitchesData);
       } catch (error) {
         console.error("Error fetching pitches:", error);
       }
