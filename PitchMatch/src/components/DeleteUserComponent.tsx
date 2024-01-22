@@ -13,8 +13,6 @@ async function deleteUserAsync(id: number): Promise<void> {
 
 export function DeleteUserButtom(){
     const { id } = useParams<keyof UserParamsType>() as UserParamsType;
-
-    
     const handleDelete = async () => {
         try {
         await deleteUserAsync(parseInt(id, 10));
