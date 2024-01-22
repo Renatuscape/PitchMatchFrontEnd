@@ -1,4 +1,4 @@
-type Pitch = {
+export type Pitch = {
     Id: number;
     title: string; 
     summary: string; 
@@ -12,12 +12,12 @@ type Pitch = {
     userId: number;
   };
 
-  type LogInType={
+  export type LogInType={
     email: string;
     password: string;
   }
   
-type TokenAndId={
+export type TokenAndId={
     accessToken:string,
     Id:number
   }

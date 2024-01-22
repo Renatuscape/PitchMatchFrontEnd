@@ -2,6 +2,7 @@ import { Container, Card, Box, CardHeader, Button, Divider, CardContent, Grid, T
 import { Link } from "react-router-dom";
 import { PitchCard } from "./PitchCard";
 import { UserPageProps } from "../pages/UserPage";
+import { Pitch } from "./types";
 
 
 export function UserPageCard1(){

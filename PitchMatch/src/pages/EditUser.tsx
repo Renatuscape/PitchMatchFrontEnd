@@ -1,5 +1,9 @@
+import { UserEditCard } from "../components/UserEditCard";
+
  export function EditUser(){
     return <>
-    <h1>EditUser</h1>
+    <div>
+      <UserEditCard />
+    </div>
     </>
  }

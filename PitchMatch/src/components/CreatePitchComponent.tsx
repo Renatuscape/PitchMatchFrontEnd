@@ -1,5 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import { Container, Card, CardHeader, Button, Divider, CardContent, TextField, Grid } from "@mui/material";
+import { Pitch } from './types';
 
 const API_URL = 'https://pitchmatch.azurewebsites.net/Pitch';
 

@@ -18,6 +18,7 @@ import { Footer } from './components/Footer';
 import { ForgotPassword } from './ForgotPassword';
 import React from 'react';
 import { AuthContext } from './AContext/contextPage';
+import { TokenAndId, LogInType } from './components/types';
 
 function App() {
 const [token, setToken] = React.useState<TokenAndId>({accessToken:"", Id:0});
@@ -49,7 +50,7 @@ console.log(LoginResponse)
           <Route path="/user" element={<UserPage/>} />
           <Route path="/mypage" element={<MyPage/>} />
           <Route path="/createuser" element={<CreateUser/>} />
-          <Route path="/edituser" element={<EditUser/>} />
+          <Route path="/edituser/:id" element={<EditUser/>} />
           <Route path="/pitch/:id" element={<PitchPage/>} />
           <Route path="/pitch/" element={<PitchPage/>} />
           <Route path="/createpitch" element={<CreatePitch/>} />

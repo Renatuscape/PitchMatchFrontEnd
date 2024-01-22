@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { UserPageCard2, UserPageCard3, UserPageCard4 } from "../components/UserPageCard";
 import { useParams } from "react-router-dom";
+import { Pitch } from "../components/types";
 
 export type UserPageProps = {
    id:number,

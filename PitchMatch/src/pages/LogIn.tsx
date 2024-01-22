@@ -4,6 +4,7 @@ import { Container, Grid } from "@mui/material";
 import { LogInCard } from "../components/LogInCard";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { LogInType } from "../components/types";
 type LoginProps={
     LoginFunctionality:(userInfo:LogInType)=>Promise<void>
 }

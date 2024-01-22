@@ -14,21 +14,20 @@ export async function getUser(id:number):Promise<PitchPageProps>{
 }
 
 export function PitchPage() {
-  const [project, setPitch] = useState<PitchPageProps>();
+  const [pitch, setPitch] = useState<PitchPageProps>();
   const {id} = useParams<keyof UserParamsType>() as UserParamsType;
 
   useEffect(() => {
     getUser(parseInt(id)).then((res) => setPitch(res));
   }, [id]);
 
-  if (!project) {
+  if (!pitch) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className='page-background'>
-      <h1>{project.title}</h1>
-      <PitchPageComponent {...project} />
+      <PitchPageComponent {...pitch} />
     </div>
   );
 }
