@@ -4,12 +4,14 @@ import { Container, Grid } from "@mui/material";
 import { LogInCard } from "../components/LogInCard";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LogInType } from "../components/types";
+import { LogInType, TokenAndId } from "../components/types";
+
 type LoginProps={
     LoginFunctionality:(userInfo:LogInType)=>Promise<void>
 }
 
 export function LogIn({LoginFunctionality}:LoginProps) {
+        const sessionInfo:TokenAndId={accessToken:localStorage.getItem('token')??"",Id:parseInt(localStorage.getItem('id')??""),IsLogged:localStorage.getItem('logInStatus')==='true'?true:false,ExpiresAt:localStorage.getItem('ExpiresAt')??``} ;
         const[email,setEmail]=React.useState<string>("")
         const[password,setPassword]=React.useState<string>("")
         const [showPassword, setShowPassword] = useState(false);
@@ -19,6 +21,12 @@ const handlerSubmit=async(e:React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault()
         const userInfo:LogInType={email:email,password:password}
         await LoginFunctionality(userInfo).then(response=> navigate("/"))
+        try{
+        LoginFunctionality(userInfo).then(response=> navigate('/'))
+              }
+                  catch{
+                    console.error("Could not log in");
+          };
         }
 
  const handleTogglePasswordVisibility = () => {

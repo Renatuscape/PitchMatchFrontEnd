@@ -20,25 +20,13 @@ import { AuthContext } from './AContext/contextPage';
 import { TokenAndId, LogInType } from './components/types';
 
 function App() {
-const [token, setToken] = React.useState<TokenAndId>({accessToken:"", Id:0});
-async function LogInFunctionality(user:LogInType){
-const response= await fetch(`https://pitchmatch.azurewebsites.net/Login`, 
-{method:'POST', headers:{'Content-Type':'application/json'} ,body:JSON.stringify(user)});
-if (!response.ok) {
-  throw new Error(`HTTP error! Status: ${response.status}`);
-}
- const responseJson=  await response.json()
-const LoginResponse:TokenAndId={
-  accessToken:responseJson.accessToken,
-  Id:responseJson.id
-}
-setToken(LoginResponse)
-console.log(LoginResponse)
-};
+
+  function LogInFunctionality(userInfo: LogInType): Promise<void> {
+    throw new Error('Function not implemented.');
+  }
 
   return (
     <>
-    <AuthContext.Provider value={token}>
         <BrowserRouter>
         <ResponsiveAppBar/>
         <Routes>
@@ -59,7 +47,6 @@ console.log(LoginResponse)
         </Routes>
         <Footer/>
         </BrowserRouter>
-        </AuthContext.Provider>
     </>
   )
 }
