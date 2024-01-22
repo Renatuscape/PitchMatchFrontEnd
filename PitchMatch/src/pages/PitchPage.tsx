@@ -8,7 +8,8 @@ export type UserParamsType = {
 }
 
 export async function getUser(id:number):Promise<PitchPageProps>{
-   const res = await fetch("https://pitchmatch.azurewebsites.net/pitch/"+id)
+   const res = await fetch(`https://pitchmatch.azurewebsites.net/Pitch/${id}?pitchId=${id}`
+   )
    const resObject = await res.json();
    return resObject;
 }
