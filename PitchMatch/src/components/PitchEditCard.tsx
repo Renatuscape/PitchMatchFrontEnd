@@ -1,4 +1,4 @@
-import { Container, Card, CardContent, TextField, CardHeader, Divider, Button, Grid } from "@mui/material";
+import { Container, Card, CardContent, TextField, CardHeader, Divider, Button, Grid, Box } from "@mui/material";
 import { style1 } from "./CreatePitchComponent";
 import { FormEvent, useState } from "react";
 import { Link, useParams} from "react-router-dom";
@@ -195,6 +195,13 @@ return<>
             </Button>
           </form>
         </CardContent>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
+          <Link to={`/pitch/${id}`} style={{ textDecoration: 'none' }}>
+                  <Button variant="contained" color="secondary">
+                    Cancel
+                  </Button>
+                </Link>
+        </Box>
       </Card>
     </Container>
 </>

@@ -24,9 +24,10 @@ export async function updateUserAsync(newUser:EditUserProps, id:number ):Promise
         },
         body: JSON.stringify(newUser)
     })
-    if(!res.ok){
-        throw new Error (res.statusText)
-    }
+     if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(JSON.stringify(errorData));
+   }
     return await res.json();
 };
 
