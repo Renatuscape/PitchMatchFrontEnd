@@ -12,7 +12,7 @@ export function Home(){
     const fetchData = async () => {
       try {
         const pitchesData = await getPitchesAsync();
-        setPitches([pitchesData]);
+        setPitches(pitchesData);
       } catch (error) {
         console.error("Error fetching pitches:", error);
       }
@@ -38,7 +38,7 @@ export function Home(){
     </div>
 }
 
-export async function getPitchesAsync():Promise<Pitch>{
+export async function getPitchesAsync():Promise<Pitch[]>{
    const res = await fetch("https://pitchmatch.azurewebsites.net/Home")
    const resObject = await res.json();
    return resObject;

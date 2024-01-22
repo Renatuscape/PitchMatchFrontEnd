@@ -89,9 +89,9 @@ return (
         <Divider orientation="horizontal" sx={{}} flexItem />
         <CardContent>
           {portfolio ? (
-            portfolio.map((pitch: Pitch) => (
-              <PitchCard title={pitch.title} content={pitch.description} />
-            ))
+           portfolio.map((pitch: Pitch) => (
+           <PitchCard key={pitch.Id} title={pitch.title} content={pitch.description} />
+  ))
           ) : isLogged ? (
             <PitchCard title="No pitches yet" content="You have no pitches yet. Create one now!" />
           ) : (

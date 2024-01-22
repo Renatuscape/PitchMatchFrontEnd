@@ -1,6 +1,7 @@
 import React, { FormEvent, useState } from 'react';
 import { Container, Card, CardHeader, Button, Divider, CardContent, TextField, Grid } from "@mui/material";
 import { Pitch } from './types';
+import { Link } from 'react-router-dom';
 
 const API_URL = 'https://pitchmatch.azurewebsites.net/Pitch';
 
@@ -196,9 +197,11 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
               </Grid>
               </Grid>
               {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+            <Link to="/Home">
             <Button type="submit" variant="contained" color="primary" sx={{ marginTop: 2 , "&:focus":{outline: "none",}}}>
               Create
             </Button>
+            </Link>
           </form>
         </CardContent>
       </Card>
