@@ -1,6 +1,7 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Button, Card, Container } from '@mui/material';
 import { LocationFinder } from '../components/LocationFinder';
+import { getUserSessionInfo } from '../Context/contextPage';
 
 type CreatePersonalDataProps = {
   phoneNumber: string;
@@ -9,12 +10,15 @@ type CreatePersonalDataProps = {
   latitude: number;
   longitude: number;
   isVerified: boolean;
+  userId: number;
 }
 
 async function createPersonalDataAsync(personalData: CreatePersonalDataProps): Promise<CreatePersonalDataProps> {
   const response = await fetch('https://pitchmatch.azurewebsites.net/PersonalData', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(personalData)
   })
   if (!response.ok) {
@@ -32,6 +36,18 @@ export function Verificaiton() {
   const [registeredAddress, setRegisteredAddress] = useState('');
   const [latitude, setLatitude] = useState<number>(0);
   const [longitude, setLongitude] = useState<number>(0);
+  const [user, setUser] = useState<CreatePersonalDataProps | null>(null);
+
+  // try{
+  // useEffect(()=>{
+  //   getUserSessionInfo().then(res => setUser(res));
+  // })    
+  // }
+  // catch{
+  //   setUser({phoneNumber: '', personNr: '', address: '', latitude: 0, longitude: 0, isVerified: false, userId: 6});
+  //   console.log('User not logged in. Using dummy ID 6');
+  // }
+
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,16 +63,22 @@ export function Verificaiton() {
         latitude: latitude,
         longitude: longitude,
         isVerified: true,
+        userId: user?.userId ?? 6
       });
 
       // Process the successful creation of the user
     } catch (error: any) {
       if (error.message) {
-        const errorData = JSON.parse(error.message);
-        if (errorData.errors) {
-          const errorMessages = Object.values(errorData.errors).flat();
-          setErrorMessage(errorMessages.join(' '));
-          return;
+        try {
+          const errorData = JSON.parse(error.message);
+          if (errorData.errors) {
+            const errorMessages = Object.values(errorData.errors).flat();
+            setErrorMessage(errorMessages.join(' '));
+            return;
+          }
+        }
+        catch {
+          throw new Error('Unknown error.')
         }
       }
       setErrorMessage('An unexpected error occurred.');
@@ -98,13 +120,13 @@ export function Verificaiton() {
               <label>Registered Address</label>
               <input placeholder='Find your address on the map below.' disabled={true} value={registeredAddress} style={{ flexGrow: '8', height: 20, padding: 10, fontSize: '100%' }}></input>
             </div>
-            <Button>Verify me!</Button>
+            <Button type="submit">Verify me!</Button>
             {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
           </form>
 
           <div style={{ padding: 10, margin: 10, border: 'solid', borderWidth: 1, borderRadius: 15 }}>
             <h3 style={{ borderBottom: 'solid', borderWidth: 1, marginLeft: -10, marginRight: -10, padding: 10, paddingTop: 0 }}>Find your address</h3>
-            <LocationFinder onRegisterAddress={setRegisteredAddress} />
+            <LocationFinder onRegisterAddress={setRegisteredAddress} onLatitudeChange={setLatitude} onLongitudeChange={setLongitude} />
           </div>
         </div>
       </Card>
