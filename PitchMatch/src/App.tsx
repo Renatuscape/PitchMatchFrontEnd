@@ -46,8 +46,8 @@ function App() {
 
   return (
     <>
-    <AuthProvider>
         <BrowserRouter>
+    <AuthProvider>
         <ResponsiveAppBar/>
         <Routes>
           <Route path="/" element={<Home/>} />
@@ -76,8 +76,8 @@ function App() {
           <Route path="/forgottenpassword" element={<ForgotPassword/>} />
         </Routes>
         <Footer/>
-        </BrowserRouter>
         </AuthProvider>
+        </BrowserRouter>
     </>
   )
 }
