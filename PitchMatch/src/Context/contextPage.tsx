@@ -61,7 +61,7 @@ export function LoggedInIcon() {
         navigate('/');
     }
     function handleUserPage() {
-        navigate(`/userpage/${user?.id}`);
+        navigate(`/user/${user?.id}`);
     }
  
     if (user) {
