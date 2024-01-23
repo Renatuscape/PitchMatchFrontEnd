@@ -1,5 +1,5 @@
 export function ForgotPassword(){
     return <>
-    <p>Forgot password</p>
+    <p>Forgot password!</p>
     </>
 }

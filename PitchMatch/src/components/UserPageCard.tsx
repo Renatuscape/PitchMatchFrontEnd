@@ -1,11 +1,15 @@
 import { Container, Card, Box, CardHeader, Button, Divider, CardContent, Grid, Typography } from "@mui/material";
+import StarIcon from '@mui/icons-material/Star';
 import { Link } from "react-router-dom";
 import { PitchCard } from "./PitchCard";
 import { UserPageProps } from "../pages/UserPage";
 import { Pitch } from "./types";
 
-export function UserPageCardTop({name,contact,soMe,cv,isLogged}: UserPageProps){
 
+export function UserPageCardTop({name,contact,soMe,cv,isLogged,imgUrl, rating}: UserPageProps){
+ const stars = Array.from({ length: 5 }, (_, index) => (
+        <StarIcon key={index} color={index < rating ? 'primary' : 'disabled'} />
+    ));
     return<>
      <Container>
             <Card sx={style1}>
@@ -24,7 +28,7 @@ export function UserPageCardTop({name,contact,soMe,cv,isLogged}: UserPageProps){
                     <Grid container>
                         {/* Image taking 60% of the space */}
                         <Grid item xs={6} sx={{display: 'flex', alignItems:'flex-end'}}>
-                            <img src="https://picsum.photos/400/200" alt="profile" style={{ borderRadius:"5px" }} />
+                            <img src={imgUrl} alt="profile" style={{ width: '300px',borderRadius:"5px" }} />
                         </Grid>
                         {/* Label for name */}
                        <Grid item xs={3} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between',alignItems:'center' }}>
@@ -55,6 +59,12 @@ export function UserPageCardTop({name,contact,soMe,cv,isLogged}: UserPageProps){
                             <Button variant="contained" href={soMe} color="success" sx={{margin: '0 20px' , "&:focus":{outline: "none",}}}>
                             SocialMedia
                         </Button>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <Typography variant="subtitle1" color="text.secondary" sx={{ marginRight: 1 }}>
+                                        Rating:
+                                    </Typography>
+                                    {stars}
+                                </div>
                         </Grid>
                     </Grid>
                 </CardContent>
@@ -88,9 +98,9 @@ return (
         <Divider orientation="horizontal" sx={{}} flexItem />
         <CardContent>
           {portfolio ? (
-            portfolio.map((pitch: Pitch) => (
-              <PitchCard title={pitch.title} content={pitch.description} />
-            ))
+           portfolio.map((pitch: Pitch) => (
+           <PitchCard key={pitch.Id} title={pitch.title} content={pitch.description} />
+  ))
           ) : isLogged ? (
             <PitchCard title="No pitches yet" content="You have no pitches yet. Create one now!" />
           ) : (

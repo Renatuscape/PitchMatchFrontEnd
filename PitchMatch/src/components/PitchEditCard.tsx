@@ -1,8 +1,9 @@
-import { Container, Card, CardContent, TextField, CardHeader, Divider, Button, Grid } from "@mui/material";
+import { Container, Card, CardContent, TextField, CardHeader, Divider, Button, Grid, Box } from "@mui/material";
 import { style1 } from "./CreatePitchComponent";
 import { FormEvent, useState } from "react";
 import { Link, useParams} from "react-router-dom";
 import { UserParamsType } from "../pages/UserPage";
+import { DeletePitchButton } from "./DeletePitchComponent";
 type EditPitchProps = {
     title: string; 
     summary: string; 
@@ -24,9 +25,11 @@ export async function updatePitchAsync(newPitch:EditPitchProps, id:number ):Prom
         },
         body: JSON.stringify(newPitch)
     })
-    if(!res.ok){
-        throw new Error (res.statusText)
-    }
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(JSON.stringify(errorData));
+   }
+
     return await res.json();
 };
 
@@ -188,11 +191,23 @@ return<>
               </Grid>
               </Grid>
                 {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-            <Button type="submit" variant="contained" color="success" sx={{ marginTop: 2 , "&:focus":{outline: "none",}}}>
+                <Link to={`/pitch/${id}`} style={{ margin:'2',textDecoration: 'none' }}>
+            <Button type="submit" variant="contained" color="success" sx={{ margin: 2 , "&:focus":{outline: "none",}}}>
               Save
             </Button>
+            </Link>
           </form>
         </CardContent>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
+          <Link to={"/"} style={{ textDecoration: 'none' }}>
+          <DeletePitchButton id={id}/>
+          </Link>
+          <Link to={`/pitch/${id}`} style={{ margin:'2',textDecoration: 'none' }}>
+                  <Button variant="contained" color="secondary">
+                    Cancel
+                  </Button>
+          </Link>
+        </Box>
       </Card>
     </Container>
 </>

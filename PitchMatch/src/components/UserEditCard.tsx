@@ -3,6 +3,7 @@ import { style1 } from "./CreatePitchComponent";
 import { FormEvent, useState } from "react";
 import { Link, useParams} from "react-router-dom";
 import { UserParamsType } from "../pages/UserPage";
+import { DeleteUserButton } from "./DeleteUserComponent";
 
 type EditUserProps = {
     name: string;
@@ -24,9 +25,10 @@ export async function updateUserAsync(newUser:EditUserProps, id:number ):Promise
         },
         body: JSON.stringify(newUser)
     })
-    if(!res.ok){
-        throw new Error (res.statusText)
-    }
+     if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(JSON.stringify(errorData));
+   }
     return await res.json();
 };
 
@@ -169,6 +171,9 @@ export function UserEditCard() {
                 </form>
               </CardContent>
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
+                <Link to="/">
+                <DeleteUserButton id={id}/>
+                </Link>
                 <Link to={`/user/${id}`} style={{ textDecoration: 'none' }}>
                   <Button variant="contained" color="secondary">
                     Cancel

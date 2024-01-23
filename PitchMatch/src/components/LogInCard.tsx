@@ -1,15 +1,18 @@
-import { Container, Card, CardHeader, Divider, CardContent, Button, TextField } from "@mui/material";
+import { Container, Card, CardHeader, Divider, CardContent, Button, TextField, InputAdornment, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import { style2 } from "./CreateUserCard";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 type LogInType={
     email: string;
     password: string;
+    passwordVisibility: boolean;
     onChangeEmail:React.Dispatch<React.SetStateAction<string>>
     onChangePassword:React.Dispatch<React.SetStateAction<string>>
     onSubmit:(e:React.MouseEvent<HTMLButtonElement>)=>void
+    onTogglePasswordVisibility: () => void;
   }
   
-export function LogInCard({email,password,onChangeEmail,onChangePassword, onSubmit}:LogInType){
+export function LogInCard({email,password,onChangeEmail,onChangePassword,passwordVisibility, onSubmit,onTogglePasswordVisibility}:LogInType){
 
 
     return <>
@@ -29,15 +32,22 @@ export function LogInCard({email,password,onChangeEmail,onChangePassword, onSubm
                   fullWidth
                 />
                 <TextField
-                  name="password"
-                  label="Password"
-                  variant="outlined"
-                  margin="normal"
-                value={password}
-                onChange={e=>onChangePassword(e.target.value)}
-                  fullWidth
-                   type='password'
-                />
+        type={passwordVisibility ? "text" : "password"}
+        label="Password"
+        value={password}
+        onChange={(e) => onChangePassword(e.target.value)}
+        fullWidth
+        margin="normal"
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={() => onTogglePasswordVisibility()}>
+                {passwordVisibility ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
                     <Link to="/forgottenPassword">Forgot you password?</Link>
                     <Link to="/mypage">
                         <Button onClick={onSubmit} variant="contained" color="success" sx={{ margin: '0 20px', "&:focus":{outline: "none",}  }}>

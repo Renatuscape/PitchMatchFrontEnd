@@ -1,6 +1,6 @@
 import './App.css'
 import ResponsiveAppBar from './components/ResponsiveAppBar';
-import { BrowserRouter,  Routes } from 'react-router-dom';
+import { BrowserRouter,  Navigate,  Routes } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { About } from './pages/About';
@@ -12,33 +12,33 @@ import { PitchPage } from './pages/PitchPage';
 import { CreatePitch } from './pages/CreatePitch';
 import { EditPitch } from './pages/EditPitch';
 import { LogIn } from './pages/LogIn';
-import { Location } from './pages/Location';
+import { Verificaiton } from './pages/Verification';
 import { Footer } from './components/Footer';
 import { ForgotPassword } from './ForgotPassword';
-import React from 'react';
-import { AuthContext } from './AContext/contextPage';
-import { TokenAndId, LogInType } from './components/types';
+import {LogInFunctionality} from './Context/contextPage'
+
+
+
+
+type ProtectedRouteProps = {
+    children?: JSX.Element;
+}
+
 
 function App() {
-const [token, setToken] = React.useState<TokenAndId>({accessToken:"", Id:0});
-async function LogInFunctionality(user:LogInType){
-const response= await fetch(`https://pitchmatch.azurewebsites.net/Login`, 
-{method:'POST', headers:{'Content-Type':'application/json'} ,body:JSON.stringify(user)});
-if (!response.ok) {
-  throw new Error(`HTTP error! Status: ${response.status}`);
-}
- const responseJson=  await response.json()
-const LoginResponse:TokenAndId={
-  accessToken:responseJson.accessToken,
-  Id:responseJson.id
-}
-setToken(LoginResponse)
-console.log(LoginResponse)
-};
+    function ProtectedRoute(props: ProtectedRouteProps) {
+        const isLoggedIn = localStorage.getItem('logInStatus') === 'true' ? true : false;
+ 
+        if (isLoggedIn) {
+            return <Navigate to="/"/>
+        }
+                return <>
+            {props.children}
+        </>
+    }
 
   return (
     <>
-    <AuthContext.Provider value={token}>
         <BrowserRouter>
         <ResponsiveAppBar/>
         <Routes>
@@ -53,13 +53,17 @@ console.log(LoginResponse)
           <Route path="/pitch/" element={<PitchPage/>} />
           <Route path="/createpitch" element={<CreatePitch/>} />
           <Route path="/editpitch/:id" element={<EditPitch/>} />
-          <Route path="/location" element={<Location/>} />
-          <Route path="/login" element={<LogIn LoginFunctionality={LogInFunctionality}/>} />
+          <Route path="/verification" element={<Verificaiton/>} />
+          <Route path={"/login"}
+                               element={
+                                   <ProtectedRoute>
+                                       <LogIn LoginFunctionality={LogInFunctionality}/>
+                                   </ProtectedRoute>}>
+                        </Route>
           <Route path="/forgottenpassword" element={<ForgotPassword/>} />
         </Routes>
         <Footer/>
         </BrowserRouter>
-        </AuthContext.Provider>
     </>
   )
 }

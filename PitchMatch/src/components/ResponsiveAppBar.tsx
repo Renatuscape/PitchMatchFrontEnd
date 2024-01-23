@@ -1,7 +1,16 @@
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+import { LoggedInIcon } from '../Context/contextPage';
+import { useEffect, useState } from 'react';
 
 export function ResponsiveAppBar() {
+  const[isLoggedIn, setIsLoggedIn]=useState<boolean>(false)
+
+  useEffect(()=>{
+    const isLogged= localStorage.getItem('logInStatus') === 'true' ? true : false
+    setIsLoggedIn(isLogged)
+  },[])
+
 
   return (
     <div className="header-container">
@@ -26,11 +35,11 @@ export function ResponsiveAppBar() {
           About
         </Button>
       </Link>
-      <Link to="/login">
-        <Button sx={{ my: 2, color: 'black', display: 'block' , "&:focus":{outline: "none",}}}>
-          Log In
-        </Button>
-      </Link>
+     
+        {isLoggedIn ? (<LoggedInIcon />) : (<Link to='/login'><Button sx={{ my: 2, color: 'black', display: 'block' , "&:focus":{outline: "none",}}}>
+        Log In
+        </Button></Link>)}
+      
     </div>
   );
 }

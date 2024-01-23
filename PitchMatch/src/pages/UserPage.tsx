@@ -9,8 +9,11 @@ export type UserPageProps = {
    contact:string,
    soMe:string,
    cv:string,
+   rating:number,
+   isVerified:boolean,
    isLogged:boolean,
    bio:string,
+   imgUrl:string,
    portfolio:Pitch[],
 }
 
@@ -32,7 +35,7 @@ export type UserParamsType = {
     <div className='page-background'>
       {user ? (
         <>
-         <UserPageCardTop {...user} />
+         <UserPageCardTop id={user.id} name={user.name} contact={user.contact} soMe={user.contact} cv={user.cv} isVerified={user.isVerified} isLogged={user.isLogged} bio={user.bio} imgUrl={user.imgUrl} portfolio={user.portfolio} rating={user.rating}  />
          <UserPageCardMiddle {...user} />
          <UserPageCardBottom {...user} />
         </>

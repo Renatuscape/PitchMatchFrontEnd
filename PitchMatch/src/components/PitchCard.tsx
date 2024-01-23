@@ -1,6 +1,6 @@
 import Paper from '@mui/material/Paper';
 
-type PitchCardProps = {
+export type PitchCardProps = {
     imgUrl?: string,
     title: string,
     content: string

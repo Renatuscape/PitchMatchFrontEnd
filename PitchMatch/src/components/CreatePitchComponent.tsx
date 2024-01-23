@@ -1,6 +1,7 @@
 import React, { FormEvent, useState } from 'react';
 import { Container, Card, CardHeader, Button, Divider, CardContent, TextField, Grid } from "@mui/material";
 import { Pitch } from './types';
+import { Link } from 'react-router-dom';
 
 const API_URL = 'https://pitchmatch.azurewebsites.net/Pitch';
 
@@ -28,8 +29,9 @@ const res = await fetch(
     });
 
   if (!res.ok) {
-    throw new Error('could not create pitch');
-  }
+      const errorData = await res.json();
+      throw new Error(JSON.stringify(errorData));
+   }
 
   const createdPitch = await res.json();
   
@@ -41,6 +43,7 @@ type CreatePitchFormProps = {
   }
 
 export default function CreatePitchComponent(props: CreatePitchFormProps) {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [title, setTitle] = useState('');
   const [summary, setSummary] = useState('');
   const [description, setDescription] = useState('');
@@ -55,6 +58,7 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    try{
     const createdPitch = await createPitch(
         userId,
         title,
@@ -68,6 +72,17 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
         categories
     );
     props.addPitch(createdPitch);
+  } catch (error: any) {
+         if (error.message) {
+            const errorData = JSON.parse(error.message);
+            if (errorData.errors) {
+               const errorMessages = Object.values(errorData.errors).flat();
+               setErrorMessage(errorMessages.join(' '));
+               return;
+            }
+         }
+         setErrorMessage('An unexpected error occurred.');
+      }
   };
 
   return (
@@ -184,9 +199,12 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
                 />
               </Grid>
               </Grid>
+              {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+            <Link to="/Home">
             <Button type="submit" variant="contained" color="primary" sx={{ marginTop: 2 , "&:focus":{outline: "none",}}}>
               Create
             </Button>
+            </Link>
           </form>
         </CardContent>
       </Card>

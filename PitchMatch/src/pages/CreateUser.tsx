@@ -1,7 +1,7 @@
-import { AutoAwesome } from "@mui/icons-material";
-import { Container } from "@mui/material";
+import { AutoAwesome, Visibility, VisibilityOff } from "@mui/icons-material";
+import { Container, IconButton } from "@mui/material";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 type CreateUserProps = {
    name: string;
@@ -31,11 +31,17 @@ async function createUserAsync(user: CreateUserProps): Promise<CreateUserProps> 
 export function CreateUser() {
    const [user, setUser] = useState<CreateUserProps>({ name: '', email: '', password: '', bio: '', contact: '', soMe: '', imgUrl: '', cvUrl: '' })
    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+   const [confirmedPassword, setConfirmedPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
 
    const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       setErrorMessage(null);
+       if (user.password !== confirmedPassword) {
+      setErrorMessage("Passwords don't match.");
+      return;
+    }
       try {
          const res = await createUserAsync({
             name: user.name,
@@ -62,6 +68,10 @@ export function CreateUser() {
       }
    }
 
+   const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setUser({ ...user, [e.target.name]: e.target.value })
    }
@@ -79,11 +89,26 @@ export function CreateUser() {
             </div>
             <div className='form-input-container'>
                <label htmlFor="password">Password <AutoAwesome color='success' fontSize="small" /></label>
-               <input value={user.password} onChange={handleChange} id='password' name='password' type='password' />
+            <IconButton onClick={handleTogglePasswordVisibility}>
+              {showPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+               <input
+              value={user.password}
+              onChange={handleChange}
+              id='password'
+              name='password'
+              type={showPassword ? 'text' : 'password'}
+            />
             </div>
             <div className='form-input-container'>
                <label htmlFor="confirmPassword">Confirm password <AutoAwesome color='success' fontSize="small" /></label>
-               <input id='confirmedPassword' name='confirmPassword' type='password' />
+              <input
+              value={confirmedPassword}
+              onChange={(e) => setConfirmedPassword(e.target.value)}
+              id='confirmedPassword'
+              name='confirmPassword'
+              type={showPassword ? 'text' : 'password'}
+            />
             </div>
             <div style={{ padding: 10, borderRadius: 4, backgroundColor: 'rgba(80,186,147,1)', display: 'flex', flexDirection: 'column', gap: 10 }}>
                <p style={{ paddingBottom: 15 }}>This section is information that other users will be able to see on your profile page when they are logged in. These fields are not required, but will improve your chances of finding a match. You can update your profile with this information later, if you prefer.</p>
@@ -109,7 +134,9 @@ export function CreateUser() {
                </div>
             </div>
             {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+            <Link to={'/login'} style={{ textDecoration: 'none' }}>
             <button>Submit</button>
+            </Link>
          </form>
       </Container>
    </div>
