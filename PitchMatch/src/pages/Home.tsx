@@ -3,9 +3,12 @@ import { PitchCard, PitchCardProps } from "../components/PitchCard";
 import { Pitch } from "../components/types";
 import { Link } from "react-router-dom";
 import { Box, Container } from "@mui/material";
+import { useAuth } from "../App";
 
 
 export function Home(){
+  const{token}=useAuth();
+  const isLoggedIn: boolean = !!token;
     const[pitches,setPitches]=useState<Pitch[]>([])
    
 
@@ -30,10 +33,16 @@ export function Home(){
         </div>
         <Box style={{width: '100vw', marginLeft: '55px',display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto'}}>
             {pitches.map((pitch, index) => (
-                <Link to="/login" style={{textDecoration: 'none'}}>
-            <PitchCard key={index} title={pitch.title} content={pitch.summary} imgUrl={pitch.imgUrl}/>
-            </Link>
-        ))}
+  isLoggedIn ? (
+    <Link to="/login" style={{ textDecoration: 'none' }}>
+      <PitchCard key={index} title={pitch.title} content={pitch.summary} imgUrl={pitch.imgUrl}/>
+    </Link>
+  ) : (
+    <Link to={`/pitch/${token?.userId}`} style={{ textDecoration: 'none' }}>
+      <PitchCard key={index} title={pitch.title} content={pitch.summary} imgUrl={pitch.imgUrl}/>
+    </Link>
+  )
+))}
         </Box>
     </div>
 }
