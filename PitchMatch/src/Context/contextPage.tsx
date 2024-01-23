@@ -1,8 +1,9 @@
 import React from "react";
 import { LogInType, TokenAndId } from "../components/types";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserPageProps } from "../pages/UserPage";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useEffect } from "react";
 import { Button, Typography } from "@mui/material";
 export const AuthContext = React.createContext({accessToken: "", Id:0})
@@ -58,17 +59,17 @@ export function LogedInIcon() {
     if (user) {
         return (
             <>
-                <div style={{display: 'flex', flexDirection: 'row'}}>
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                    <AccountCircleIcon sx={{ fontSize: 40, marginRight: 10 }} />
                     <Typography gutterBottom variant="h4" component="div">
                         {user.name ?? 'novalue'}
                     </Typography>
- 
-                    <Button style={{textAlign: 'center', height: '50px'}} variant="contained" onClick={handleLogOut}>
-                        Log out
-                    </Button>
+                    <Link to="/">
+        <Button sx={{ my: 2, color: 'black', display: 'block', "&:focus":{outline: "none",} }}>
+          About
+        </Button>
+      </Link>
                 </div>
             </>
-        )
-    }
-}
-
+        );
+    }}
