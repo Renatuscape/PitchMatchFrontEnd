@@ -28,7 +28,9 @@ const isLoggedIn: boolean = localStorage.getItem('logInStatus') === 'true' ? tru
           About
         </Button>
       </Link>
-       {isLoggedIn && <LoggedInIcon /> }
+        {isLoggedIn ? (<LoggedInIcon />) : (<Link to="/login"> <Button sx={{ my: 2, color: 'black', display: 'block' , "&:focus":{outline: "none",}}}>
+          Log In
+        </Button></Link>)}
     </div>
   );
 }

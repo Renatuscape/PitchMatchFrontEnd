@@ -60,11 +60,10 @@ export function LoggedInIcon() {
         return (
             <>
                <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', flexDirection: 'row' }}>
+                    <Link to="/userpage/:id">
                     <AccountCircleIcon sx={{ fontSize: 40, marginRight: 10 }} />
-                    <Typography gutterBottom variant="h4" component="div">
-                        {user.name ?? 'novalue'}
-                    </Typography>
-                    <Link to="/login">
+                    </Link>
+                    <Link to="/">
                     <Button sx={{ my: 2, color: 'black', display: 'block', "&:focus":{outline: "none",}}} onClick={handleLogOut}>
                         Log out
                     </Button>
