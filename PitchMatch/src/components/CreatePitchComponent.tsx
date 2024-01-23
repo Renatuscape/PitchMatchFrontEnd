@@ -2,11 +2,11 @@ import React, { FormEvent, useState, useContext } from 'react';
 import { Container, Card, CardHeader, Button, Divider, CardContent, TextField, Grid } from "@mui/material";
 import { Pitch } from './types';
 import { Link, useNavigate } from 'react-router-dom';
+import { getSession } from '../Context/contextPage';
 
 const API_URL = 'https://pitchmatch.azurewebsites.net/Pitch';
 
 async function createPitch(
-    userId: number,
     title: string,
     summary: string, 
     description: string,
@@ -26,7 +26,7 @@ const res = await fetch(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ 
-        userId,
+        userId: getSession().userId,
         title, 
         summary, 
         description, 
@@ -63,7 +63,7 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
   const [goal, setGoal] = useState<number>(0);
   const [pitchYield, setPitchYield] = useState<number>(0);
   const [categories, setCategories] = useState('');
-  const [userId] = useState<number>(0);
+  
 
   // const navigate = useNavigate();
 
@@ -71,7 +71,6 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
     e.preventDefault();
     try{
     const createdPitch = await createPitch(
-        userId,
         title,
         summary,
         description,
