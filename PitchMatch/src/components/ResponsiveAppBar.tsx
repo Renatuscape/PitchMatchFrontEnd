@@ -37,7 +37,7 @@ export function ResponsiveAppBar() {
       </Link>
      
         {isLoggedIn ? (<LoggedInIcon />) : (<Link to='/login'><Button sx={{ my: 2, color: 'black', display: 'block' , "&:focus":{outline: "none",}}}>
-          Log In
+        Log In
         </Button></Link>)}
       
     </div>
