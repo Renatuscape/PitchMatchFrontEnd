@@ -16,7 +16,6 @@ import { Verificaiton } from './pages/Verification';
 import { Footer } from './components/Footer';
 import { ForgotPassword } from './ForgotPassword';
 import React from 'react';
-import { AuthContext } from './AContext/contextPage';
 import { TokenAndId, LogInType } from './components/types';
 
 function App() {
