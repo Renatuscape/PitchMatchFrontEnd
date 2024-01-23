@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react';
 import { Button, Container, Paper } from '@mui/material';
 import { LocationFinder } from '../components/LocationFinder';
 import { getSession} from '../Context/contextPage';
+import { DeletePersonalData } from '../components/DeletePersonalData';
 
 type CreatePersonalDataProps = {
   phoneNumber: string;
@@ -125,6 +126,7 @@ export function Verificaiton() {
             <LocationFinder onRegisterAddress={setRegisteredAddress} onLatitudeChange={setLatitude} onLongitudeChange={setLongitude} />
           </Paper>
         </div>
+        <DeletePersonalData />
       </Paper>
     </Container>
   </div>
