@@ -6,9 +6,11 @@ import { useAuth } from '../App';
 
 export function ResponsiveAppBar() {
   const {token}=useAuth();console.log('Token:', token);
-console.log('Token:', token);
-const isLoggedIn: boolean = !!token;
-console.log('Is Logged In:', isLoggedIn);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsLoggedIn(!!token);
+  }, [token]);
 
   return (
     <div className="header-container">
