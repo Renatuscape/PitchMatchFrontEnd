@@ -19,8 +19,8 @@ export type Pitch = {
   
 export type TokenAndId={
     accessToken:string,
-    Id:number,
+    userId:number,
     IsLogged:boolean,
-    ExpiresAt:string,
+    expiresIn:string,
   }
  

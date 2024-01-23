@@ -17,25 +17,25 @@ if (!response.ok) {
  const responseJson=  await response.json()
 const LoginResponse:TokenAndId={
   accessToken:responseJson.accessToken,
-  Id:responseJson.id,
+  userId:responseJson.userId,
   IsLogged:true,
-    ExpiresAt:responseJson.expiration
+  expiresIn:responseJson.expiresIn
 }
 localStorage.setItem('token', `${LoginResponse.accessToken}`)
-    localStorage.setItem('id', `${LoginResponse.Id}`)
+    localStorage.setItem('id', `${LoginResponse.userId}`)
     localStorage.setItem('logInStatus', `${LoginResponse.IsLogged}`)
-    localStorage.setItem('ExpiresAt', `${LoginResponse.ExpiresAt}`)
+    localStorage.setItem('ExpiresAt', `${LoginResponse.expiresIn}`)
     console.log(response)
 };
 
 export async function getUserSessionInfo() {
     const sessionInfo: TokenAndId = {
         accessToken: localStorage.getItem('token') ?? "",
-        Id: parseInt(localStorage.getItem('id') ?? ""),
+        userId: parseInt(localStorage.getItem('userId') ?? ""),
         IsLogged: localStorage.getItem('logInStatus') === 'true' ? true : false,
-        ExpiresAt: localStorage.getItem('ExpiresAt') ?? ""
+        expiresIn: localStorage.getItem('expiresIn') ?? ""
     };
-    const response = await fetch(`https://pitchmatch.azurewebsites.net/PersonalData/${sessionInfo.Id}`, {
+    const response = await fetch(`https://pitchmatch.azurewebsites.net/PersonalData/${sessionInfo.userId}`, {
         method: 'GET',
         headers: {'Content-Type': 'application/json'}
     });
