@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 const API_URL = 'https://pitchmatch.azurewebsites.net/Pitch';
 
 async function createPitch(
+    userId: number,
     title: string,
     summary: string, 
     description: string,
@@ -14,7 +15,7 @@ async function createPitch(
     location: string,
     goal: number,
     pitchYield: number,
-    category: string
+    categories: string
     ): Promise<Pitch> {
 
 const res = await fetch(
@@ -24,7 +25,7 @@ const res = await fetch(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title, summary, description, imgUrl, videoUrl, location, goal, pitchYield, category, userId: 6 })
+      body: JSON.stringify({ title, summary, description, imgUrl, videoUrl, location, goal, pitchYield, categories, userId: {userId} })
     });
 
   if (!res.ok) {
@@ -51,13 +52,15 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
   const [location, setLocation] = useState('');
   const [goal, setGoal] = useState<number>(0);
   const [pitchYield, setPitchYield] = useState<number>(0);
-  const [category, setCategory] = useState('');
+  const [categories, setCategories] = useState('');
+  const [userId] = useState<number>(0);
 
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try{
     const createdPitch = await createPitch(
+        userId,
         title,
         summary,
         description,
@@ -66,7 +69,7 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
         location,
         goal,
         pitchYield,
-        category
+        categories
     );
     props.addPitch(createdPitch);
   } catch (error: any) {
@@ -186,10 +189,10 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  name="category"
+                  name="categories"
                   label="Category"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
+                  value={categories}
+                  onChange={(e) => setCategories(e.target.value)}
                   variant="outlined"
                   margin="normal"
                   fullWidth

@@ -3,31 +3,67 @@ import { Container, Card, CardHeader, CardContent, CardMedia, CardActions, Typog
 import { Pitch } from './types';
 
 export type PitchPageProps = {
+  id: number;
   title: string;
-  category: string;
-  creator: string;
-  goals: number;
-  investors: number;
-  funding: number;
-  risk: number;
-  projectedYield: string;
+  summary: string;
   description: string;
-  imageUrl: string;
+  imgUrl: string;
+  location: string;
+  goal: number;
+  funding: number;
+  yield: number;
+  views: number;
+  categories: string;
+  userId: number;
+  user: null | any; 
+  investments: null | any;  
 };
 
+
 export function PitchPageComponent(props: PitchPageProps) {
+  console.log("PitchPageComponent props:", props); 
+
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const calculateProgress = () => {
-      return (props.funding / props.goals) * 100;
+      return (props.funding / props.goal) * 100;
     };
 
     setProgress(calculateProgress());
-  }, [props.funding, props.goals]);
+  }, [props.funding, props.goal]);
+  
+
+  // const updateViewCount = async () => {
+  //   try {
+  //     const [views, setViews] = useState(0);
+  //     const newViews = views + 1; // Increment the current view count by 1
+  //     const response = await fetch(`https://pitchmatch.azurewebsites.net/Pitch/${props.id}?pitchId=${props.id}`, {
+  //       method: 'PATCH',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         // Include other headers like authorization if needed
+  //       },
+  //       body: JSON.stringify({ views: newViews }),
+  //     });
+  
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! Status: ${response.status}`);
+  //     }
+  
+  //     // Assuming the response includes the updated pitch with the new views count
+  //     const updatedPitch = await response.json();
+      
+  //     // Update the view count state if the API call was successful
+  //     setViews(updatedPitch.views);
+  
+  //   } catch (error) {
+  //     console.error('Failed to update view count:', error);
+  //   }
+  // };
 
   return (
-    <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', }}>
       <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
         <Card sx={{
           maxWidth: 'lg',
@@ -35,19 +71,13 @@ export function PitchPageComponent(props: PitchPageProps) {
           my: 4,
           boxShadow: 3,
           position: 'relative',
-          height: '100vh',
+          minHeight: '100vh',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
         }}>
-          <CardMedia
-            component="img"
-            height="194"
-            image={props.imageUrl}
-            alt="Success"
-          />
           <Box sx={{
-            position: 'absolute',
+            // position: 'absolute',
             top: 0,
             left: 0,
             right: 0,
@@ -55,22 +85,53 @@ export function PitchPageComponent(props: PitchPageProps) {
             p: 4,
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
           }}>
-            <Typography gutterBottom variant="h3" component="div" sx={{ fontWeight: 'bold', color: 'white' }}>
-              {props.title}
-            </Typography>
-            <Typography variant="h6" sx={{ mb: 2, color: 'white' }}>
-              {props.category}
-            </Typography>
-            <Button variant="contained" color="secondary" size="large" sx={{ alignSelf: 'flex-end' }}>
-              Interested
-            </Button>
+            <Box sx={{
+              backgroundImage: `url(${props.imgUrl})`,
+              backgroundPosition: 'center',
+              backgroundSize: '100%, auto',
+              backgroundRepeat: 'no-repeat',
+              height: 400,
+              display: 'flex',
+              justifyContent: 'flex-end',
+              flexDirection: 'column',
+              padding: '1.5em',
+            }}>
+              <Box sx={{ pt: 4 }}>
+                <Typography
+                  gutterBottom
+                  variant="h3"
+                  component="div"
+                  sx={{ fontWeight: 'bold', color: 'black', mt: 2 }}
+                >
+                  {props.title}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{ mb: 2, color: 'black' }}
+                >
+                  {props.categories}
+                </Typography>
+              </Box>
+
+              <Button variant="contained" color="secondary" size="large" sx={{ mb: 2, mr: 2, alignSelf: 'flex-end' }}>
+                Interested
+              </Button>
+
+            </Box>
+            {/* <CardMedia
+            component="img"
+            height="194"
+            image={props.imgUrl}
+            alt="Success"
+            sx={{ height: 388, objectFit: 'cover' }} 
+            /> */}
             <Divider sx={{ bgcolor: 'white', my: 2 }} />
             <CardContent sx={{ bgcolor: 'white', opacity: 0.95 }}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Box sx={{ width: '100%', mr: 1 }}>
-                <LinearProgress variant="determinate" value={progress} />
+                  <LinearProgress variant="determinate" value={progress} />
                 </Box>
                 <Box sx={{ minWidth: 35 }}>
                   <Typography variant="body2" color="text.secondary">{`${Math.round(
@@ -81,15 +142,15 @@ export function PitchPageComponent(props: PitchPageProps) {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle1">Creator:</Typography>
-                  <Typography>{props.creator}</Typography>
+                  <Typography>{props.user}</Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle1">Goals:</Typography>
-                  <Typography>{props.goals}</Typography>
+                  <Typography>{props.goal}</Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle1">Investors:</Typography>
-                  <Typography>{props.investors}</Typography>
+                  <Typography>{props.investments}</Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle1">Funding:</Typography>
@@ -97,11 +158,11 @@ export function PitchPageComponent(props: PitchPageProps) {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle1">Risk:</Typography>
-                  <Typography>{props.risk}</Typography>
+                  <Typography>{ }</Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle1">Projected Annual Yield:</Typography>
-                  <Typography>{props.projectedYield}</Typography>
+                  <Typography>{props.yield}</Typography>
                 </Grid>
               </Grid>
             </CardContent>

@@ -11,6 +11,7 @@ export async function getUser(id:number):Promise<PitchPageProps>{
    const res = await fetch(`https://pitchmatch.azurewebsites.net/Pitch/${id}?pitchId=${id}`
    )
    const resObject = await res.json();
+   console.log("Fetched data:", resObject);  // Add this line
    return resObject;
 }
 
