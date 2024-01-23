@@ -105,14 +105,17 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
 const handleLogin = (tokenAndId: TokenAndId) => {
     try {
-        setToken(tokenAndId);
-        navigate('/');
+    setToken(tokenAndId);
+    localStorage.setItem('logInStatus', 'true');
+    navigate('/');
     } catch (error) {
         console.error('Error during login:', error);
     }
 };
   const handleLogout = () => {
     setToken(null);
+    localStorage.setItem('logInStatus', 'false');
+    navigate('/login');
   };
  const value = {
     token,
