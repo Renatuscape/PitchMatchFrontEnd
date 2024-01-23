@@ -29,18 +29,24 @@ localStorage.setItem('token', `${LoginResponse.accessToken}`)
 };
 
 export async function getUserSessionInfo() {
-    const sessionInfo: TokenAndId = {
-        accessToken: localStorage.getItem('token') ?? "",
-        userId: parseInt(localStorage.getItem('userId') ?? ""),
-        IsLogged: localStorage.getItem('logInStatus') === 'true' ? true : false,
-        expiresIn: localStorage.getItem('expiresIn') ?? ""
-    };
+    const sessionInfo: TokenAndId = getSession();
     const response = await fetch(`https://pitchmatch.azurewebsites.net/PersonalData/${sessionInfo.userId}`, {
         method: 'GET',
         headers: {'Content-Type': 'application/json'}
     });
     const object = await response.json();
     return object;
+}
+
+export function getSession(){
+    const sessionInfo: TokenAndId = {
+        accessToken: localStorage.getItem('token') ?? "",
+        userId: parseInt(localStorage.getItem('userId') ?? ""),
+        IsLogged: localStorage.getItem('logInStatus') === 'true' ? true : false,
+        expiresIn: localStorage.getItem('expiresIn') ?? ""
+    };
+
+    return sessionInfo;
 }
 
 export function LoggedInIcon() {
