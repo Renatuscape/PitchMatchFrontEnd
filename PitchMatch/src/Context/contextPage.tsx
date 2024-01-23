@@ -52,12 +52,15 @@ export function getSession(){
 export function LoggedInIcon() {
     const navigate = useNavigate();
     const [user, setUser] = useState<UserPageProps | null>()
-   useEffect(() => {
+    useEffect(() => {
         async function fetchUserSessionInfo() {
-            const res = await getUserSessionInfo();
-            setUser(res);
+            try {
+                const res = await getUserSessionInfo();
+                setUser(res);
+            } catch (error) {
+                console.error('Error fetching user session:', error);
+            }
         }
-
         fetchUserSessionInfo();
     }, []);
  
@@ -83,6 +86,4 @@ export function LoggedInIcon() {
         );
         
     }
-    
-    return null;
-    }
+}
