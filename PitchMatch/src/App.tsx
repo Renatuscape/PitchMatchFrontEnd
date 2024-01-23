@@ -54,21 +54,42 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/createuser" element={<CreateUser/>} />
           <Route path="/login" element={<LogIn LoginFunctionality={LogInFunctionality}/>} />
-          <Route path={"/"}
-                               element={
-                                <ProtectedRoute>
-                                    <Route path="/editpitch/:id" element={<EditPitch/>} />
-                                </ProtectedRoute>
-                                
-                            } />
-           <Route path="/verification" element={<Verificaiton/>} />
-          <Route path="/createpitch" element={<CreatePitch/>} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/user/:id" element={<UserPage/>} />
-          <Route path="/edituser/:id" element={<EditUser/>} />
-          <Route path="/pitch/:id" element={<PitchPage/>} />
-
           <Route path="/forgottenpassword" element={<ForgotPassword/>} />
+         <Route path="/editpitch/:id" element={ <ProtectedRoute>
+                                                    <EditPitch />
+                                                </ProtectedRoute>
+                                              }
+                                               />                                       
+         <Route path="/verification" element={ <ProtectedRoute>
+                                                    <Verificaiton />
+                                                </ProtectedRoute>
+                                              }
+                                                />
+          <Route path="/createpitch" element={ <ProtectedRoute>
+                                                    <CreatePitch />
+                                                </ProtectedRoute>
+                                              }
+                                                />
+          <Route path="/search" element={ <ProtectedRoute>
+                                                   <Search />
+                                                </ProtectedRoute>
+                                              }
+                                                />
+          <Route path="/user/:id" element={ <ProtectedRoute>
+                                                    <UserPage/>
+                                                </ProtectedRoute>
+                                              }
+                                                />
+          <Route path="/edituser/:id" element={ <ProtectedRoute>
+                                                    <EditPitch/>
+                                                </ProtectedRoute>
+                                              }
+                                                />
+          <Route path="/pitch/:id" element={ <ProtectedRoute>
+                                                    <PitchPage/>
+                                                </ProtectedRoute>
+                                              }
+                                                />
         </Routes>
         <Footer/>
         </AuthProvider>
