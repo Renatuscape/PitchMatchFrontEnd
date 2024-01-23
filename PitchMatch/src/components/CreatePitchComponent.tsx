@@ -48,7 +48,7 @@ const res = await fetch(
   return createdPitch;
 }
 
-type CreatePitchFormProps = {
+export type CreatePitchFormProps = {
     addPitch: (pitch: Pitch) => void;
   }
 
@@ -65,7 +65,7 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
   const [categories, setCategories] = useState('');
   const [userId] = useState<number>(0);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -83,7 +83,7 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
         categories
     );
     props.addPitch(createdPitch);
-    navigate('/');
+    // navigate('/');
   } catch (error: any) {
          if (error.message) {
             const errorData = JSON.parse(error.message);
