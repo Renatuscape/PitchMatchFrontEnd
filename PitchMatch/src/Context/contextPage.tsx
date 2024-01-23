@@ -1,5 +1,10 @@
 import React from "react";
 import { LogInType, TokenAndId } from "../components/types";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserPageProps } from "../pages/UserPage";
+import { useEffect } from "react";
+import { Button, Typography } from "@mui/material";
 export const AuthContext = React.createContext({accessToken: "", Id:0})
 
 async function LogInFunctionality(user:LogInType){
@@ -37,4 +42,33 @@ export async function getUserSessionInfo() {
     return object;
 }
 
+export function LogedInIcon() {
+    const navigate = useNavigate();
+    const [user, setUser] = useState<UserPageProps | null>()
+    useEffect(() => {
+        getUserSessionInfo().then(res => setUser(res));
+    }, [])
+ 
+    function handleLogOut() {
+        localStorage.clear();
+        setUser(null);
+        navigate('/');
+    }
+ 
+    if (user) {
+        return (
+            <>
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                    <Typography gutterBottom variant="h4" component="div">
+                        {user.name ?? 'novalue'}
+                    </Typography>
+ 
+                    <Button style={{textAlign: 'center', height: '50px'}} variant="contained" onClick={handleLogOut}>
+                        Log out
+                    </Button>
+                </div>
+            </>
+        )
+    }
+}
 
