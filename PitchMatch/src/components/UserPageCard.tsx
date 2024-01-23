@@ -96,13 +96,13 @@ export function UserPageCardBottom({ portfolio, isLogged }: UserPageProps) {
     return (
         <>
             <Container>
-                <Card sx={style3} style={{display: 'flex', flexDirection: 'column'}}>
+                <Card sx={style3} style={{ display: 'flex', flexDirection: 'column' }}>
                     <CardHeader title="Portfolio" />
                     <Divider orientation="horizontal" sx={{}} flexItem />
-                    <CardContent style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: 'auto'}}>
+                    <CardContent style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: 'auto' }}>
                         {portfolio ? (
                             portfolio.map((pitch: Pitch) => (
-                                <PitchCard key={pitch.Id+pitch.title} title={pitch.title} content={pitch.description} />
+                                <PitchCard key={pitch.Id + pitch.title} title={pitch.title} content={pitch.description} />
                             ))
                         ) : isLogged ? (
                             <PitchCard title="No pitches yet" content="You have no pitches yet. Create one now!" />
@@ -118,7 +118,7 @@ export function UserPageCardBottom({ portfolio, isLogged }: UserPageProps) {
 
 const style1 = {
     margin: "5px 35px",
-    height: "310px",
+    height: "330px",
     borderRadius: "10px",
     boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 };
@@ -130,7 +130,7 @@ const style2 = {
 };
 const style3 = {
     margin: "0 35px 15px",
-    height: "450px",
+    height: "auto",
     borderRadius: "10px",
     boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
 };
