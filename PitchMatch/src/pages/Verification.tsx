@@ -55,11 +55,13 @@ export function Verificaiton() {
         latitude: latitude,
         longitude: longitude,
         isVerified: true,
-        userId: userId ?? 6
+        userId: 6
+        // userId: userId ?? 6
       });
 
-      // Process the successful creation of the user
+      // Process the successful creation of the data
     } catch (error: any) {
+      console.error(error);
       if (error.message) {
         try {
           const errorData = JSON.parse(error.message);
