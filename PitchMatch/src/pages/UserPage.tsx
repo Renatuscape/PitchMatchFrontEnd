@@ -23,7 +23,7 @@ export type UserParamsType = {
 }
 
 export function UserPage() {
-  const [userPageData, setUserPageData] = useState<UserPageProps>();
+  //const [userPageData, setUserPageData] = useState<UserPageProps>();
   const [user, setUser] = useState<User>();
   const [userPortfolio, setUserPortfolio] = useState<Pitch[]>([]);
   const [personalData, setPersonalData] = useState<PersonalData>();
@@ -34,21 +34,22 @@ export function UserPage() {
     gePersonalData(parseInt(id)).then((res) => setPersonalData(res));
     getPitches(parseInt(id)).then((res) => setUserPortfolio(res));
 
-    setUserPageData({
-      id: parseInt(id),
-      name: user?.name ?? '',
-      contact: user?.contact ?? '',
-      soMe: user?.soMe ?? '',
-      cvUrl: user?.cvUrl ?? '',
-      rating: user?.rating ?? 0,
-      isVerified: personalData?.isVerified ?? false,
-      isLogged: user?.isLogged ?? false,
-      bio: user?.bio ?? '',
-      imgUrl: user?.imgUrl ?? '',
-      portfolio: userPortfolio ?? [],
-      location: personalData?.address ?? '',
-    });
   }, [])
+  
+  const userPageData = ({
+    id: parseInt(id),
+    name: user?.name ?? '',
+    contact: user?.contact ?? '',
+    soMe: user?.soMe ?? '',
+    cvUrl: user?.cvUrl ?? '',
+    rating: user?.rating ?? 0,
+    isVerified: personalData?.isVerified ?? false,
+    isLogged: user?.isLogged ?? false,
+    bio: user?.bio ?? '',
+    imgUrl: user?.imgUrl ?? '',
+    portfolio: userPortfolio ?? [],
+    location: personalData?.address ?? '',
+  });
 
   return (
     <div className='page-background' style={{padding: 20}}>
