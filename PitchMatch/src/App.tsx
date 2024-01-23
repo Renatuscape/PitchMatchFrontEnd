@@ -33,10 +33,10 @@ type ProtectedRouteProps = {
 function App() {
     const [token, setToken] = React.useState<TokenAndId | null>(null);
     function ProtectedRoute(props: ProtectedRouteProps) {
-        
+
         const isLoggedIn = localStorage.getItem('logInStatus') === 'true' ? true : false;
  
-        if (isLoggedIn) {
+        if (!isLoggedIn) {
             return <Navigate to="/"/>
         }
                 return <>
@@ -52,23 +52,27 @@ function App() {
         <Routes>
           <Route path="/" element={<Home/>} />
           <Route path="/about" element={<About />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/user/:id" element={<UserPage/>} />
-          <Route path="/user" element={<UserPage/>} />
           <Route path="/createuser" element={<CreateUser/>} />
-          <Route path="/edituser/:id" element={<EditUser/>} />
-          <Route path="/pitch/:id" element={<PitchPage/>} />
-          <Route path="/pitch/" element={<PitchPage/>} />
-          <Route path="/createpitch" element={<CreatePitch/>} />
-          <Route path="/editpitch/:id" element={<EditPitch/>} />
-          <Route path="/verification" element={<Verificaiton/>} />
-          <Route path={"/login"}
+          <Route path="/login" element={<LogIn LoginFunctionality={LogInFunctionality}/>} />
+          <Route path={"/"}
                                element={
-                                   <ProtectedRoute>
-                                       <LogIn LoginFunctionality={LogInFunctionality}/>
-         
-                                   </ProtectedRoute>}>
-                        </Route>
+                                <ProtectedRoute>
+                                    <>
+                                       <Route path="/pitch/" element={<PitchPage/>} />
+                                    <Route path="/user" element={<UserPage/>} />
+                                    <Route path="/editpitch/:id" element={<EditPitch/>} />
+                                    <Route path="/verification" element={<Verificaiton/>} />
+                                    <Route path="/createpitch" element={<CreatePitch/>} />
+                                    <Route path="/search" element={<Search />} />
+                                    <Route path="/user/:id" element={<UserPage/>} />
+                                    <Route path="/edituser/:id" element={<EditUser/>} />
+                                    <Route path="/pitch/:id" element={<PitchPage/>} />
+                                        {/* Multiple children go here */}
+                                    </>
+                                </ProtectedRoute>
+                            } />
+
+
           <Route path="/forgottenpassword" element={<ForgotPassword/>} />
         </Routes>
         <Footer/>
@@ -107,7 +111,11 @@ const handleLogin = (tokenAndId: TokenAndId) => {
 };
 
 export const useAuth = () => {
-  return React.useContext(AuthContext);
+  const tokenAndId = React.useContext(AuthContext);
+  if (!tokenAndId) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return tokenAndId;
 };
 export default App
 
