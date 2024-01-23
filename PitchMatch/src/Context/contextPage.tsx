@@ -55,19 +55,18 @@ export function LoggedInIcon() {
         setUser(null);
         navigate('/');
     }
+    function handleUserPage() {
+        navigate(`/userpage/${user?.id}`);
+    }
  
     if (user) {
         return (
             <>
                <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', flexDirection: 'row' }}>
-                    <Link to="/userpage/:id">
-                    <AccountCircleIcon sx={{ fontSize: 40, marginRight: 10 }} />
-                    </Link>
-                    <Link to="/">
+                    <AccountCircleIcon sx={{ fontSize: 40, marginRight: 10 }} onClick={handleUserPage}/>
                     <Button sx={{ my: 2, color: 'black', display: 'block', "&:focus":{outline: "none",}}} onClick={handleLogOut}>
                         Log out
                     </Button>
-                    </Link>
                 </Box>
             </>
         );

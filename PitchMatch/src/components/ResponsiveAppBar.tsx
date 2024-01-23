@@ -4,7 +4,8 @@ import { LoggedInIcon } from '../Context/contextPage';
 
 export function ResponsiveAppBar() {
 
-const isLoggedIn: boolean = localStorage.getItem('logInStatus') === 'true' ? true : false
+const isLoggedIn: boolean = localStorage.getItem('logInStatus') === 'true' ? true : false;
+
   return (
     <div className="header-container">
       <Link to="/search">
