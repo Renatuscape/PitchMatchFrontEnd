@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserPageProps } from "../pages/UserPage";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useEffect } from "react";
-import { Button, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 export const AuthContext = React.createContext({accessToken: "", Id:0})
 
 export async function LogInFunctionality(user:LogInType){
@@ -59,7 +59,7 @@ export function LoggedInIcon() {
     if (user) {
         return (
             <>
-               
+               <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', flexDirection: 'row' }}>
                     <AccountCircleIcon sx={{ fontSize: 40, marginRight: 10 }} />
                     <Typography gutterBottom variant="h4" component="div">
                         {user.name ?? 'novalue'}
@@ -69,6 +69,7 @@ export function LoggedInIcon() {
                         Log out
                     </Button>
                     </Link>
+                </Box>
             </>
         );
     }}
