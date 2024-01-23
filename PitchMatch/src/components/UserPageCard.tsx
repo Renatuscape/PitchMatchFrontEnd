@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { PitchCard } from "./PitchCard";
 import { UserPageProps } from "../pages/UserPage";
 import { Pitch } from "./types";
-import { AutoAwesome } from "@mui/icons-material";
+import { AutoAwesome, Height } from "@mui/icons-material";
 
 
 export function UserPageCardTop({ name, contact, soMe, cvUrl: cv, isLogged, isVerified, imgUrl, rating, location: address }: UserPageProps) {
@@ -96,10 +96,10 @@ export function UserPageCardBottom({ portfolio, isLogged }: UserPageProps) {
     return (
         <>
             <Container>
-                <Card sx={style3}>
+                <Card sx={style3} style={{display: 'flex', flexDirection: 'column'}}>
                     <CardHeader title="Portfolio" />
                     <Divider orientation="horizontal" sx={{}} flexItem />
-                    <CardContent>
+                    <CardContent style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: 'auto'}}>
                         {portfolio ? (
                             portfolio.map((pitch: Pitch) => (
                                 <PitchCard key={pitch.Id+pitch.title} title={pitch.title} content={pitch.description} />
