@@ -5,13 +5,8 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../App';
 
 export function ResponsiveAppBar() {
-  const {token}=useAuth();console.log('Token:', token);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-
-  useEffect(() => {
-    setIsLoggedIn(!!token);
-  }, [token]);
-
+  const {token}=useAuth();
+  
   return (
     <div className="header-container">
       <Link to="/search">
@@ -36,7 +31,7 @@ export function ResponsiveAppBar() {
         </Button>
       </Link>
      
-        {isLoggedIn ? (<LoggedInIcon />) : (<Link to='/login'><Button sx={{ my: 2, color: 'black', display: 'block' , "&:focus":{outline: "none",}}}>
+        {token?.IsLogged ? (<LoggedInIcon />) : (<Link to='/login'><Button sx={{ my: 2, color: 'black', display: 'block' , "&:focus":{outline: "none",}}}>
         Log In
         </Button></Link>)}
       
