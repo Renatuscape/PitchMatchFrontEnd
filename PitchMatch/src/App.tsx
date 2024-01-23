@@ -47,7 +47,7 @@ function App() {
   return (
     <>
         <BrowserRouter>
-    <AuthProvider>
+        <AuthProvider>
         <ResponsiveAppBar/>
         <Routes>
           <Route path="/" element={<Home/>} />
@@ -57,21 +57,16 @@ function App() {
           <Route path={"/"}
                                element={
                                 <ProtectedRoute>
-                                    <>
-                                    <Route path="/pitch/" element={<PitchPage/>} />
-                                    <Route path="/user" element={<UserPage/>} />
                                     <Route path="/editpitch/:id" element={<EditPitch/>} />
-                                    <Route path="/verification" element={<Verificaiton/>} />
-                                    <Route path="/createpitch" element={<CreatePitch/>} />
-                                    <Route path="/search" element={<Search />} />
-                                    <Route path="/user/:id" element={<UserPage/>} />
-                                    <Route path="/edituser/:id" element={<EditUser/>} />
-                                    <Route path="/pitch/:id" element={<PitchPage/>} />
-                                        {/* Multiple children go here */}
-                                    </>
                                 </ProtectedRoute>
+                                
                             } />
-
+           <Route path="/verification" element={<Verificaiton/>} />
+          <Route path="/createpitch" element={<CreatePitch/>} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/user/:id" element={<UserPage/>} />
+          <Route path="/edituser/:id" element={<EditUser/>} />
+          <Route path="/pitch/:id" element={<PitchPage/>} />
 
           <Route path="/forgottenpassword" element={<ForgotPassword/>} />
         </Routes>
