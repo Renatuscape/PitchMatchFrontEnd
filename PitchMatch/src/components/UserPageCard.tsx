@@ -5,9 +5,12 @@ import { PitchCard } from "./PitchCard";
 import { UserPageProps } from "../pages/UserPage";
 import { Pitch } from "./types";
 import { AutoAwesome, Height } from "@mui/icons-material";
+import { useAuth } from "../App";
 
 
 export function UserPageCardTop({ name, contact, soMe, cvUrl: cv, isLogged, isVerified, imgUrl, rating, location: address }: UserPageProps) {
+    const { token } = useAuth();
+  const isLoggedIn: boolean = !!token;
     const stars = Array.from({ length: 5 }, (_, index) => (
         <StarIcon key={index} color={index < rating ? 'primary' : 'disabled'} />
     ));
@@ -17,7 +20,7 @@ export function UserPageCardTop({ name, contact, soMe, cvUrl: cv, isLogged, isVe
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <CardHeader title="About me" />
                     <div style={{ marginRight: 15 }}>{isVerified ? <>Verified user <AutoAwesome color='success' fontSize="small" /></> : <>Unverified user</>}</div>
-                    {isLogged &&
+                    {isLoggedIn &&
                         <Link to="/edituser">
                             <Button variant="contained" color="success" sx={{ margin: '0 20px' }}>
                                 Edit

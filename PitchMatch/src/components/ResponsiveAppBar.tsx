@@ -2,14 +2,12 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { LoggedInIcon } from '../Context/contextPage';
 import { useEffect, useState } from 'react';
+import { useAuth } from '../App';
 
 export function ResponsiveAppBar() {
-  const[isLoggedIn, setIsLoggedIn]=useState<boolean>(false)
-
-  useEffect(()=>{
-    const isLogged= localStorage.getItem('logInStatus') === 'true' ? true : false
-    setIsLoggedIn(isLogged)
-  },[])
+  const {token}=useAuth();
+  const isLoggedIn: boolean = !!token;
+  
 
 
   return (

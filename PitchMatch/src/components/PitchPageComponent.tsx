@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Card, CardHeader, CardContent, CardMedia, CardActions, Typography, Button, Divider, Grid, Box, LinearProgress } from "@mui/material";
+import { Container, Card, CardHeader, CardContent, CardMedia, CardActions, Typography, Button, Divider, Grid, Box, LinearProgress, Link } from "@mui/material";
 import { Pitch } from './types';
+import { useAuth } from '../App';
+import { DeletePitchButton } from './DeletePitchComponent';
+import { Navigate } from 'react-router-dom';
 
 export type PitchPageProps = {
   id: number;
@@ -21,6 +24,8 @@ export type PitchPageProps = {
 
 
 export function PitchPageComponent(props: PitchPageProps) {
+  const { token } = useAuth();
+  
   console.log("PitchPageComponent props:", props); 
 
   const [progress, setProgress] = useState(0);
@@ -32,6 +37,10 @@ export function PitchPageComponent(props: PitchPageProps) {
 
     setProgress(calculateProgress());
   }, [props.funding, props.goal]);
+
+  const editHandler=()=>{
+    return <Navigate to={`/editpitch/${token?.userId}`}/>
+  }
   
 
   // const updateViewCount = async () => {
@@ -65,6 +74,11 @@ export function PitchPageComponent(props: PitchPageProps) {
   return (
     <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', }}>
       <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
+        {token && (<DeletePitchButton id={token?.userId} />)}
+        {token &&  (<Button variant="contained" onClick={editHandler} color="success" sx={{ margin: '0 20px' }}>
+                                Edit
+                            </Button> )
+                    }
         <Card sx={{
           maxWidth: 'lg',
           mx: 'auto',
