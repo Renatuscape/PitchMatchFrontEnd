@@ -124,13 +124,15 @@ export function LocationFinder({ onRegisterAddress, onLatitudeChange, onLongitud
                     </AdvancedMarker>
                 </Map>
             </div>
-            <p>Lat: {markerPosition.lat}, Lng: {markerPosition.lng}</p>
+            {/* <p>Lat: {markerPosition.lat}, Lng: {markerPosition.lng}</p> */}
+            
+            {address && <div style={{display: 'flex', flexDirection: 'column', textAlign: 'center'}}>
             <h2 style={{ margin: 'auto', marginBottom: 10 }}>{address}</h2>
-            {address &&
                 <Button
                     onClick={handleRegisterAddress}
                     sx={{ backgroundColor: "rgb(26,126,127)", color: "lightgreen" }}>Register this address
-                </Button>}
+                </Button>
+                </div>}
         </APIProvider>
     );
 }
