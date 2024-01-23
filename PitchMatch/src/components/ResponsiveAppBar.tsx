@@ -5,7 +5,13 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../App';
 
 export function ResponsiveAppBar() {
-  const {token}=useAuth();
+  const { token } = useAuth();
+  const isLoggedIn: boolean = !!token;
+
+  useEffect(() => {
+    const res = localStorage.getItem('logInStatus') === 'true' ? true : false;
+   
+  }, [token]);
   
   return (
     <div className="header-container">
@@ -31,7 +37,7 @@ export function ResponsiveAppBar() {
         </Button>
       </Link>
      
-        {token?.IsLogged ? (<LoggedInIcon />) : (<Link to='/login'><Button sx={{ my: 2, color: 'black', display: 'block' , "&:focus":{outline: "none",}}}>
+        {isLoggedIn ? (<LoggedInIcon />) : (<Link to='/login'><Button sx={{ my: 2, color: 'black', display: 'block' , "&:focus":{outline: "none",}}}>
         Log In
         </Button></Link>)}
       
