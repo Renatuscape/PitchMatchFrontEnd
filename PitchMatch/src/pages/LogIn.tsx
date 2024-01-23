@@ -10,7 +10,6 @@ type LoginProps={
 }
 
 export function LogIn({LoginFunctionality}:LoginProps) {
-        const sessionInfo:TokenAndId={accessToken:localStorage.getItem('token')??"",Id:parseInt(localStorage.getItem('id')??""),IsLogged:localStorage.getItem('logInStatus')==='true'?true:false,ExpiresAt:localStorage.getItem('ExpiresAt')??``} ;
         const[email,setEmail]=React.useState<string>("")
         const[password,setPassword]=React.useState<string>("")
         const [showPassword, setShowPassword] = useState(false);
