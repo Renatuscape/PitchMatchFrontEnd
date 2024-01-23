@@ -17,12 +17,9 @@ import { Footer } from './components/Footer';
 import { ForgotPassword } from './ForgotPassword';
 import React from 'react';
 import { TokenAndId, LogInType } from './components/types';
-
+import {LogInFunctionality} from './Context/contextPage'
 function App() {
 
-  function LogInFunctionality(userInfo: LogInType): Promise<void> {
-    throw new Error('Function not implemented.');
-  }
 
   return (
     <>

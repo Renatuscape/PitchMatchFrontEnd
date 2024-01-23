@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { Button, Typography } from "@mui/material";
 export const AuthContext = React.createContext({accessToken: "", Id:0})
 
-async function LogInFunctionality(user:LogInType){
+export async function LogInFunctionality(user:LogInType){
 const response= await fetch(`https://pitchmatch.azurewebsites.net/Login`, 
 {method:'POST', headers:{'Content-Type':'application/json'} ,body:JSON.stringify(user)});
 if (!response.ok) {

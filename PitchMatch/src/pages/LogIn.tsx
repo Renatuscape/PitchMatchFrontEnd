@@ -35,7 +35,6 @@ return<>
 <div className='page-background' style={{height:"700px"}}>
 <Container>
 <Grid container >
-        
          <Grid item xs={6}> <LogInCard onSubmit={handlerSubmit} onChangeEmail={setEmail} onChangePassword={setPassword} email={email} password={password} passwordVisibility={showPassword} onTogglePasswordVisibility={handleTogglePasswordVisibility}/> </Grid>
          <Grid item xs={6}> <CreateUserCard/> </Grid>
 </Grid>
