@@ -7,8 +7,12 @@ import { useAuth } from '../App';
 export function ResponsiveAppBar() {
   const {token}=useAuth();
   const isLoggedIn: boolean = !!token;
-  
+  const[isLogged, setIsLoggedIn]=useState<boolean>(false)
 
+  useEffect(() => {
+    const isLoggedFromStorage = localStorage.getItem('logInStatus') === 'true';
+    setIsLoggedIn(isLoggedFromStorage);
+  }, []);
 
   return (
     <div className="header-container">

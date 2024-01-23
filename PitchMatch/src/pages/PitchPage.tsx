@@ -21,7 +21,7 @@ export function PitchPage() {
 
   useEffect(() => {
     getUser(parseInt(id)).then((res) => setPitch(res));
-  }, [id]);
+  }, []);
 
   if (!pitch) {
     return <div>Loading...</div>;
