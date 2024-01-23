@@ -11,9 +11,11 @@ import { Button } from "@mui/material";
 
 interface LocationFinderProps {
     onRegisterAddress: (address: string) => void;
+    onLatitudeChange: (longitude: number) => void;
+    onLongitudeChange: (latitude: number) => void;
 }
 
-export function LocationFinder({ onRegisterAddress }: LocationFinderProps) {
+export function LocationFinder({ onRegisterAddress, onLatitudeChange, onLongitudeChange }: LocationFinderProps) {
     const initialPosition = { lat: 60.76696785977024, lng: 11.075835828837834 };
     const [markerPosition, setMarkerPosition] = useState(initialPosition);
     const [mapCenter, setMapCenter] = useState(initialPosition);
@@ -95,6 +97,8 @@ export function LocationFinder({ onRegisterAddress }: LocationFinderProps) {
 
     const handleRegisterAddress = () => {
         onRegisterAddress(address);
+        onLatitudeChange(markerPosition.lat);
+        onLongitudeChange(markerPosition.lng);
     };
 
     return (
