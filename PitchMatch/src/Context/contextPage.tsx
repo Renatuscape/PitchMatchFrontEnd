@@ -46,9 +46,14 @@ export async function getUserSessionInfo() {
 export function LoggedInIcon() {
     const navigate = useNavigate();
     const [user, setUser] = useState<UserPageProps | null>()
-    useEffect(() => {
-        getUserSessionInfo().then(res => setUser(res));
-    }, [])
+   useEffect(() => {
+        async function fetchUserSessionInfo() {
+            const res = await getUserSessionInfo();
+            setUser(res);
+        }
+
+        fetchUserSessionInfo();
+    }, []);
  
     function handleLogOut() {
         localStorage.clear();
@@ -70,4 +75,8 @@ export function LoggedInIcon() {
                 </Box>
             </>
         );
-    }}
+        
+    }
+    
+    return null;
+    }
