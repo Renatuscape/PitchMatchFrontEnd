@@ -37,7 +37,7 @@ function App() {
         const isLoggedIn = localStorage.getItem('logInStatus') === 'true' ? true : false;
  
         if (!isLoggedIn) {
-            return <Navigate to="/"/>
+            return <Navigate to="/login"/>
         }
                 return <>
             {props.children}
@@ -58,7 +58,7 @@ function App() {
                                element={
                                 <ProtectedRoute>
                                     <>
-                                       <Route path="/pitch/" element={<PitchPage/>} />
+                                    <Route path="/pitch/" element={<PitchPage/>} />
                                     <Route path="/user" element={<UserPage/>} />
                                     <Route path="/editpitch/:id" element={<EditPitch/>} />
                                     <Route path="/verification" element={<Verificaiton/>} />
