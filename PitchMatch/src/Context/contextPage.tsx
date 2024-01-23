@@ -22,9 +22,9 @@ const LoginResponse:TokenAndId={
   expiresIn:responseJson.expiresIn
 }
 localStorage.setItem('token', `${LoginResponse.accessToken}`)
-    localStorage.setItem('id', `${LoginResponse.userId}`)
+    localStorage.setItem('userId', `${LoginResponse.userId}`)
     localStorage.setItem('logInStatus', `${LoginResponse.IsLogged}`)
-    localStorage.setItem('ExpiresAt', `${LoginResponse.expiresIn}`)
+    localStorage.setItem('expiresIn', `${LoginResponse.expiresIn}`)
     console.log(response)
 };
 
@@ -67,7 +67,7 @@ export function LoggedInIcon() {
         navigate('/');
     }
     function handleUserPage() {
-        navigate(`/userpage/${user?.id}`);
+        navigate(`/user/${user?.id}`);
     }
  
     if (user) {

@@ -7,8 +7,8 @@ export function ResponsiveAppBar() {
   const[isLoggedIn, setIsLoggedIn]=useState<boolean>(false)
 
   useEffect(()=>{
-    const isLoggedIn= localStorage.getItem('logInStatus') === 'true' ? true : false
-    setIsLoggedIn(isLoggedIn)
+    const isLogged= localStorage.getItem('logInStatus') === 'true' ? true : false
+    setIsLoggedIn(isLogged)
   },[])
 
 
@@ -37,7 +37,7 @@ export function ResponsiveAppBar() {
       </Link>
      
         {isLoggedIn ? (<LoggedInIcon />) : (<Link to='/login'><Button sx={{ my: 2, color: 'black', display: 'block' , "&:focus":{outline: "none",}}}>
-          Log In
+        Log In
         </Button></Link>)}
       
     </div>
