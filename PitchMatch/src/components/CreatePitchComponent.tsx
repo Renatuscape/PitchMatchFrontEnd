@@ -1,7 +1,7 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useState, useContext } from 'react';
 import { Container, Card, CardHeader, Button, Divider, CardContent, TextField, Grid } from "@mui/material";
 import { Pitch } from './types';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const API_URL = 'https://pitchmatch.azurewebsites.net/Pitch';
 
@@ -25,16 +25,26 @@ const res = await fetch(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ title, summary, description, imgUrl, videoUrl, location, goal, pitchYield, categories, userId: {userId} })
+      body: JSON.stringify({ 
+        userId,
+        title, 
+        summary, 
+        description, 
+        imgUrl, 
+        videoUrl, 
+        location, 
+        goal, 
+        pitchYield, 
+        categories
+      })
     });
 
-  if (!res.ok) {
+    if (!res.ok) {
       const errorData = await res.json();
       throw new Error(JSON.stringify(errorData));
-   }
+  }
 
   const createdPitch = await res.json();
-  
   return createdPitch;
 }
 
@@ -55,6 +65,7 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
   const [categories, setCategories] = useState('');
   const [userId] = useState<number>(0);
 
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -72,6 +83,7 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
         categories
     );
     props.addPitch(createdPitch);
+    navigate('/');
   } catch (error: any) {
          if (error.message) {
             const errorData = JSON.parse(error.message);
@@ -200,11 +212,9 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
               </Grid>
               </Grid>
               {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-            <Link to="/Home">
-            <Button type="submit" variant="contained" color="primary" sx={{ marginTop: 2 , "&:focus":{outline: "none",}}}>
+              <Button type="submit" variant="contained" color="primary" sx={{ marginTop: 2, "&:focus": { outline: "none", } }}>
               Create
-            </Button>
-            </Link>
+              </Button>
           </form>
         </CardContent>
       </Card>

@@ -1,11 +1,13 @@
 import CreatePitchComponent from "../components/CreatePitchComponent";
+import { Pitch } from "../components/types";
 
 export function CreatePitch(){
-    return <>
-    <div className='page-background'>
-    <CreatePitchComponent addPitch={function (pitch: { title: string; summary: string; description: string; imgUrl: string; videoUrl: string; location: string; goal: number; pitchYield: number; category: string; }): void {
-          throw new Error("Function not implemented.");
-       } } />
+   const addPitch = (pitch: Pitch): void => {
+      console.log("New pitch created:", pitch);
+  };
+   return (
+      <div className='page-background'>
+          <CreatePitchComponent addPitch={addPitch} />
       </div>
-    </>
+  );
  }
