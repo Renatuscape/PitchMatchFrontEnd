@@ -57,8 +57,10 @@ export function PitchEditCard(){
     e.preventDefault();
     setErrorMessage(null);
     if (!token) {
+      console.log('not token found');
       return;
     }
+
     try {
       const res = await updatePitchAsync(newPitch, token.userId);
       setNewPitch(res);
