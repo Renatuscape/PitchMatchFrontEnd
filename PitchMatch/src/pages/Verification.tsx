@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Button, Card, Container } from '@mui/material';
 import { LocationFinder } from '../components/LocationFinder';
-import { getUserSessionInfo } from '../Context/contextPage';
+import { getSession, getUserSessionInfo } from '../Context/contextPage';
 
 type CreatePersonalDataProps = {
   phoneNumber: string;
@@ -36,17 +36,6 @@ export function Verificaiton() {
   const [registeredAddress, setRegisteredAddress] = useState('');
   const [latitude, setLatitude] = useState<number>(0);
   const [longitude, setLongitude] = useState<number>(0);
-  const [user, setUser] = useState<CreatePersonalDataProps | null>(null);
-
-  // try{
-  // useEffect(()=>{
-  //   getUserSessionInfo().then(res => setUser(res));
-  // })    
-  // }
-  // catch{
-  //   setUser({phoneNumber: '', personNr: '', address: '', latitude: 0, longitude: 0, isVerified: false, userId: 6});
-  //   console.log('User not logged in. Using dummy ID 6');
-  // }
 
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -55,6 +44,9 @@ export function Verificaiton() {
     if (registeredAddress === null || registeredAddress === '' || registeredAddress === 'Address not found') {
       setErrorMessage(prevErrorMessage => (prevErrorMessage ?? '') + 'Invalid address.');
     }
+
+    const userId = getSession().userId;
+
     try {
       const res = await createPersonalDataAsync({
         phoneNumber: phoneNumber,
@@ -63,7 +55,7 @@ export function Verificaiton() {
         latitude: latitude,
         longitude: longitude,
         isVerified: true,
-        userId: user?.userId ?? 6
+        userId: userId ?? 6
       });
 
       // Process the successful creation of the user
