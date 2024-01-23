@@ -1,12 +1,15 @@
 import { Container, Card, Box, CardHeader, Button, Divider, CardContent, Grid, Typography } from "@mui/material";
+import StarIcon from '@mui/icons-material/Star';
 import { Link } from "react-router-dom";
 import { PitchCard } from "./PitchCard";
 import { UserPageProps } from "../pages/UserPage";
 import { Pitch } from "./types";
 
 
-export function UserPageCardTop({name,contact,soMe,cv,isLogged,imgUrl}: UserPageProps){
-
+export function UserPageCardTop({name,contact,soMe,cv,isLogged,imgUrl, rating}: UserPageProps){
+ const stars = Array.from({ length: 5 }, (_, index) => (
+        <StarIcon key={index} color={index < rating ? 'primary' : 'disabled'} />
+    ));
     return<>
      <Container>
             <Card sx={style1}>
@@ -56,6 +59,12 @@ export function UserPageCardTop({name,contact,soMe,cv,isLogged,imgUrl}: UserPage
                             <Button variant="contained" href={soMe} color="success" sx={{margin: '0 20px' , "&:focus":{outline: "none",}}}>
                             SocialMedia
                         </Button>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <Typography variant="subtitle1" color="text.secondary" sx={{ marginRight: 1 }}>
+                                        Rating:
+                                    </Typography>
+                                    {stars}
+                                </div>
                         </Grid>
                     </Grid>
                 </CardContent>

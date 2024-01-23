@@ -1,4 +1,3 @@
-import { Create, Height } from "@mui/icons-material";
 import { CreateUserCard } from "../components/CreateUserCard";
 import { Container, Grid } from "@mui/material";
 import { LogInCard } from "../components/LogInCard";
@@ -20,7 +19,6 @@ export function LogIn({LoginFunctionality}:LoginProps) {
 const handlerSubmit=async(e:React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault()
         const userInfo:LogInType={email:email,password:password}
-        await LoginFunctionality(userInfo).then(response=> navigate("/"))
         try{
         LoginFunctionality(userInfo).then(response=> navigate('/'))
               }
@@ -37,7 +35,6 @@ return<>
 <div className='page-background' style={{height:"700px"}}>
 <Container>
 <Grid container >
-        
          <Grid item xs={6}> <LogInCard onSubmit={handlerSubmit} onChangeEmail={setEmail} onChangePassword={setPassword} email={email} password={password} passwordVisibility={showPassword} onTogglePasswordVisibility={handleTogglePasswordVisibility}/> </Grid>
          <Grid item xs={6}> <CreateUserCard/> </Grid>
 </Grid>

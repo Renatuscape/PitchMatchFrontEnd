@@ -1,8 +1,14 @@
 import React from "react";
 import { LogInType, TokenAndId } from "../components/types";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserPageProps } from "../pages/UserPage";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useEffect } from "react";
+import { Box, Button, Typography } from "@mui/material";
 export const AuthContext = React.createContext({accessToken: "", Id:0})
 
-async function LogInFunctionality(user:LogInType){
+export async function LogInFunctionality(user:LogInType){
 const response= await fetch(`https://pitchmatch.azurewebsites.net/Login`, 
 {method:'POST', headers:{'Content-Type':'application/json'} ,body:JSON.stringify(user)});
 if (!response.ok) {
@@ -37,4 +43,33 @@ export async function getUserSessionInfo() {
     return object;
 }
 
-
+export function LoggedInIcon() {
+    const navigate = useNavigate();
+    const [user, setUser] = useState<UserPageProps | null>()
+    useEffect(() => {
+        getUserSessionInfo().then(res => setUser(res));
+    }, [])
+ 
+    function handleLogOut() {
+        localStorage.clear();
+        setUser(null);
+        navigate('/');
+    }
+ 
+    if (user) {
+        return (
+            <>
+               <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', flexDirection: 'row' }}>
+                    <AccountCircleIcon sx={{ fontSize: 40, marginRight: 10 }} />
+                    <Typography gutterBottom variant="h4" component="div">
+                        {user.name ?? 'novalue'}
+                    </Typography>
+                    <Link to="/login">
+                    <Button sx={{ my: 2, color: 'black', display: 'block', "&:focus":{outline: "none",}}} onClick={handleLogOut}>
+                        Log out
+                    </Button>
+                    </Link>
+                </Box>
+            </>
+        );
+    }}
