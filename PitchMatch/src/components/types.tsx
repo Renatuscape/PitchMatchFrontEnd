@@ -28,6 +28,7 @@ export type Pitch = {
     cvUrl:string;
     rating:number;
     portfolio:Pitch[];
+    isLogged: boolean,
   }
 
   export type PersonalData = {
