@@ -4,6 +4,8 @@ import { FormEvent, useState } from "react";
 import { Link, useParams} from "react-router-dom";
 import { UserParamsType } from "../pages/UserPage";
 import { DeletePitchButton } from "./DeletePitchComponent";
+import { useAuth } from "../App";
+import { TokenAndId } from "./types";
 type EditPitchProps = {
     title: string; 
     summary: string; 
@@ -35,6 +37,7 @@ export async function updatePitchAsync(newPitch:EditPitchProps, id:number ):Prom
 
 
 export function PitchEditCard(){
+  const { token } = useAuth();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const {id} = useParams<keyof UserParamsType>() as UserParamsType;
   const [newPitch, setNewPitch] = useState<EditPitchProps>({
@@ -48,12 +51,16 @@ export function PitchEditCard(){
     pitchYield: 0,
     category: "",
   });
+
   
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMessage(null);
+    if (!token) {
+      return;
+    }
     try {
-      const res = await updatePitchAsync(newPitch, parseInt(id, 10));
+      const res = await updatePitchAsync(newPitch, token.userId);
       setNewPitch(res);
       
    } catch (error: any) {
@@ -200,13 +207,13 @@ return<>
         </CardContent>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
           <Link to={"/"} style={{ textDecoration: 'none' }}>
-          <DeletePitchButton id={id}/>
+          {token && <DeletePitchButton id={token.userId} />}
           </Link>
-          <Link to={`/pitch/${id}`} style={{ margin:'2',textDecoration: 'none' }}>
+          {token && <Link to={`/pitch/${token.userId}`} style={{ margin:'2',textDecoration: 'none' }}>
                   <Button variant="contained" color="secondary">
                     Cancel
                   </Button>
-          </Link>
+          </Link>}
         </Box>
       </Card>
     </Container>

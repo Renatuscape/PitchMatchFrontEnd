@@ -11,14 +11,14 @@ async function deletePitchAsync(id: number): Promise<void> {
 }
 
 type DeletePitchProps = {
-    id: string;
+    id: number;
 }
 
 export function DeletePitchButton({id}:DeletePitchProps){
   
     const handleDelete = async () => {
         try {
-        await deletePitchAsync(parseInt(id, 10));
+        await deletePitchAsync(id);
 
         } catch (error) {
         console.log(error);
