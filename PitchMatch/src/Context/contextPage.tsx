@@ -43,7 +43,7 @@ export async function getUserSessionInfo() {
     return object;
 }
 
-export function LogedInIcon() {
+export function LoggedInIcon() {
     const navigate = useNavigate();
     const [user, setUser] = useState<UserPageProps | null>()
     useEffect(() => {
@@ -59,17 +59,16 @@ export function LogedInIcon() {
     if (user) {
         return (
             <>
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+               
                     <AccountCircleIcon sx={{ fontSize: 40, marginRight: 10 }} />
                     <Typography gutterBottom variant="h4" component="div">
                         {user.name ?? 'novalue'}
                     </Typography>
-                    <Link to="/">
-        <Button sx={{ my: 2, color: 'black', display: 'block', "&:focus":{outline: "none",} }}>
-          About
-        </Button>
-      </Link>
-                </div>
+                    <Link to="/login">
+                    <Button sx={{ my: 2, color: 'black', display: 'block', "&:focus":{outline: "none",}}} onClick={handleLogOut}>
+                        Log out
+                    </Button>
+                    </Link>
             </>
         );
     }}

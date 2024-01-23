@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-import { LogedInIcon } from '../Context/contextPage';
+import { LoggedInIcon } from '../Context/contextPage';
 
 export function ResponsiveAppBar() {
 
@@ -28,11 +28,7 @@ const isLoggedIn: boolean = localStorage.getItem('logInStatus') === 'true' ? tru
           About
         </Button>
       </Link>
-      <Link to="/login">
-        {isLoggedIn ? (<LogedInIcon />) : (<Button sx={{ my: 2, color: 'black', display: 'block' , "&:focus":{outline: "none",}}}>
-          Log In
-        </Button>)}
-      </Link>
+       {isLoggedIn && <LoggedInIcon /> }
     </div>
   );
 }
