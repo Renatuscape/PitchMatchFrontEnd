@@ -19,6 +19,8 @@ export function PitchPage() {
   const [pitch, setPitch] = useState<PitchPageProps>();
   const {id} = useParams<keyof UserParamsType>() as UserParamsType;
 
+  console.log('pitch', pitch)
+
   useEffect(() => {
     getUser(parseInt(id)).then((res) => setPitch(res));
   }, []);

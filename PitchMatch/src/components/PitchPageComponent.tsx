@@ -55,7 +55,7 @@ export function PitchPageComponent(props: PitchPageProps) {
     return <Navigate to={`/editpitch/${token?.userId}`} />
   }
 
-  const uniqueInvestorCount = new Set(props.investments.map(inv => inv.UserId)).size;
+  const uniqueInvestorCount = props.investments ? new Set(props.investments.map(inv => inv.UserId)).size : 0;
 
   const [investorCount, setInvestorCount] = useState(uniqueInvestorCount);
 
@@ -103,12 +103,12 @@ export function PitchPageComponent(props: PitchPageProps) {
     }
   };
 
-  useEffect(() => {
-    if (props.investments) {
-      const uniqueCount = new Set(props.investments.map(inv => inv.UserId)).size;
-      setInvestorCount(uniqueCount);
-    }
-  }, [props.investments]);
+  // useEffect(() => {
+  //   if (props.investments) {
+  //     const uniqueCount = new Set(props.investments.map(inv => inv.UserId)).size;
+  //     setInvestorCount(uniqueCount);
+  //   }
+  // }, [props.investments]);
 
   useEffect(() => {
     const calculateProgress = () => {
