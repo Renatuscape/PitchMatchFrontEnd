@@ -4,6 +4,7 @@ import { Pitch } from "../components/types";
 import { Link } from "react-router-dom";
 import { Box, Container } from "@mui/material";
 import { useAuth } from "../App";
+import { DynamicCard } from "../components/DynamicCard";
 
 
 export function Home(){
@@ -36,12 +37,12 @@ export function Home(){
             {pitches.map((pitch, index) => (
   isLoggedIn ? (
     <Link to={`/pitch/${pitch.Id}`} style={{ textDecoration: 'none' }}>
-      <PitchCard key={index} title={pitch.title} content={pitch.summary} imgUrl={pitch.imgUrl}/>
+      <DynamicCard key={index} pitch={pitch}/>
     </Link>
     
   ) : (
     <Link to="/login" style={{ textDecoration: 'none' }}>
-      <PitchCard key={index} title={pitch.title} content={pitch.summary} imgUrl={pitch.imgUrl}/>
+      <DynamicCard key={index} pitch={pitch}/>
     </Link>
   )
 ))}
