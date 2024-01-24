@@ -140,6 +140,10 @@ const handleLogin = async (user: LogInType) => {
 };
   const handleLogout = () => {
     setToken(null);
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('logInStatus');
+    localStorage.removeItem('expiresIn');
     navigate('/login');
   };
  const value = {
