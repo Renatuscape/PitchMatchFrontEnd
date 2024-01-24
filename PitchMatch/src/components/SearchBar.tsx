@@ -110,7 +110,7 @@ export function SearchBar() {
 
           {filteredPitches.map((pitch: Pitch) => (
             <Link key={pitch.Id} to={`/pitch/${pitch.Id}`}>
-              <DynamicCard pitch={pitch} />
+              <DynamicCard key={pitch.Id} pitch={pitch} />
             </Link>
           ))}
         </div>
