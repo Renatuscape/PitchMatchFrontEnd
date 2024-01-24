@@ -112,7 +112,8 @@ export function UserPageCardBottom({ portfolio, isLogged }: UserPageProps) {
 }
 export function UserPageCardTopMyPage({ name, contact, soMe, cvUrl: cv, isLogged, isVerified, imgUrl, rating, location: address }: UserPageProps) {
     const { token } = useAuth();
-  const isLoggedIn: boolean = !!token;
+    const userId = useAuth().token?.userId;
+      const isLoggedIn: boolean = !!token;
     const stars = Array.from({ length: 5 }, (_, index) => (
         <StarIcon key={index} color={index < rating ? 'primary' : 'disabled'} />
     ));
@@ -138,7 +139,7 @@ export function UserPageCardTopMyPage({ name, contact, soMe, cvUrl: cv, isLogged
                     }
                     {isLoggedIn &&
                         <Link to="/">
-                            <DeleteUserButton id={""} />
+                            <DeleteUserButton id={userId ?? 0} />
                         </Link>
                     }
                 </Box>

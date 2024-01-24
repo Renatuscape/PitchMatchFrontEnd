@@ -12,14 +12,14 @@ async function deleteUserAsync(id: number): Promise<void> {
 }
 
 type DeleteUserProps = {
-    id: string;
+    id: number;
     }
 
 export function DeleteUserButton({id}:DeleteUserProps){
   
     const handleDelete = async () => {
         try {
-        await deleteUserAsync(parseInt(id, 10));
+        await deleteUserAsync(id);
 
         } catch (error) {
         console.log(error);

@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useAuth } from "../App";
 
 async function deletePitchAsync(id: number): Promise<void> {
 
@@ -15,11 +16,11 @@ type DeletePitchProps = {
 }
 
 export function DeletePitchButton({id}:DeletePitchProps){
-  
+  const {onLogout} = useAuth();
     const handleDelete = async () => {
         try {
         await deletePitchAsync(id);
-
+        onLogout();
         } catch (error) {
         console.log(error);
         }
