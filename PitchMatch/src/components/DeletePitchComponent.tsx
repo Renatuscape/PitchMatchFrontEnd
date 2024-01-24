@@ -16,11 +16,9 @@ type DeletePitchProps = {
 }
 
 export function DeletePitchButton({id}:DeletePitchProps){
-  const {onLogout} = useAuth();
     const handleDelete = async () => {
         try {
         await deletePitchAsync(id);
-        onLogout();
         } catch (error) {
         console.log(error);
         }
