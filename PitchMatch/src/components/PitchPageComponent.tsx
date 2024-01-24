@@ -3,7 +3,7 @@ import { Container, Card, CardHeader, CardContent, CardMedia, CardActions, Typog
 import { Pitch } from './types';
 import { useAuth } from '../App';
 import { DeletePitchButton } from './DeletePitchComponent';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export type PitchPageProps = {
   id: number;
@@ -24,6 +24,7 @@ export type PitchPageProps = {
 
 
 export function PitchPageComponent(props: PitchPageProps) {
+    const navigate = useNavigate();
    const { token } = useAuth();
   const loggedInUserId = useAuth().token?.userId;
 
@@ -40,10 +41,6 @@ export function PitchPageComponent(props: PitchPageProps) {
 
     setProgress(calculateProgress());
   }, [props.funding, props.goal]);
-
-  const editHandler=()=>{
-    return <Navigate to={`/editpitch/${token?.userId}`}/>
-  }
   
 
   // const updateViewCount = async () => {
@@ -74,12 +71,16 @@ export function PitchPageComponent(props: PitchPageProps) {
   //   }
   // };
 
+ const handleEditClick = () => {
+    navigate(`/editpitch/${props.id}`);
+  };
+
   return (
     <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', }}>
       <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
          {token && isOwner && <DeletePitchButton id={props.id} />}
         {token && isOwner && (
-          <Button variant="contained" onClick={editHandler} color="success" sx={{ margin: '0 20px' }}>
+          <Button variant="contained" onClick={handleEditClick} color="success" sx={{ margin: '0 20px' }}>
             Edit
           </Button>
         )} 

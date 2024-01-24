@@ -6,6 +6,7 @@ import { UserParamsType } from "../pages/UserPage";
 import { DeletePitchButton } from "./DeletePitchComponent";
 import { useAuth } from "../App";
 import { TokenAndId } from "./types";
+import { LocationFinder } from "./LocationFinder";
 type EditPitchProps = {
     title: string; 
     summary: string; 
@@ -15,17 +16,39 @@ type EditPitchProps = {
     location: string;
     goal: number;
     pitchYield: number;
-    category: string;
+    categories: string;
+    latitude: number;
+    longitude: number;
     }
 
-export async function updatePitchAsync(newPitch:EditPitchProps, id:number ):Promise<EditPitchProps>{
+export async function updatePitchAsync(title: string,
+    summary: string,
+    description: string,
+    imgUrl: string,
+    videoUrl: string,
+    location: string,
+    goal: number,
+    pitchYield: number,
+    categories: string,
+    latitude: number,
+    longitude: number, id:number ):Promise<EditPitchProps>{
     const res= await fetch(`https://pitchmatch.azurewebsites.net/Pitch/${id}?pitchId=${id}`,
     {
         method:'PUT',
         headers:{
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(newPitch)
+        body: JSON.stringify({id,title,
+    summary,
+    description,
+    imgUrl,
+    videoUrl,
+    location,
+    goal,
+    pitchYield,
+    categories,
+    latitude,
+    longitude})
     })
     if (!res.ok) {
       const errorData = await res.json();
@@ -35,24 +58,27 @@ export async function updatePitchAsync(newPitch:EditPitchProps, id:number ):Prom
     return await res.json();
 };
 
-
 export function PitchEditCard(){
-  const { token } = useAuth();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [title, setTitle] = useState('');
+  const [summary, setSummary] = useState('');
+  const [description, setDescription] = useState('');
+  const [imgUrl, setImgUrl] = useState('');
+  const [videoUrl, setVideoUrl] = useState('');
+  const [goal, setGoal] = useState<number>(0);
+  const [pitchYield, setPitchYield] = useState<number>(0);
+  const [categories, setCategories] = useState('');
+  const [registeredAddress, setRegisteredAddress] = useState('');
+  const [latitude, setLatitude] = useState<number>(0);
+  const [longitude, setLongitude] = useState<number>(0);
+  const [location, setLocation] = useState('');
+  const{token}=useAuth();
   const {id} = useParams<keyof UserParamsType>() as UserParamsType;
-  const [newPitch, setNewPitch] = useState<EditPitchProps>({
-    title: "",
-    summary: "",
-    description: "",
-    imgUrl: "",
-    videoUrl: "",
-    location: "",
-    goal: 0,
-    pitchYield: 0,
-    category: "",
-  });
+  const handleAddressChange = (address: string) => {
+    setRegisteredAddress(address);
+    setLocation(address);
+  }
 
-  
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMessage(null);
@@ -60,11 +86,9 @@ export function PitchEditCard(){
       console.log('not token found');
       return;
     }
-
     try {
-      const res = await updatePitchAsync(newPitch, token.userId);
-      setNewPitch(res);
-      
+      const res = await updatePitchAsync(title,summary,description,imgUrl,videoUrl,location,goal,pitchYield,categories,latitude,longitude,parseInt(id,10));
+      console.log('Submitting new pitch:', title);
    } catch (error: any) {
          if (error.message) {
             const errorData = JSON.parse(error.message);
@@ -76,17 +100,12 @@ export function PitchEditCard(){
          }
          setErrorMessage('An unexpected error occurred.');
       }
-
   };
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewPitch({ ...newPitch, [e.target.name]: e.target.value });
-  }
-
-return<>
- <Container>
+return (
+    <Container>
       <Card sx={style1}>
-        <CardHeader title="Edit your pitch" />
+        <CardHeader title="Edit"  />
         <Divider />
         <CardContent>
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -95,8 +114,8 @@ return<>
                 <TextField
                   name="title"
                   label="Title"
-                  value={newPitch.title}
-                  onChange={onChange}
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -106,8 +125,8 @@ return<>
                 <TextField
                   name="summary"
                   label="Pitch Summary (this will be visible to everyone)"
-                  value={newPitch.summary}
-                  onChange={onChange}
+                  value={summary}
+                  onChange={(e) => setSummary(e.target.value)}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -119,8 +138,8 @@ return<>
                 <TextField
                   name="description"
                   label="Write about your proposal (this will only be shown to verified users)"
-                  value={newPitch.description}
-                  onChange={onChange}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -130,11 +149,10 @@ return<>
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  name="imgUrl"
+                  name="picture"
                   label="Add a picture URL"
-                type="url"
-                  value={newPitch.imgUrl}
-                  onChange={onChange}
+                  value={imgUrl}
+                  onChange={(e) => setImgUrl(e.target.value)}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -142,11 +160,10 @@ return<>
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  name="videoUrl"
+                  name="video"
                   label="Add a video URL"
-                  value={newPitch.videoUrl}
-                  type="url"
-                   onChange={onChange}
+                  value={videoUrl}
+                  onChange={(e) => setVideoUrl(e.target.value)}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -157,8 +174,8 @@ return<>
                   name="goal"
                   label="Goal Capital"
                   type="number"
-                  value={newPitch.goal}
-                   onChange={onChange}
+                  value={goal}
+                  onChange={(e) => setGoal(Number(e.target.value))}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -169,8 +186,8 @@ return<>
                   name="pitchYield"
                   label="Projected annual yield"
                   type="number"
-                  value={newPitch.pitchYield}
-                  onChange={onChange}
+                  value={pitchYield}
+                  onChange={(e) => setPitchYield(Number(e.target.value))}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -178,47 +195,50 @@ return<>
               </Grid>
               <Grid item xs={6}>
                 <TextField
+                  name="categories"
+                  label="Category"
+                  value={categories}
+                  onChange={(e) => setCategories(e.target.value)}
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={6}>
+              <TextField
                   name="location"
                   label="Location"
-                  value={newPitch.location}
-                  onChange={onChange}
+                  value={location}
+                  InputProps={{
+                    readOnly: true,
+                  }}
                   variant="outlined"
                   margin="normal"
                   fullWidth
                 />
               </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  name="category"
-                  label="Category"
-                  value={newPitch.category}
-                  onChange={onChange}
-                  variant="outlined"
-                  margin="normal"
-                  fullWidth
-                />
+              <Grid item xs={12}>
+              <LocationFinder 
+                onRegisterAddress={handleAddressChange}
+                onLatitudeChange={setLatitude} 
+                onLongitudeChange={setLongitude} 
+              />
               </Grid>
               </Grid>
-                {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-                <Link to={`/pitch/${id}`} style={{ margin:'2',textDecoration: 'none' }}>
-            <Button type="submit" variant="contained" color="success" sx={{ margin: 2 , "&:focus":{outline: "none",}}}>
+              {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+              <Button type="submit" variant="contained" color="success" sx={{ marginTop: 2, "&:focus": { outline: "none", } }}>
               Save
-            </Button>
-            </Link>
+              </Button>
           </form>
-        </CardContent>
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
-          <Link to={"/"} style={{ textDecoration: 'none' }}>
-          {token && <DeletePitchButton id={token.userId} />}
-          </Link>
+           <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
           {token && <Link to={`/pitch/${token.userId}`} style={{ margin:'2',textDecoration: 'none' }}>
-                  <Button variant="contained" color="secondary">
-                    Cancel
-                  </Button>
-          </Link>}
-        </Box>
+                  <Button variant="contained" color="success">
+                     Cancel
+                   </Button>
+           </Link>}
+                  </Box>
+        </CardContent>
       </Card>
     </Container>
-</>
+  );
 }
-
