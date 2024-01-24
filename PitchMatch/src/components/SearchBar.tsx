@@ -1,54 +1,106 @@
 import { Container, IconButton, InputAdornment, Paper, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useState } from "react";
-import { PitchCard } from "./PitchCard";
-import { UserSearchCard } from "./UserSearchCard";
 import { Link } from "react-router-dom";
 import { DynamicCard } from "./DynamicCard";
-import { User } from "./types";
-
-
-type PitchSearchProps = {
-  id: number;
-  title: string;
-  content: string;
-  imgUrl: string;
-}
+import { Pitch, User } from "./types";
+import { GetCoordinates, sortPitchesByDistance, sortUsersByDistance } from "./GeoTools";
 
 export function SearchBar() {
+  const [searchType, setSearchType] = useState<string>("pitches");
   const [users, setUsers] = useState<User[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
-  const [pitchers, setPitchers] = useState<PitchSearchProps[]>([]);
-  const [filteredPitchers, setFilteredPitchers] = useState<PitchSearchProps[]>([]);
-
+  const [pitches, setPitchers] = useState<Pitch[]>([]);
+  const [filteredPitches, setFilteredPitches] = useState<Pitch[]>([]);
+  const [coordinates, setCoordinates] = useState<{ latitude: number, longitude: number }>({ latitude: 0, longitude: 0 });
 
   useEffect(() => {
-    getAllUsersAsync().then(user => {
-      setUsers(user);
-      setFilteredUsers(user);
+    getAllUsersAsync().then(users => {
+      setUsers(users);
+      setFilteredUsers([]);
     });
 
-    getAllPitchesAsync().then(pitch => {
-      setPitchers(pitch);
-      setFilteredPitchers(pitch);
+    getAllPitchesAsync().then(pitches => {
+      setPitchers(pitches);
+      setFilteredPitches(pitches);
     });
   }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    const filteredUsers = users.filter(user => {
-      return user.name.toLowerCase().includes(inputValue.toLowerCase());
-    });
-    setFilteredUsers(filteredUsers);
-    const filteredPitchers = pitchers.filter(pitch => {
-      return pitch.title.toLowerCase().includes(inputValue.toLowerCase());
-    });
-    setFilteredPitchers(filteredPitchers);
+    const inputValue = event.target.value.toLowerCase();
+
+    if (searchType === "users") {
+      const filteredUsers = users.filter(user => {
+        return user.name.toLowerCase().includes(inputValue);
+      });
+      setFilteredUsers(filteredUsers);
+      setFilteredPitches([]);
+    }
+
+    else if (searchType === "pitches") {
+      const filteredPitches = pitches.filter(pitch => {
+        return pitch.title.toLowerCase().includes(inputValue);
+      });
+      setFilteredUsers([]);
+      setFilteredPitches(filteredPitches);
+    }
+
+    else if (searchType === "userLocation" && inputValue !== "") {
+
+      GetCoordinates(inputValue).then((coordinates) => {
+        const sortedUsers = sortUsersByDistance(users, coordinates.latitude, coordinates.longitude);
+
+        if (coordinates.latitude === 0 && coordinates.longitude === 0) {
+          setFilteredUsers([]);
+        }
+        else {
+          setFilteredUsers(sortedUsers);
+        }
+        setFilteredPitches([]);
+        setCoordinates({ latitude: coordinates.latitude, longitude: coordinates.longitude });
+      });
+    }
+
+    else if (searchType === "pitchLocation" && inputValue !== "") {
+      GetCoordinates(inputValue).then((coordinates) => {
+        const sortedPitches = sortPitchesByDistance(pitches, coordinates.latitude, coordinates.longitude);
+
+        if (coordinates.latitude === 0 && coordinates.longitude === 0) {
+          setFilteredPitches([]);
+        }
+        else {
+          setFilteredPitches(sortedPitches);
+        }
+        setFilteredUsers([]);
+        setCoordinates({ latitude: coordinates.latitude, longitude: coordinates.longitude });
+      });
+    }
   };
+
+  const handleSearchTypeChange = (newSearchType: string) => {
+    setSearchType(newSearchType);
+    if (newSearchType === "userLocation") {
+      setFilteredPitches([]);
+      setFilteredUsers(users);
+    }
+    else if (newSearchType === "pitchLocation") {
+      setFilteredPitches(pitches);
+      setFilteredUsers([]);
+    }
+    else if (newSearchType === "users") {
+      setFilteredPitches([]);
+      setFilteredUsers(users);
+    }
+    else if (newSearchType === "pitches") {
+      setFilteredPitches(pitches);
+      setFilteredUsers([]);
+    }
+  };
+
   return <>
-    <div className='page-background' style={{paddingTop: 15,  display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center'}}>
+    <div className='page-background' style={{ paddingTop: 15, display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center' }}>
       <Container style={{ alignItems: 'center' }}>
-        <Paper elevation={3} style={{ padding: '10px', alignItems: 'center' }}>
+        <Paper elevation={3} style={{ display: 'flex', padding: '10px', alignItems: 'center' }}>
           <TextField
             fullWidth
             onChange={handleSearch}
@@ -63,23 +115,38 @@ export function SearchBar() {
                   </IconButton>
                 </InputAdornment>),
             }} />
+          <select
+            style={{
+              width: '20%',
+              height: '40px',
+              paddingLeft: '15px',
+              marginLeft: '10px',
+              backgroundColor: 'white',
+              borderRadius: 4,
+              borderWidth: 1,
+              borderColor: 'rgba(0, 0, 0, 0.35)',
+            }}
+            onChange={(e) => handleSearchTypeChange(e.target.value)}
+          >
+            <option value="pitches">Pitches</option>
+            <option value="users">Users</option>
+            <option value="pitchLocation">Pitches by location</option>
+            <option value="userLocation">Users by location</option>
+          </select>
         </Paper>
-
+        <p>Search coordinates: {coordinates.latitude} - {coordinates.longitude}</p>
         <div style={{ paddingTop: 20, paddingBottom: 20, display: 'grid', gap: 20, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center', marginTop: '15p' }}>
           {filteredUsers.map((user: User) => (
-            <Link key={user.id} to={`/user/${user.id}`}>
-              <DynamicCard key={user.id} user={user} />
-              {/* <UserSearchCard key={user.id} id={user.id} name={user.name} email={user.email} location={user.location} imgUrl={user.imgUrl} /> */}
+            <Link key={user.id + user.name} to={`/user/${user.id}`}>
+              <DynamicCard key={user.id + user.name} user={user} />
             </Link>
           ))}
 
-          {filteredPitchers.map((pitch: PitchSearchProps) => (
-            <Link key={pitch.id} to={`/pitch/${pitch.id}`}>
-              <DynamicCard key={pitch.id} pitch={pitch} />
-              {/* <PitchCard key={pitch.id} title={pitch.title} content={pitch.content} imgUrl={pitch.imgUrl}/> */}
+          {filteredPitches.map((pitch: Pitch) => (
+            <Link key={pitch.id + pitch.title} to={`/pitch/${pitch.id}`}>
+              <DynamicCard key={pitch.id + pitch.title} pitch={pitch} />
             </Link>
           ))}
-
         </div>
       </Container>
     </div>
@@ -91,7 +158,7 @@ export async function getAllUsersAsync(): Promise<User[]> {
   const resObject = await res.json();
   return resObject;
 }
-export async function getAllPitchesAsync(): Promise<PitchSearchProps[]> {
+export async function getAllPitchesAsync(): Promise<Pitch[]> {
   const res = await fetch("https://pitchmatch.azurewebsites.net/pitch")
   const resObject = await res.json();
   return resObject;

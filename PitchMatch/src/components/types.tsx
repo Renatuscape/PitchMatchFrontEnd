@@ -1,11 +1,13 @@
 export type Pitch = {
-    Id: number;
+    id: number;
     title: string; 
     summary: string; 
     description: string;
     imgUrl: string;
     videoUrl: string;
     location: string;
+    latitude: number;
+    longitude: number;
     goal: number;
     pitchYield: number;
     category: string;
