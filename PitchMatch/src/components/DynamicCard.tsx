@@ -1,13 +1,9 @@
 import { Paper } from "@mui/material";
 import { Pitch, User } from "./types";
+import { AutoAwesome, LocationOn } from "@mui/icons-material";
 
 type DynamicCardProps = {
-    user?: {
-        name: string;
-        bio?: string;
-        imgUrl: string;
-        location?: string;
-    }
+    user?: User;
     pitch?: {
         title: string;
         summary?: string;
@@ -20,7 +16,8 @@ export function DynamicCard(props: DynamicCardProps) {
     const title: string = props.pitch?.title ?? props.user?.name ?? 'Title';
     const summary: string = props.pitch?.summary ?? props.user?.bio ?? 'Summary';
     const imgUrl: string = props.pitch?.imgUrl ?? props.user?.imgUrl ?? 'https://picsum.photos/200/300';
-    const location: string = props.pitch?.location ?? props.user?.location ?? 'Unspecified Location';
+    const location: string = props.pitch?.location ?? props.user?.personalData?.address ?? 'Unspecified Location';
+    const isVerified: boolean = props.user?.personalData?.isVerified ?? false;
 
     return <>
         <Paper elevation={3} style={{ width: 370, height: 350, overflow: 'hidden' }}>
@@ -44,12 +41,16 @@ export function DynamicCard(props: DynamicCardProps) {
                     paddingLeft: 10,
                     paddingTop: 0,
                     width: '100%',
-                    height: 'auto'
+                    height: 'auto',
+
                 }}>
-                    {title}
+                    {title}{isVerified && <>  <AutoAwesome htmlColor="lightGreen" fontSize="medium" style={{ padding: 5 }} /></>}
                 </div>
             </div>
             <div style={{
+                borderTop: 'solid',
+                borderWidth: 1,
+                borderColor: 'rgba(26, 125, 127, 0.564)',
                 height: '20%',
                 overflow: 'hidden',
                 textAlign: 'left',
@@ -60,14 +61,18 @@ export function DynamicCard(props: DynamicCardProps) {
             <div style={{
                 borderTop: 'solid',
                 borderWidth: 1,
+                borderColor: 'rgba(26, 125, 127, 0.564)',
                 height: '100%',
                 display: 'flex',
-                justifyContent: 'center',
+                justifyContent: 'space-between',
                 paddingTop: 8,
-                borderColor:  'rgb(26,126,127)', 
+                paddingLeft: 5,
+                paddingRight: 5,
                 backgroundColor: 'rgb(26,126,127, 0.1)',
                 color: 'rgb(26,126,127)',
-                }}>{location}</div>
+            }}>
+                <div style={{ width: '90%', textAlign: 'left', overflow: 'hidden' }}>{location}</div>
+                <LocationOn /></div>
         </Paper>
     </>
 }

@@ -1,4 +1,5 @@
 import { Button, Paper } from "@mui/material";
+import { getSession } from "../Context/contextPage";
 
 async function deletePersonalDataAsync(id: number): Promise<void> {
 
@@ -14,7 +15,7 @@ async function deletePersonalDataAsync(id: number): Promise<void> {
 
 export function DeletePersonalData() {
 
-    const userId = 6;
+    const userId = getSession().userId
     const handleDelete = async () => {
         try {
             await deletePersonalDataAsync(userId);

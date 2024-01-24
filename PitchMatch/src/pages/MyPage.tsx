@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { UserPageCardBottom, UserPageCardMiddle, UserPageCardTop } from "../components/UserPageCard";
+import { UserPageCardBottom, UserPageCardMiddle, UserPageCardTop, UserPageCardTopMyPage } from "../components/UserPageCard";
 import { User, Pitch, PersonalData } from "../components/types";
 import { UserParamsType, getUser, gePersonalData, getPitches } from "./UserPage";
 import { useAuth } from "../App";
@@ -40,7 +40,7 @@ export function MyPage(){
       <div>
         {userPageData ? (
           <div>
-            <UserPageCardTop id={userPageData.id} location={userPageData.location} name={userPageData.name} contact={userPageData.contact} soMe={userPageData.contact} cvUrl={userPageData.cvUrl} isVerified={userPageData.isVerified} isLogged={userPageData.isLogged} bio={userPageData.bio} imgUrl={userPageData.imgUrl} portfolio={userPageData.portfolio} rating={userPageData.rating} />
+            <UserPageCardTopMyPage id={userPageData.id} location={userPageData.location} name={userPageData.name} contact={userPageData.contact} soMe={userPageData.contact} cvUrl={userPageData.cvUrl} isVerified={userPageData.isVerified} isLogged={userPageData.isLogged} bio={userPageData.bio} imgUrl={userPageData.imgUrl} portfolio={userPageData.portfolio} rating={userPageData.rating} />
             <UserPageCardMiddle {...userPageData} />
             <UserPageCardBottom {...userPageData} />
           </div>

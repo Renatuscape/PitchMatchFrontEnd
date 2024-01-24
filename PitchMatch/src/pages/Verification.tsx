@@ -56,7 +56,7 @@ export function Verificaiton() {
         latitude: latitude,
         longitude: longitude,
         isVerified: true,
-        userId: 6
+        userId: getSession().userId
         // userId: userId ?? 6
       });
 
