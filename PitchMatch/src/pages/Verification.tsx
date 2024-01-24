@@ -3,6 +3,7 @@ import { Button, Container, Paper } from '@mui/material';
 import { LocationFinder } from '../components/LocationFinder';
 import { getSession} from '../Context/contextPage';
 import { DeletePersonalData } from '../components/DeletePersonalData';
+import { useNavigate } from 'react-router-dom';
 
 type CreatePersonalDataProps = {
   phoneNumber: string;
@@ -37,6 +38,7 @@ export function Verificaiton() {
   const [registeredAddress, setRegisteredAddress] = useState('');
   const [latitude, setLatitude] = useState<number>(0);
   const [longitude, setLongitude] = useState<number>(0);
+  const navigate = useNavigate();
 
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -59,6 +61,7 @@ export function Verificaiton() {
         userId: getSession().userId
         // userId: userId ?? 6
       });
+      navigate('/mypage');
 
       // Process the successful creation of the data
     } catch (error: any) {
