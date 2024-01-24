@@ -7,7 +7,7 @@ export type UserParamsType = {
    id: string
 }
 
-export async function getUser(id:number):Promise<PitchPageProps>{
+export async function getPitch(id:number):Promise<PitchPageProps>{
    const res = await fetch(`https://pitchmatch.azurewebsites.net/Pitch/${id}?pitchId=${id}`
    )
    const resObject = await res.json();
@@ -22,7 +22,7 @@ export function PitchPage() {
   console.log('pitch', pitch)
 
   useEffect(() => {
-    getUser(parseInt(id)).then((res) => setPitch(res));
+    getPitch(parseInt(id)).then((res) => setPitch(res));
   }, []);
 
   if (!pitch) {
