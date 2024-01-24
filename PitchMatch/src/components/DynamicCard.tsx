@@ -42,12 +42,15 @@ export function DynamicCard(props: DynamicCardProps) {
                     paddingTop: 0,
                     width: '100%',
                     height: 'auto',
-  
+
                 }}>
-                    {title}{isVerified && <>  <AutoAwesome htmlColor="lightGreen" fontSize="medium" style={{padding: 5}}/></>}
+                    {title}{isVerified && <>  <AutoAwesome htmlColor="lightGreen" fontSize="medium" style={{ padding: 5 }} /></>}
                 </div>
             </div>
             <div style={{
+                borderTop: 'solid',
+                borderWidth: 1,
+                borderColor: 'rgba(26, 125, 127, 0.564)',
                 height: '20%',
                 overflow: 'hidden',
                 textAlign: 'left',
@@ -58,18 +61,18 @@ export function DynamicCard(props: DynamicCardProps) {
             <div style={{
                 borderTop: 'solid',
                 borderWidth: 1,
+                borderColor: 'rgba(26, 125, 127, 0.564)',
                 height: '100%',
                 display: 'flex',
                 justifyContent: 'space-between',
                 paddingTop: 8,
                 paddingLeft: 5,
                 paddingRight: 5,
-                borderColor:  'rgb(26,126,127)', 
                 backgroundColor: 'rgb(26,126,127, 0.1)',
                 color: 'rgb(26,126,127)',
-                }}>
-                    <div style={{width: '90%', textAlign: 'left', overflow: 'hidden'}}>{location}</div>
-                <LocationOn/></div>
+            }}>
+                <div style={{ width: '90%', textAlign: 'left', overflow: 'hidden' }}>{location}</div>
+                <LocationOn /></div>
         </Paper>
     </>
 }
