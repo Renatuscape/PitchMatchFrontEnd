@@ -103,14 +103,14 @@ export function SearchBar() {
 
         <div style={{ paddingTop: 20, paddingBottom: 20, display: 'grid', gap: 20, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center', marginTop: '15p' }}>
           {filteredUsers.map((user: User) => (
-            <Link key={user.id} to={`/user/${user.id}`}>
-              <DynamicCard key={user.id} user={user} />
+            <Link key={user.id + user.name} to={`/user/${user.id}`}>
+              <DynamicCard key={user.id + user.name} user={user} />
             </Link>
           ))}
 
           {filteredPitches.map((pitch: Pitch) => (
-            <Link key={pitch.Id} to={`/pitch/${pitch.Id}`}>
-              <DynamicCard key={pitch.Id} pitch={pitch} />
+            <Link key={pitch.id + pitch.title} to={`/pitch/${pitch.id}`}>
+              <DynamicCard key={pitch.id + pitch.title} pitch={pitch} />
             </Link>
           ))}
         </div>
