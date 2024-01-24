@@ -54,6 +54,7 @@ export function CreateUser() {
             imgUrl: user.imgUrl,
             cvUrl: user.cvUrl
          });
+         navigate('/login');
    
          // Process the successful creation of the user
       } catch (error: any) {
@@ -67,11 +68,6 @@ export function CreateUser() {
          }
          setErrorMessage('An unexpected error occurred.');
       }
-   }
-
-   const onClick = (event:React.MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
-      navigate('/login');
    }
    const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -139,7 +135,7 @@ export function CreateUser() {
                </div>
             </div>
             {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-            <button type="submit" onClick={onClick}>Submit</button>
+            <button type="submit">Submit</button>
          </form>
       </Container>
    </div>
