@@ -10,26 +10,26 @@ import { useAuth } from "../App";
 export const AuthContext = React.createContext({ accessToken: "", Id: 0 });
 
 export async function LogInFunctionality(user: LogInType) {
-//   const response = await fetch(`https://pitchmatch.azurewebsites.net/Login`, {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(user),
-//   });
-//   if (!response.ok) {
-//     throw new Error(`HTTP error! Status: ${response.status}`);
-//   }
-//   const responseJson = await response.json();
-//   const LoginResponse: TokenAndId = {
-//     accessToken: responseJson.accessToken,
-//     userId: responseJson.userId,
-//     IsLogged: true,
-//     expiresIn: responseJson.expiresIn,
-//   };
-//   localStorage.setItem("token", `${LoginResponse.accessToken}`);
-//   localStorage.setItem("userId", `${LoginResponse.userId}`);
-//   localStorage.setItem("logInStatus", `${LoginResponse.IsLogged}`);
-//   localStorage.setItem("expiresIn", `${LoginResponse.expiresIn}`);
-//   console.log(response);
+  //   const response = await fetch(`https://pitchmatch.azurewebsites.net/Login`, {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(user),
+  //   });
+  //   if (!response.ok) {
+  //     throw new Error(`HTTP error! Status: ${response.status}`);
+  //   }
+  //   const responseJson = await response.json();
+  //   const LoginResponse: TokenAndId = {
+  //     accessToken: responseJson.accessToken,
+  //     userId: responseJson.userId,
+  //     IsLogged: true,
+  //     expiresIn: responseJson.expiresIn,
+  //   };
+  //   localStorage.setItem("token", `${LoginResponse.accessToken}`);
+  //   localStorage.setItem("userId", `${LoginResponse.userId}`);
+  //   localStorage.setItem("logInStatus", `${LoginResponse.IsLogged}`);
+  //   localStorage.setItem("expiresIn", `${LoginResponse.expiresIn}`);
+  //   console.log(response);
 }
 
 export async function getUserSessionInfo() {
@@ -57,7 +57,7 @@ export function getSession() {
 }
 
 export function LoggedInIcon() {
-    const{onLogout}= useAuth();
+  const { onLogout } = useAuth();
   const navigate = useNavigate();
   const [user, setUser] = useState<UserPageProps | null>();
   useEffect(() => {
@@ -73,28 +73,29 @@ export function LoggedInIcon() {
   }, []);
 
   function handleUserPage() {
-    navigate(`/user/${user?.id}`);
+    navigate(`/mypage`);
   }
 
   if (user) {
     return (
-      <div style={{height: 30, display: 'flex', alignItems: 'end', backgroundColor: 'orange'}}>
-          <AccountCircleIcon
-            sx={{ fontSize: 40, my: 2,
-              color: "#1a7d7f",
-              "&:focus": { outline: "none" }}}
-            onClick={handleUserPage}
-          />
-          <Button
-            sx={{
-              my: 2,
-              color: "black",
-              display: "block",
-              "&:focus": { outline: "none" },
-            }}
-            onClick={onLogout}>
-            Log out
-          </Button>
+      <div style={{display: 'flex', height: 30, alignContent: 'center'}}>
+        <AccountCircleIcon
+          sx={{
+            fontSize: 40,
+            color: "#1a7d7f",
+            "&:focus": { outline: "none" }
+          }}
+          onClick={handleUserPage}
+        />
+        <Button
+          sx={{
+            color: "black",
+            display: "block",
+            "&:focus": { outline: "none" },
+          }}
+          onClick={onLogout}>
+          Log out
+        </Button>
       </div>
     );
   }
