@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Card, CardHeader, CardContent, CardMedia, CardActions, Typography, Button, Divider, Grid, Box, LinearProgress, Link } from "@mui/material";
+import { Container, Card, CardHeader, CardContent, CardMedia, CardActions, Typography, Button, Divider, Grid, Box, LinearProgress, Link, Paper } from "@mui/material";
 import { Pitch } from './types';
 import { useAuth } from '../App';
 import { DeletePitchButton } from './DeletePitchComponent';
@@ -103,13 +103,6 @@ export function PitchPageComponent(props: PitchPageProps) {
     }
   };
 
-  // useEffect(() => {
-  //   if (props.investments) {
-  //     const uniqueCount = new Set(props.investments.map(inv => inv.UserId)).size;
-  //     setInvestorCount(uniqueCount);
-  //   }
-  // }, [props.investments]);
-
   useEffect(() => {
     const calculateProgress = () => {
       return (funding / props.goal) * 100;
@@ -118,176 +111,85 @@ export function PitchPageComponent(props: PitchPageProps) {
     setProgress(calculateProgress());
   }, [funding, props.goal]);
 
-  // const updateViewCount = async () => {
-  //   try {
-  //     const [views, setViews] = useState(0);
-  //     const newViews = views + 1; // Increment the current view count by 1
-  //     const response = await fetch(`https://pitchmatch.azurewebsites.net/Pitch/${props.id}?pitchId=${props.id}`, {
-  //       method: 'PATCH',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         // Include other headers like authorization if needed
-  //       },
-  //       body: JSON.stringify({ views: newViews }),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error(`HTTP error! Status: ${response.status}`);
-  //     }
-
-  //     // Assuming the response includes the updated pitch with the new views count
-  //     const updatedPitch = await response.json();
-
-  //     // Update the view count state if the API call was successful
-  //     setViews(updatedPitch.views);
-
-  //   } catch (error) {
-  //     console.error('Failed to update view count:', error);
-  //   }
-  // };
-
   const handleEditClick = () => {
     navigate(`/editpitch/${props.id}`);
   };
 
-  return (
-    <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', }}>
-      <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
-        {token && isOwner && <DeletePitchButton id={props.id} />}
-        {token && isOwner && (
-          <Button variant="contained" onClick={handleEditClick} color="success" sx={{ margin: '0 20px' }}>
-            Edit
-          </Button>
-        )}
-
-        <Card sx={{
-          maxWidth: 'lg',
-          mx: 'auto',
-          my: 4,
-          boxShadow: 3,
-          position: 'relative',
-          minHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-        }}>
-          <Box sx={{
-            // position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            p: 4,
+  return (<>
+    <div style={{ minHeight: '80vh', paddingTop: 30, paddingBottom: 30 }}>
+      <Container>
+        <Paper elevation={4} style={{ overflow: 'hidden' }}>
+          <div style={{
+            minHeight: '60vh',
+            backgroundColor: 'rgb(26,126,127)',
+            backgroundImage: `url(${props.imgUrl})`,
+            backgroundPosition: 'top',
+            backgroundSize: '100%, auto',
+            backgroundRepeat: 'no-repeat',
             display: 'flex',
-            flexDirection: 'column',
+            alignItems: 'flex-end',
             justifyContent: 'space-between',
           }}>
-            <Box sx={{
-              backgroundImage: `url(${props.imgUrl})`,
-              backgroundPosition: 'center',
-              backgroundSize: '100%, auto',
-              backgroundRepeat: 'no-repeat',
-              height: 400,
+            <div style={{
+              backgroundColor: 'rgb(0, 0, 0, 0.3)',
+              width: '100%',
               display: 'flex',
-              justifyContent: 'flex-end',
-              flexDirection: 'column',
-              padding: '1.5em',
+              alignItems: 'flex-end',
+              justifyContent: 'space-between',
+              padding: 10,
             }}>
-              <Box sx={{ pt: 4 }}>
-                <Typography
-                  gutterBottom
-                  variant="h3"
-                  component="div"
-                  sx={{ fontWeight: 'bold', color: 'black', mt: 2 }}
-                >
-                  {props.title}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{ mb: 2, color: 'black' }}
-                >
-                  {props.categories}
-                </Typography>
-              </Box>
+              <div style={{
+                flexGrow: 1,
+                fontSize: '280%',
+                fontWeight: 'bold',
+                color: 'white',
+                textShadow: '1px 1px 5px black',
+              }}>
+                {props.title}
+              </div>
+            </div>
+          </div>
 
-              <Button
-                variant="contained"
-                color="secondary"
-                size="large"
-                sx={{ mb: 2, mr: 2, alignSelf: 'flex-end' }}
-                onClick={handleInterestClick}
-                disabled={hasClickedInterested} // Disable the button after it's clicked
-              >
-                Interested
-              </Button>
+          <div style={{ padding: 10, display: 'flex', justifyContent: 'space-between', backgroundColor: 'rgb(26,126,127)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', height: 35, gap: 10 }}>
+              <div style={{ marginLeft: 5, color: 'lightgreen', fontSize: '130%' }}>{props.categories}</div>
+              {token && isOwner && <DeletePitchButton id={props.id} />}
+              {token && isOwner && (<Button variant="contained" onClick={handleEditClick} color="secondary">Edit</Button>)}
+            </div>
+            <Button
+              variant="contained"
+              color="success"
+              size="large"
+              onClick={handleInterestClick}
+              disabled={hasClickedInterested} // Disable the button after it's clicked
+            >
+              Interested
+            </Button>
+          </div>
 
-            </Box>
-            {/* <CardMedia
-            component="img"
-            height="194"
-            image={props.imgUrl}
-            alt="Success"
-            sx={{ height: 388, objectFit: 'cover' }} 
-            /> */}
-            <Divider sx={{ bgcolor: 'white', my: 2 }} />
-            <CardContent sx={{ bgcolor: 'white', opacity: 0.95 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Box sx={{ width: '100%', mr: 1 }}>
-                  <LinearProgress variant="determinate" value={progress} />
-                </Box>
-                <Box sx={{ minWidth: 35 }}>
-                  <Typography variant="body2" color="text.secondary">{`${Math.round(
-                    progress,
-                  )}%`}</Typography>
-                </Box>
+          <Paper elevation={3} style={{ width: 'auto', margin: '20px', paddingTop: 5, paddingBottom: 15, textAlign: 'center' }}>
+            <div style={{ display: 'flex', padding: 10, gap: 10, alignItems: 'center' }}>
+              <div style={{ width: '100%' }}>
+                <LinearProgress variant="determinate" value={progress} style={{ height: 10, borderRadius: 10 }} />
+              </div>
+              <Box sx={{ minWidth: 35 }}>
+                <Typography variant="body2" color="text.secondary" style={{ fontSize: '120%', color: 'rgb(26,126,127)' }}>{`${Math.round(progress)}%`}</Typography>
               </Box>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle1">Creator:</Typography>
-                  <Typography>{props.user}</Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle1">Goals:</Typography>
-                  <Typography>{props.goal}</Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle1">Investors:</Typography>
-                  <Typography>{investorCount}</Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle1">Funding:</Typography>
-                  <Typography>{props.funding}</Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle1">Risk:</Typography>
-                  <Typography>{ }</Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle1">Projected Annual Yield:</Typography>
-                  <Typography>{props.yield}</Typography>
-                </Grid>
-              </Grid>
-            </CardContent>
-            <Divider sx={{ bgcolor: 'white', my: 2 }} />
-            <Card sx={style1}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <CardContent sx={{ bgcolor: 'white', opacity: 0.95 }}>
-                  <Typography variant="body1" sx={{ mt: 2 }}>
-                    {props.description}
-                  </Typography>
-                </CardContent>
-              </Box>
-            </Card>
-          </Box>
-        </Card>
-      </Box>
-    </Container>
+            </div>
+            <p style={{ color: 'rgb(26,126,127)' }}>{props.funding} in investments have been put towards the project goal of {props.goal}</p>
+          </Paper>
+          <div style={{ minHeight: '10vh' }}>
+            <p>Creator: {props.user}</p>
+            <p>Investors: {investorCount}</p>
+            <p>Risk: {props.funding < props.goal / 2 ? <>High</> : <>Low</>}</p>
+            <p>Projected Annual Yield: {props.yield}</p>
+          </div>
+          <Paper elevation={3} style={{ margin: 20, padding: 15 }}>
+            {props.description}
+          </Paper>
+        </Paper>
+      </Container>
+    </div>
+  </>
   );
 }
-
-const style1 = {
-  margin: "0 35px",
-  height: "400px",
-  borderRadius: "10px",
-  boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-};
