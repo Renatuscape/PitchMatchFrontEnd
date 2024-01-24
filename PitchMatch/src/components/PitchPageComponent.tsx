@@ -5,6 +5,13 @@ import { useAuth } from '../App';
 import { DeletePitchButton } from './DeletePitchComponent';
 import { Navigate } from 'react-router-dom';
 
+export type Investment = {
+  Id: number;
+  Amount: number;
+  PitchId?: number;
+  UserId?: number;
+};
+
 export type PitchPageProps = {
   id: number;
   title: string;
@@ -18,20 +25,22 @@ export type PitchPageProps = {
   views: number;
   categories: string;
   userId: number;
-  user: null | any; 
-  investments: null | any;  
+  user: null | any;
+  investments: Investment[];
 };
 
 
 export function PitchPageComponent(props: PitchPageProps) {
-   const { token } = useAuth();
+  const { token } = useAuth();
   const loggedInUserId = useAuth().token?.userId;
-
   const isOwner = loggedInUserId === props.userId;
-  
-  console.log("PitchPageComponent props:", props); 
-
+  const [hasClickedInterested, setHasClickedInterested] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [funding, setFunding] = useState(props.funding);
+  
+
+  console.log("PitchPageComponent props:", props);
+
 
   useEffect(() => {
     const calculateProgress = () => {
@@ -41,10 +50,70 @@ export function PitchPageComponent(props: PitchPageProps) {
     setProgress(calculateProgress());
   }, [props.funding, props.goal]);
 
-  const editHandler=()=>{
-    return <Navigate to={`/editpitch/${token?.userId}`}/>
+  const editHandler = () => {
+    return <Navigate to={`/editpitch/${token?.userId}`} />
   }
-  
+
+  const uniqueInvestorCount = new Set(props.investments.map(inv => inv.UserId)).size;
+
+  const [investorCount, setInvestorCount] = useState(uniqueInvestorCount);
+
+  const handleInterestClick = async () => {
+    if (!hasClickedInterested) {
+      setHasClickedInterested(true);
+
+      const randomFundingContribution = Math.random() * (props.goal - props.funding);
+
+      const newInvestment = {
+        Amount: randomFundingContribution,
+        PitchId: props.id,
+        UserId: loggedInUserId, 
+      };
+
+      try {
+        // Send the new investment to the backend
+        const investmentResponse = await fetch('https://pitchmatch.azurewebsites.net/Investment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token?.accessToken}`, // Add this if your API requires authentication
+            },
+            body: JSON.stringify(newInvestment),
+        });
+
+        if (!investmentResponse.ok) {
+            throw new Error('Failed to create investment');
+        }
+
+        
+        const investmentsResponse = await fetch(`https://pitchmatch.azurewebsites.net/Pitch/${props.id}/Investment`);
+            if (!investmentsResponse.ok) {
+                throw new Error('Failed to fetch investments');
+            }
+            const investments = await investmentsResponse.json();
+
+        // Calculate the new unique investor count
+        const newUniqueInvestorCount = new Set(investments.map((inv: { UserId: any; }) => inv.UserId)).size;
+
+        // Update the funding and unique investor count in the component's state
+        setFunding((prevFunding) => prevFunding + randomFundingContribution);
+        setInvestorCount(newUniqueInvestorCount);
+
+    } catch (error) {
+        console.error('Failed to create investment:', error);
+    }
+}
+};
+
+
+
+  useEffect(() => {
+    const calculateProgress = () => {
+      return (funding / props.goal) * 100;
+    };
+
+    setProgress(calculateProgress());
+  }, [funding, props.goal]);
 
   // const updateViewCount = async () => {
   //   try {
@@ -58,17 +127,17 @@ export function PitchPageComponent(props: PitchPageProps) {
   //       },
   //       body: JSON.stringify({ views: newViews }),
   //     });
-  
+
   //     if (!response.ok) {
   //       throw new Error(`HTTP error! Status: ${response.status}`);
   //     }
-  
+
   //     // Assuming the response includes the updated pitch with the new views count
   //     const updatedPitch = await response.json();
-      
+
   //     // Update the view count state if the API call was successful
   //     setViews(updatedPitch.views);
-  
+
   //   } catch (error) {
   //     console.error('Failed to update view count:', error);
   //   }
@@ -77,13 +146,13 @@ export function PitchPageComponent(props: PitchPageProps) {
   return (
     <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', }}>
       <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
-         {token && isOwner && <DeletePitchButton id={props.id} />}
+        {token && isOwner && <DeletePitchButton id={props.id} />}
         {token && isOwner && (
           <Button variant="contained" onClick={editHandler} color="success" sx={{ margin: '0 20px' }}>
             Edit
           </Button>
-        )} 
-                    
+        )}
+
         <Card sx={{
           maxWidth: 'lg',
           mx: 'auto',
@@ -134,7 +203,14 @@ export function PitchPageComponent(props: PitchPageProps) {
                 </Typography>
               </Box>
 
-              <Button variant="contained" color="secondary" size="large" sx={{ mb: 2, mr: 2, alignSelf: 'flex-end' }}>
+              <Button
+                variant="contained"
+                color="secondary"
+                size="large"
+                sx={{ mb: 2, mr: 2, alignSelf: 'flex-end' }}
+                onClick={handleInterestClick}
+                disabled={hasClickedInterested} // Disable the button after it's clicked
+              >
                 Interested
               </Button>
 
@@ -169,7 +245,7 @@ export function PitchPageComponent(props: PitchPageProps) {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle1">Investors:</Typography>
-                  <Typography>{props.investments}</Typography>
+                  <Typography>{investorCount}</Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle1">Funding:</Typography>

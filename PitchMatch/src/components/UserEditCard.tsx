@@ -172,7 +172,7 @@ export function UserEditCard() {
               </CardContent>
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
                 <Link to="/">
-                <DeleteUserButton id={id}/>
+                <DeleteUserButton id={Number(id)}/>
                 </Link>
                 <Link to={`/user/${id}`} style={{ textDecoration: 'none' }}>
                   <Button variant="contained" color="secondary">
