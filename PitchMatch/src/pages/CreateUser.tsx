@@ -69,7 +69,8 @@ export function CreateUser() {
       }
    }
 
-   const onClick = () => {
+   const onClick = (event:React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
       navigate('/login');
    }
    const handleTogglePasswordVisibility = () => {
@@ -138,7 +139,6 @@ export function CreateUser() {
                </div>
             </div>
             {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-        
             <button type="submit" onClick={onClick}>Submit</button>
          </form>
       </Container>
