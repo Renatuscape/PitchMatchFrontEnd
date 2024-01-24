@@ -18,6 +18,7 @@ import { ForgotPassword } from './ForgotPassword';
 import {LogInFunctionality, getSession, getUserSessionInfo} from './Context/contextPage'
 import React, { useEffect } from 'react';
 import { LogInType, TokenAndId } from './components/types';
+import { MyPage } from './pages/MyPage';
 
 const AuthContext = React.createContext<{
     token: TokenAndId | null;
@@ -82,14 +83,19 @@ function App() {
                                                 </ProtectedRoute>
                                               }
                                                 />
-          <Route path="/edituser/:id" element={ <ProtectedRoute>
-                                                    <EditPitch/>
+          <Route path="/edituser" element={ <ProtectedRoute>
+                                                    <EditUser/>
                                                 </ProtectedRoute>
                                               }
                                                 />
           <Route path="/pitch/:id" element={ <ProtectedRoute>
                                                     <PitchPage/>
                                                 </ProtectedRoute>
+                                              }
+                                                />
+         <Route path="/mypage" element={ <ProtectedRoute>
+                                                    <MyPage/>
+                                            </ProtectedRoute>
                                               }
                                                 />
         </Routes>
@@ -134,6 +140,10 @@ const handleLogin = async (user: LogInType) => {
 };
   const handleLogout = () => {
     setToken(null);
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('logInStatus');
+    localStorage.removeItem('expiresIn');
     navigate('/login');
   };
  const value = {

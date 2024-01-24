@@ -3,7 +3,6 @@ import { Container, Card, CardHeader, Button, Divider, CardContent, TextField, G
 import { Pitch } from './types';
 import { Link, useNavigate } from 'react-router-dom';
 import { getSession } from '../Context/contextPage';
-import { useAuth } from '../App';
 
 const API_URL = 'https://pitchmatch.azurewebsites.net/Pitch';
 
@@ -54,7 +53,6 @@ export type CreatePitchFormProps = {
   }
 
 export default function CreatePitchComponent(props: CreatePitchFormProps) {
-  const { token } = useAuth();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [title, setTitle] = useState('');
   const [summary, setSummary] = useState('');
@@ -71,10 +69,6 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!token) {
-      console.log('not token found');
-      return;
-    }
     try{
     const createdPitch = await createPitch(
         title,
