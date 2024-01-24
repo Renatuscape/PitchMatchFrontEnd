@@ -138,8 +138,7 @@ export function CreateUser() {
                </div>
             </div>
             {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-        
-            <button type="submit" onClick={onClick}>Submit</button>
+            <button type="submit">Submit</button>
          </form>
       </Container>
    </div>
