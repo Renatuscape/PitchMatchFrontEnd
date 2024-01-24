@@ -8,7 +8,8 @@ import { useAuth } from "../App";
 
 export function Home(){
   const{token}=useAuth();
-  const isLoggedIn: boolean = !!token;
+  const isLoggedIn: boolean = !!token?.accessToken;
+  const userId: number = token?.userId ?? 0;
     const[pitches,setPitches]=useState<Pitch[]>([])
    
 
@@ -34,11 +35,12 @@ export function Home(){
         <Box style={{width: '100vw', marginLeft: '55px',display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto'}}>
             {pitches.map((pitch, index) => (
   isLoggedIn ? (
-    <Link to="/login" style={{ textDecoration: 'none' }}>
+    <Link to={`/pitch/${pitch.Id}`} style={{ textDecoration: 'none' }}>
       <PitchCard key={index} title={pitch.title} content={pitch.summary} imgUrl={pitch.imgUrl}/>
     </Link>
+    
   ) : (
-    <Link to={`/pitch/${token?.userId}`} style={{ textDecoration: 'none' }}>
+    <Link to="/login" style={{ textDecoration: 'none' }}>
       <PitchCard key={index} title={pitch.title} content={pitch.summary} imgUrl={pitch.imgUrl}/>
     </Link>
   )

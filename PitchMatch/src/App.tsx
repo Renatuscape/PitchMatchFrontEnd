@@ -15,13 +15,15 @@ import { LogIn } from './pages/LogIn';
 import { Verificaiton } from './pages/Verification';
 import { Footer } from './components/Footer';
 import { ForgotPassword } from './ForgotPassword';
-import {LogInFunctionality, getUserSessionInfo} from './Context/contextPage'
-import React from 'react';
-import { TokenAndId } from './components/types';
+import {LogInFunctionality, getSession, getUserSessionInfo} from './Context/contextPage'
+import React, { useEffect } from 'react';
+import { LogInType, TokenAndId } from './components/types';
+import { MyPage } from './pages/MyPage';
 
 const AuthContext = React.createContext<{
     token: TokenAndId | null;
-    onLogin: (tokenAndId: TokenAndId) => void;
+    // onLogin: (tokenAndId: TokenAndId) => void;
+    onLogin: (user: LogInType) => void;
     onLogout: () => void;
 } | undefined>(undefined);
 
@@ -53,7 +55,8 @@ function App() {
           <Route path="/" element={<Home/>} />
           <Route path="/about" element={<About />} />
           <Route path="/createuser" element={<CreateUser/>} />
-          <Route path="/login" element={<LogIn LoginFunctionality={LogInFunctionality}/>} />
+          {/* <Route path="/login" element={<LogIn LoginFunctionality={LogInFunctionality}/>} /> */}
+          <Route path="/login" element={<LogIn />} />
           <Route path="/forgottenpassword" element={<ForgotPassword/>} />
          <Route path="/editpitch/:id" element={ <ProtectedRoute>
                                                     <EditPitch />
@@ -80,14 +83,19 @@ function App() {
                                                 </ProtectedRoute>
                                               }
                                                 />
-          <Route path="/edituser/:id" element={ <ProtectedRoute>
-                                                    <EditPitch/>
+          <Route path="/edituser" element={ <ProtectedRoute>
+                                                    <EditUser/>
                                                 </ProtectedRoute>
                                               }
                                                 />
           <Route path="/pitch/:id" element={ <ProtectedRoute>
                                                     <PitchPage/>
                                                 </ProtectedRoute>
+                                              }
+                                                />
+         <Route path="/mypage" element={ <ProtectedRoute>
+                                                    <MyPage/>
+                                            </ProtectedRoute>
                                               }
                                                 />
         </Routes>
@@ -102,19 +110,36 @@ function App() {
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const [token, setToken] = React.useState<TokenAndId | null>(null);
+  
+  useEffect(() => {
+    setToken(getSession())
+  }, [])
 
-const handleLogin = (tokenAndId: TokenAndId) => {
-    try {
-    setToken(tokenAndId);
-    localStorage.setItem('logInStatus', 'true');
-    navigate('/');
-    } catch (error) {
-        console.error('Error during login:', error);
-    }
+const handleLogin = async (user: LogInType) => {
+   const response = await fetch(`https://pitchmatch.azurewebsites.net/Login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(user),
+  });
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+  const responseJson = await response.json();
+  const LoginResponse: TokenAndId = {
+    accessToken: responseJson.accessToken,
+    userId: responseJson.userId,
+    IsLogged: true,
+    expiresIn: responseJson.expiresIn,
+  };
+  localStorage.setItem("token", `${LoginResponse.accessToken}`);
+  localStorage.setItem("userId", `${LoginResponse.userId}`);
+  localStorage.setItem("logInStatus", `${LoginResponse.IsLogged}`);
+  localStorage.setItem("expiresIn", `${LoginResponse.expiresIn}`);
+  setToken(LoginResponse);
+  navigate('/');
 };
   const handleLogout = () => {
     setToken(null);
-    localStorage.setItem('logInStatus', 'false');
     navigate('/login');
   };
  const value = {

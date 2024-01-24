@@ -6,6 +6,7 @@ import { UserPageProps } from "../pages/UserPage";
 import { Pitch } from "./types";
 import { AutoAwesome, Height } from "@mui/icons-material";
 import { useAuth } from "../App";
+import { DeleteUserButton } from "./DeleteUserComponent";
 
 
 export function UserPageCardTop({ name, contact, soMe, cvUrl: cv, isLogged, isVerified, imgUrl, rating, location: address }: UserPageProps) {
@@ -25,6 +26,18 @@ export function UserPageCardTop({ name, contact, soMe, cvUrl: cv, isLogged, isVe
                             <Button variant="contained" color="success" sx={{ margin: '0 20px' }}>
                                 Edit
                             </Button>
+                        </Link>
+                    }
+                    {isLoggedIn &&
+                        <Link to="/verification">
+                            <Button variant="contained" color="success" sx={{ margin: '0 20px' }}>
+                                Verification
+                            </Button>
+                        </Link>
+                    }
+                    {isLoggedIn &&
+                        <Link to="/">
+                            <DeleteUserButton id={""} />
                         </Link>
                     }
                 </Box>
