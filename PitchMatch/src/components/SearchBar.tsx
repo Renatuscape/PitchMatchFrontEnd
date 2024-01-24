@@ -1,54 +1,73 @@
 import { Container, IconButton, InputAdornment, Paper, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useState } from "react";
-import { PitchCard } from "./PitchCard";
-import { UserSearchCard } from "./UserSearchCard";
 import { Link } from "react-router-dom";
 import { DynamicCard } from "./DynamicCard";
-import { User } from "./types";
-
-
-type PitchSearchProps = {
-  id: number;
-  title: string;
-  content: string;
-  imgUrl: string;
-}
+import { Pitch, User } from "./types";
 
 export function SearchBar() {
+  const [searchType, setSearchType] = useState<string>("location");
   const [users, setUsers] = useState<User[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
-  const [pitchers, setPitchers] = useState<PitchSearchProps[]>([]);
-  const [filteredPitchers, setFilteredPitchers] = useState<PitchSearchProps[]>([]);
-
+  const [pitches, setPitchers] = useState<Pitch[]>([]);
+  const [filteredPitches, setFilteredPitches] = useState<Pitch[]>([]);
 
   useEffect(() => {
-    getAllUsersAsync().then(user => {
-      setUsers(user);
-      setFilteredUsers(user);
+    getAllUsersAsync().then(users => {
+      setUsers(users);
+      setFilteredUsers(users);
     });
 
-    getAllPitchesAsync().then(pitch => {
-      setPitchers(pitch);
-      setFilteredPitchers(pitch);
+    getAllPitchesAsync().then(pitches => {
+      setPitchers(pitches);
+      setFilteredPitches(pitches);
     });
   }, []);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    const filteredUsers = users.filter(user => {
-      return user.name.toLowerCase().includes(inputValue.toLowerCase());
-    });
-    setFilteredUsers(filteredUsers);
-    const filteredPitchers = pitchers.filter(pitch => {
-      return pitch.title.toLowerCase().includes(inputValue.toLowerCase());
-    });
-    setFilteredPitchers(filteredPitchers);
+    const inputValue = event.target.value.toLowerCase();
+
+    if (searchType === "users") {
+      const filteredUsers = users.filter(user => {
+        return user.name.toLowerCase().includes(inputValue);
+      });
+      setFilteredUsers(filteredUsers);
+      setFilteredPitches([]);
+    } else if (searchType === "pitches") {
+      const filteredPitches = pitches.filter(pitch => {
+        return pitch.title.toLowerCase().includes(inputValue);
+      });
+      setFilteredUsers([]);
+      setFilteredPitches(filteredPitches);
+    }
+    else if (searchType === "location") {
+      // Implement location search logic here if needed
+
+      setFilteredUsers(filteredUsers);
+      setFilteredPitches(filteredPitches);
+    }
   };
+
+  const handleSearchTypeChange = (newSearchType: string) => {
+    setSearchType(newSearchType);
+    if (newSearchType === "location") {
+      setFilteredPitches(pitches);
+      setFilteredUsers(users);
+    }
+    else if (newSearchType === "users") {
+      setFilteredPitches([]);
+      setFilteredUsers(users);
+    }
+    else if (newSearchType === "pitches") {
+      setFilteredPitches(pitches);
+      setFilteredUsers([]);
+    }
+  };
+
   return <>
-    <div className='page-background' style={{paddingTop: 15,  display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center'}}>
+    <div className='page-background' style={{ paddingTop: 15, display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center' }}>
       <Container style={{ alignItems: 'center' }}>
-        <Paper elevation={3} style={{ padding: '10px', alignItems: 'center' }}>
+        <Paper elevation={3} style={{ display: 'flex', padding: '10px', alignItems: 'center' }}>
           <TextField
             fullWidth
             onChange={handleSearch}
@@ -63,23 +82,37 @@ export function SearchBar() {
                   </IconButton>
                 </InputAdornment>),
             }} />
+          <select
+            style={{
+              width: '20%',
+              height: '40px',
+              paddingLeft: '15px',
+              marginLeft: '10px',
+              backgroundColor: 'white',
+              borderRadius: 4,
+              borderWidth: 1,
+              borderColor: 'rgba(0, 0, 0, 0.35)',
+            }}
+            onChange={(e) => handleSearchTypeChange(e.target.value)}
+          >
+            <option value="location">Location</option>
+            <option value="users">Users</option>
+            <option value="pitches">Pitches</option>
+          </select>
         </Paper>
 
         <div style={{ paddingTop: 20, paddingBottom: 20, display: 'grid', gap: 20, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center', marginTop: '15p' }}>
           {filteredUsers.map((user: User) => (
             <Link key={user.id} to={`/user/${user.id}`}>
               <DynamicCard key={user.id} user={user} />
-              {/* <UserSearchCard key={user.id} id={user.id} name={user.name} email={user.email} location={user.location} imgUrl={user.imgUrl} /> */}
             </Link>
           ))}
 
-          {filteredPitchers.map((pitch: PitchSearchProps) => (
-            <Link key={pitch.id} to={`/pitch/${pitch.id}`}>
-              <DynamicCard key={pitch.id} pitch={pitch} />
-              {/* <PitchCard key={pitch.id} title={pitch.title} content={pitch.content} imgUrl={pitch.imgUrl}/> */}
+          {filteredPitches.map((pitch: Pitch) => (
+            <Link key={pitch.Id} to={`/pitch/${pitch.Id}`}>
+              <DynamicCard pitch={pitch} />
             </Link>
           ))}
-
         </div>
       </Container>
     </div>
@@ -91,7 +124,7 @@ export async function getAllUsersAsync(): Promise<User[]> {
   const resObject = await res.json();
   return resObject;
 }
-export async function getAllPitchesAsync(): Promise<PitchSearchProps[]> {
+export async function getAllPitchesAsync(): Promise<Pitch[]> {
   const res = await fetch("https://pitchmatch.azurewebsites.net/pitch")
   const resObject = await res.json();
   return resObject;
