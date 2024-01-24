@@ -24,7 +24,10 @@ export type PitchPageProps = {
 
 
 export function PitchPageComponent(props: PitchPageProps) {
-  const { token } = useAuth();
+   const { token } = useAuth();
+  const loggedInUserId = useAuth().token?.userId;
+
+  const isOwner = loggedInUserId === props.userId;
   
   console.log("PitchPageComponent props:", props); 
 
@@ -74,11 +77,13 @@ export function PitchPageComponent(props: PitchPageProps) {
   return (
     <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', }}>
       <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
-        {token && (<DeletePitchButton id={token?.userId} />)}
-        {token &&  (<Button variant="contained" onClick={editHandler} color="success" sx={{ margin: '0 20px' }}>
-                                Edit
-                            </Button> )
-                    }
+         {token && isOwner && <DeletePitchButton id={props.id} />}
+        {token && isOwner && (
+          <Button variant="contained" onClick={editHandler} color="success" sx={{ margin: '0 20px' }}>
+            Edit
+          </Button>
+        )} 
+                    
         <Card sx={{
           maxWidth: 'lg',
           mx: 'auto',
