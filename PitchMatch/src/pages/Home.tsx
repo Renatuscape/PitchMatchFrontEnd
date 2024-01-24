@@ -36,13 +36,13 @@ export function Home(){
         <Box style={{width: '100vw', marginLeft: '55px',display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto'}}>
             {pitches.map((pitch, index) => (
   isLoggedIn ? (
-    <Link to={`/pitch/${pitch.Id}`} style={{ textDecoration: 'none' }}>
-      <DynamicCard key={index} pitch={pitch}/>
+    <Link key={index + pitch.id} to={`/pitch/${pitch.id}`} style={{ textDecoration: 'none' }}>
+      <DynamicCard key={index + pitch.id} pitch={pitch}/>
     </Link>
     
   ) : (
-    <Link to="/login" style={{ textDecoration: 'none' }}>
-      <DynamicCard key={index} pitch={pitch}/>
+    <Link key={index + pitch.id} to="/login" style={{ textDecoration: 'none' }}>
+      <DynamicCard key={index + pitch.id} pitch={pitch}/>
     </Link>
   )
 ))}
