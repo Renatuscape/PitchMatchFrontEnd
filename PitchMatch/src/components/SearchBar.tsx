@@ -46,7 +46,7 @@ export function SearchBar() {
     setFilteredPitchers(filteredPitchers);
   };
   return <>
-    <div className='page-background'>
+    <div className='page-background' style={{paddingTop: 15,  display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center'}}>
       <Container style={{ alignItems: 'center' }}>
         <Paper elevation={3} style={{ padding: '10px', alignItems: 'center' }}>
           <TextField
@@ -65,7 +65,7 @@ export function SearchBar() {
             }} />
         </Paper>
 
-        <div style={{ display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center', marginTop: '15p' }}>
+        <div style={{ paddingTop: 20, paddingBottom: 20, display: 'grid', gap: 20, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center', marginTop: '15p' }}>
           {filteredUsers.map((user: User) => (
             <Link key={user.id} to={`/user/${user.id}`}>
               <DynamicCard key={user.id} user={user} />
