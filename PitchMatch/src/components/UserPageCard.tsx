@@ -7,7 +7,6 @@ import { Pitch } from "./types";
 import { AutoAwesome, Height } from "@mui/icons-material";
 import { useAuth } from "../App";
 import { DeleteUserButton } from "./DeleteUserComponent";
-import { DynamicCard } from "./DynamicCard";
 
 
 export function UserPageCardTop({ name, contact, soMe, cvUrl: cv, isLogged, isVerified, imgUrl, rating, location: address }: UserPageProps) {
@@ -97,10 +96,8 @@ export function UserPageCardBottom({ portfolio, isLogged }: UserPageProps) {
                     <Divider orientation="horizontal" sx={{}} flexItem />
                     <CardContent style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: 'auto' }}>
                         {portfolio ? (
-                            portfolio.map((pitch, index) => (
-                                <Link to={`/pitch/${pitch.Id}`}>
-                                    <DynamicCard key={index} pitch={pitch}/>
-                                </Link>
+                            portfolio.map((pitch: Pitch) => (
+                                <PitchCard key={pitch.Id + pitch.title} title={pitch.title} content={pitch.description} />
                             ))
                         ) : isLogged ? (
                             <PitchCard title="No pitches yet" content="You have no pitches yet. Create one now!" />
