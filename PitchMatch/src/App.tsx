@@ -84,7 +84,7 @@ function App() {
                                               }
                                                 />
           <Route path="/edituser" element={ <ProtectedRoute>
-                                                    <EditPitch/>
+                                                    <EditUser/>
                                                 </ProtectedRoute>
                                               }
                                                 />
