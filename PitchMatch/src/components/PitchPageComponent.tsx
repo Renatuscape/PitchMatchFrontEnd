@@ -38,7 +38,7 @@ export function PitchPageComponent(props: PitchPageProps) {
   const [hasClickedInterested, setHasClickedInterested] = useState(false);
   const [progress, setProgress] = useState(0);
   const [funding, setFunding] = useState(props.funding);
-  
+
 
   console.log("PitchPageComponent props:", props);
 
@@ -51,7 +51,7 @@ export function PitchPageComponent(props: PitchPageProps) {
     setProgress(calculateProgress());
   }, [props.funding, props.goal]);
 
- const editHandler = () => {
+  const editHandler = () => {
     return <Navigate to={`/editpitch/${token?.userId}`} />
   }
 
@@ -68,45 +68,47 @@ export function PitchPageComponent(props: PitchPageProps) {
       const newInvestment = {
         Amount: randomFundingContribution,
         PitchId: props.id,
-        UserId: loggedInUserId, 
+        UserId: loggedInUserId,
       };
 
       try {
-        // Send the new investment to the backend
         const investmentResponse = await fetch('https://pitchmatch.azurewebsites.net/Investment', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token?.accessToken}`, // Add this if your API requires authentication
-            },
-            body: JSON.stringify(newInvestment),
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token?.accessToken}`,
+          },
+          body: JSON.stringify(newInvestment),
         });
 
         if (!investmentResponse.ok) {
-            throw new Error('Failed to create investment');
+          throw new Error('Failed to create investment');
         }
 
-        
-        const investmentsResponse = await fetch(`https://pitchmatch.azurewebsites.net/Pitch/${props.id}/Investment`);
-            if (!investmentsResponse.ok) {
-                throw new Error('Failed to fetch investments');
-            }
-            const investments = await investmentsResponse.json();
 
-        // Calculate the new unique investor count
+        const investmentsResponse = await fetch(`https://pitchmatch.azurewebsites.net/Pitch/${props.id}/Investment`);
+        if (!investmentsResponse.ok) {
+          throw new Error('Failed to fetch investments');
+        }
+        const investments = await investmentsResponse.json();
+
         const newUniqueInvestorCount = new Set(investments.map((inv: { UserId: any; }) => inv.UserId)).size;
 
-        // Update the funding and unique investor count in the component's state
         setFunding((prevFunding) => prevFunding + randomFundingContribution);
         setInvestorCount(newUniqueInvestorCount);
 
-    } catch (error) {
+      } catch (error) {
         console.error('Failed to create investment:', error);
+      }
     }
-}
-};
+  };
 
-
+  useEffect(() => {
+    if (props.investments) {
+      const uniqueCount = new Set(props.investments.map(inv => inv.UserId)).size;
+      setInvestorCount(uniqueCount);
+    }
+  }, [props.investments]);
 
   useEffect(() => {
     const calculateProgress = () => {
@@ -144,7 +146,7 @@ export function PitchPageComponent(props: PitchPageProps) {
   //   }
   // };
 
- const handleEditClick = () => {
+  const handleEditClick = () => {
     navigate(`/editpitch/${props.id}`);
   };
 
