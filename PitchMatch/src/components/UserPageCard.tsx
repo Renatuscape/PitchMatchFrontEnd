@@ -29,6 +29,13 @@ export function UserPageCardTop({ name, contact, soMe, cvUrl: cv, isLogged, isVe
                         </Link>
                     }
                     {isLoggedIn &&
+                        <Link to="/verification">
+                            <Button variant="contained" color="success" sx={{ margin: '0 20px' }}>
+                                Verification
+                            </Button>
+                        </Link>
+                    }
+                    {isLoggedIn &&
                         <Link to="/">
                             <DeleteUserButton id={""} />
                         </Link>
