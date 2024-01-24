@@ -27,7 +27,7 @@ export function DeletePitchButton({id}:DeletePitchProps){
     return (
         <div>
         <Link to="/">
-        <Button type="submit" variant="contained" color="success" sx={{ marginLeft: 2 , "&:focus":{outline: "none",}}} onClick={handleDelete}>Delete</Button>
+        <Button type="submit" variant="contained" color="secondary" sx={{"&:focus":{outline: "none",}}} onClick={handleDelete}>Delete</Button>
         </Link>
         </div>
     );
