@@ -14,6 +14,10 @@ export type Investment = {
 };
 
 export type PitchPageProps = {
+  videoUrl: string;
+  pitchYield: number;
+  latitude: number;
+  longitude: number;
   id: number;
   title: string;
   summary: string;

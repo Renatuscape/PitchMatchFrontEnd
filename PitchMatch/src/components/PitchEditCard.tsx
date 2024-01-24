@@ -1,12 +1,13 @@
 import { Container, Card, CardContent, TextField, CardHeader, Divider, Button, Grid, Box } from "@mui/material";
 import { style1 } from "./CreatePitchComponent";
 import { FormEvent, useState } from "react";
-import { Link, useParams} from "react-router-dom";
+import { Link, useNavigate, useParams} from "react-router-dom";
 import { UserParamsType } from "../pages/UserPage";
 import { DeletePitchButton } from "./DeletePitchComponent";
 import { useAuth } from "../App";
-import { TokenAndId } from "./types";
+import { Pitch, TokenAndId } from "./types";
 import { LocationFinder } from "./LocationFinder";
+import { getPitch } from "../pages/PitchPage";
 type EditPitchProps = {
     title: string; 
     summary: string; 
@@ -73,11 +74,31 @@ export function PitchEditCard(){
   const [longitude, setLongitude] = useState<number>(0);
   const [location, setLocation] = useState('');
   const{token}=useAuth();
+  const navigate = useNavigate();
+  const [newPitch, setNewPitch] = useState<Partial<EditPitchProps>>({});
   const {id} = useParams<keyof UserParamsType>() as UserParamsType;
   const handleAddressChange = (address: string) => {
-    setRegisteredAddress(address);
-    setLocation(address);
-  }
+        setRegisteredAddress(address);
+        setLocation(address);
+        handleFieldChange("location", address);
+    };
+
+    const handleLatitudeChange = (value: number) => {
+        setLatitude(value);
+        handleFieldChange("latitude", value);
+    };
+
+    const handleLongitudeChange = (value: number) => {
+        setLongitude(value);
+        handleFieldChange("longitude", value);
+    };
+  const handleFieldChange = (fieldName: string, value: any) => {
+        setNewPitch((prevNewPitch) => ({
+            ...prevNewPitch,
+            [fieldName]: value
+        }));
+    };
+
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -87,7 +108,23 @@ export function PitchEditCard(){
       return;
     }
     try {
+      const pitch = await getPitch(parseInt(id,10));
+
+        setTitle(pitch.title || '');
+        setSummary(pitch.summary || '');
+        setDescription(pitch.description || '');
+        setImgUrl(pitch.imgUrl || '');
+        setVideoUrl(pitch.videoUrl || '');
+        setGoal(pitch.goal || 0);
+        setPitchYield(pitch.pitchYield || 0);
+        setCategories(pitch.categories || '');
+        setRegisteredAddress(pitch.location || '');
+        setLatitude(pitch.latitude || 0);
+        setLongitude(pitch.longitude || 0);
+        setLocation(pitch.location || '');
+
       const res = await updatePitchAsync(title,summary,description,imgUrl,videoUrl,location,goal,pitchYield,categories,latitude,longitude,parseInt(id,10));
+      navigate ("/");
       console.log('Submitting new pitch:', title);
    } catch (error: any) {
          if (error.message) {
@@ -115,7 +152,10 @@ return (
                   name="title"
                   label="Title"
                   value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={(e) => {
+                                    setTitle(e.target.value);
+                                    handleFieldChange("title", e.target.value);
+                                }}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -126,7 +166,10 @@ return (
                   name="summary"
                   label="Pitch Summary (this will be visible to everyone)"
                   value={summary}
-                  onChange={(e) => setSummary(e.target.value)}
+                  onChange={(e) => {
+                                    setSummary(e.target.value);
+                                    handleFieldChange("title", e.target.value);
+                                }}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -139,7 +182,10 @@ return (
                   name="description"
                   label="Write about your proposal (this will only be shown to verified users)"
                   value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  onChange={(e) => {
+                                    setDescription(e.target.value);
+                                    handleFieldChange("title", e.target.value);
+                                }}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -152,7 +198,10 @@ return (
                   name="picture"
                   label="Add a picture URL"
                   value={imgUrl}
-                  onChange={(e) => setImgUrl(e.target.value)}
+                  onChange={(e) => {
+                                    setImgUrl(e.target.value);
+                                    handleFieldChange("title", e.target.value);
+                                }}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -163,7 +212,10 @@ return (
                   name="video"
                   label="Add a video URL"
                   value={videoUrl}
-                  onChange={(e) => setVideoUrl(e.target.value)}
+                  onChange={(e) => {
+                                    setVideoUrl(e.target.value);
+                                    handleFieldChange("title", e.target.value);
+                                }}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -175,7 +227,10 @@ return (
                   label="Goal Capital"
                   type="number"
                   value={goal}
-                  onChange={(e) => setGoal(Number(e.target.value))}
+                  onChange={(e) => {
+                                    setGoal(parseInt(e.target.value,10));
+                                    handleFieldChange("title", e.target.value);
+                                }}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -187,7 +242,10 @@ return (
                   label="Projected annual yield"
                   type="number"
                   value={pitchYield}
-                  onChange={(e) => setPitchYield(Number(e.target.value))}
+                  onChange={(e) => {
+                                    setPitchYield(parseInt(e.target.value,10));
+                                    handleFieldChange("title", e.target.value);
+                                }}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -196,9 +254,12 @@ return (
               <Grid item xs={6}>
                 <TextField
                   name="categories"
-                  label="Category"
+                  label="Categories"
                   value={categories}
-                  onChange={(e) => setCategories(e.target.value)}
+                  onChange={(e) => {
+                                    setCategories(e.target.value);
+                                    handleFieldChange("title", e.target.value);
+                                }}
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -220,8 +281,8 @@ return (
               <Grid item xs={12}>
               <LocationFinder 
                 onRegisterAddress={handleAddressChange}
-                onLatitudeChange={setLatitude} 
-                onLongitudeChange={setLongitude} 
+                onLatitudeChange={handleLatitudeChange}
+                onLongitudeChange={handleLongitudeChange}
               />
               </Grid>
               </Grid>

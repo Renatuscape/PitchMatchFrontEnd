@@ -176,7 +176,7 @@ export function UserEditCard() {
                 </form>
               </CardContent>
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
-                <DeleteUserButton id={parseInt(id,10)}/>
+                <DeleteUserButton />
                   <Button onClick={handlerCancel} variant="contained" color="secondary">
                     Cancel
                   </Button>
