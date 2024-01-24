@@ -4,18 +4,20 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { DynamicCard } from "./DynamicCard";
 import { Pitch, User } from "./types";
+import { GetCoordinates, sortPitchesByDistance, sortUsersByDistance } from "./GeoTools";
 
 export function SearchBar() {
-  const [searchType, setSearchType] = useState<string>("location");
+  const [searchType, setSearchType] = useState<string>("pitches");
   const [users, setUsers] = useState<User[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [pitches, setPitchers] = useState<Pitch[]>([]);
   const [filteredPitches, setFilteredPitches] = useState<Pitch[]>([]);
+  const [coordinates, setCoordinates] = useState<{ latitude: number, longitude: number }>({ latitude: 0, longitude: 0 });
 
   useEffect(() => {
     getAllUsersAsync().then(users => {
       setUsers(users);
-      setFilteredUsers(users);
+      setFilteredUsers([]);
     });
 
     getAllPitchesAsync().then(pitches => {
@@ -33,26 +35,57 @@ export function SearchBar() {
       });
       setFilteredUsers(filteredUsers);
       setFilteredPitches([]);
-    } else if (searchType === "pitches") {
+    }
+
+    else if (searchType === "pitches") {
       const filteredPitches = pitches.filter(pitch => {
         return pitch.title.toLowerCase().includes(inputValue);
       });
       setFilteredUsers([]);
       setFilteredPitches(filteredPitches);
     }
-    else if (searchType === "location") {
-      // Implement location search logic here if needed
 
-      setFilteredUsers(filteredUsers);
-      setFilteredPitches(filteredPitches);
+    else if (searchType === "userLocation" && inputValue !== "") {
+
+      GetCoordinates(inputValue).then((coordinates) => {
+        const sortedUsers = sortUsersByDistance(users, coordinates.latitude, coordinates.longitude);
+
+        if (coordinates.latitude === 0 && coordinates.longitude === 0) {
+          setFilteredUsers([]);
+        }
+        else {
+          setFilteredUsers(sortedUsers);
+        }
+        setFilteredPitches([]);
+        setCoordinates({ latitude: coordinates.latitude, longitude: coordinates.longitude });
+      });
+    }
+
+    else if (searchType === "pitchLocation" && inputValue !== "") {
+      GetCoordinates(inputValue).then((coordinates) => {
+        const sortedPitches = sortPitchesByDistance(pitches, coordinates.latitude, coordinates.longitude);
+
+        if (coordinates.latitude === 0 && coordinates.longitude === 0) {
+          setFilteredPitches([]);
+        }
+        else {
+          setFilteredPitches(sortedPitches);
+        }
+        setFilteredUsers([]);
+        setCoordinates({ latitude: coordinates.latitude, longitude: coordinates.longitude });
+      });
     }
   };
 
   const handleSearchTypeChange = (newSearchType: string) => {
     setSearchType(newSearchType);
-    if (newSearchType === "location") {
-      setFilteredPitches(pitches);
+    if (newSearchType === "userLocation") {
+      setFilteredPitches([]);
       setFilteredUsers(users);
+    }
+    else if (newSearchType === "pitchLocation") {
+      setFilteredPitches(pitches);
+      setFilteredUsers([]);
     }
     else if (newSearchType === "users") {
       setFilteredPitches([]);
@@ -95,12 +128,13 @@ export function SearchBar() {
             }}
             onChange={(e) => handleSearchTypeChange(e.target.value)}
           >
-            <option value="location">Location</option>
-            <option value="users">Users</option>
             <option value="pitches">Pitches</option>
+            <option value="users">Users</option>
+            <option value="pitchLocation">Pitches by location</option>
+            <option value="userLocation">Users by location</option>
           </select>
         </Paper>
-
+        <p>Search coordinates: {coordinates.latitude} - {coordinates.longitude}</p>
         <div style={{ paddingTop: 20, paddingBottom: 20, display: 'grid', gap: 20, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center', marginTop: '15p' }}>
           {filteredUsers.map((user: User) => (
             <Link key={user.id + user.name} to={`/user/${user.id}`}>
