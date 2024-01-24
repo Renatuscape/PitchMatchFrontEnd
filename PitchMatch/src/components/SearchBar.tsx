@@ -1,8 +1,6 @@
 import { Container, IconButton, InputAdornment, Paper, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useState } from "react";
-import { PitchCard } from "./PitchCard";
-import { UserSearchCard } from "./UserSearchCard";
 import { Link } from "react-router-dom";
 import { DynamicCard } from "./DynamicCard";
 import { User } from "./types";
