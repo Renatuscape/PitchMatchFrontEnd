@@ -3,6 +3,8 @@ import { Container, Card, CardHeader, Button, Divider, CardContent, TextField, G
 import { Pitch } from './types';
 import { Link, useNavigate } from 'react-router-dom';
 import { getSession } from '../Context/contextPage';
+import { useAuth } from '../App';
+import { LocationFinder } from './LocationFinder';
 
 const API_URL = 'https://pitchmatch.azurewebsites.net/Pitch';
 
@@ -12,10 +14,13 @@ async function createPitch(
     description: string,
     imgUrl: string,
     videoUrl: string,
-    location: string,
     goal: number,
     pitchYield: number,
-    categories: string
+    categories: string,
+    longitude: number,
+    latitude: number,
+    registeredAddress: string,
+    location: string,
     ): Promise<Pitch> {
 
 const res = await fetch(
@@ -31,11 +36,14 @@ const res = await fetch(
         summary, 
         description, 
         imgUrl, 
-        videoUrl, 
-        location, 
+        videoUrl,
         goal, 
         pitchYield, 
-        categories
+        categories,
+        longitude,
+        latitude,
+        registeredAddress,
+        location,
       })
     });
 
@@ -53,22 +61,35 @@ export type CreatePitchFormProps = {
   }
 
 export default function CreatePitchComponent(props: CreatePitchFormProps) {
+  const { token } = useAuth();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [title, setTitle] = useState('');
   const [summary, setSummary] = useState('');
   const [description, setDescription] = useState('');
   const [imgUrl, setImgUrl] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
-  const [location, setLocation] = useState('');
   const [goal, setGoal] = useState<number>(0);
   const [pitchYield, setPitchYield] = useState<number>(0);
   const [categories, setCategories] = useState('');
+  const [registeredAddress, setRegisteredAddress] = useState('');
+  const [latitude, setLatitude] = useState<number>(0);
+  const [longitude, setLongitude] = useState<number>(0);
+  const [location, setLocation] = useState('');
+
+  const handleAddressChange = (address: string) => {
+    setRegisteredAddress(address);
+    setLocation(address);
+  };
   
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!token) {
+      console.log('not token found');
+      return;
+    }
     try{
     const createdPitch = await createPitch(
         title,
@@ -76,10 +97,13 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
         description,
         imgUrl,
         videoUrl,
-        location,
         goal,
         pitchYield,
-        categories
+        categories,
+        longitude,
+        latitude,
+        registeredAddress,
+        location,
     );
     props.addPitch(createdPitch);
     navigate('/');
@@ -189,17 +213,6 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  name="location"
-                  label="Location"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  variant="outlined"
-                  margin="normal"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
                   name="categories"
                   label="Category"
                   value={categories}
@@ -208,6 +221,26 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
                   margin="normal"
                   fullWidth
                 />
+              </Grid>
+              <Grid item xs={6}>
+              <TextField
+                  name="location"
+                  label="Location"
+                  value={location}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+              <LocationFinder 
+                onRegisterAddress={handleAddressChange}
+                onLatitudeChange={setLatitude} 
+                onLongitudeChange={setLongitude} 
+              />
               </Grid>
               </Grid>
               {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
