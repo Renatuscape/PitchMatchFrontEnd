@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Card, CardHeader, CardContent, CardMedia, CardActions, Typography, Button, Divider, Grid, Box, LinearProgress, Link, Paper } from "@mui/material";
-import { Pitch } from './types';
+import { Container, Card, CardHeader, CardContent, CardMedia, CardActions, Typography, Button, Divider, Grid, Box, LinearProgress, Link, Paper, Rating } from "@mui/material";
+import { Pitch, User } from './types';
 import { useAuth } from '../App';
 import { DeletePitchButton } from './DeletePitchComponent';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { LocationOn } from '@mui/icons-material';
 
 export type Investment = {
   Id: number;
@@ -25,7 +26,7 @@ export type PitchPageProps = {
   views: number;
   categories: string;
   userId: number;
-  user: null | any;
+  user: User;
   investments: Investment[];
 };
 
@@ -167,7 +168,7 @@ export function PitchPageComponent(props: PitchPageProps) {
             </Button>
           </div>
 
-          <Paper elevation={3} style={{ width: 'auto', margin: '20px', paddingTop: 5, paddingBottom: 15, textAlign: 'center' }}>
+          <Paper elevation={1} style={{ width: 'auto', margin: '20px', paddingTop: 5, paddingBottom: 15, textAlign: 'center' }}>
             <div style={{ display: 'flex', padding: 10, gap: 10, alignItems: 'center' }}>
               <div style={{ width: '100%' }}>
                 <LinearProgress variant="determinate" value={progress} style={{ height: 10, borderRadius: 10 }} />
@@ -178,15 +179,35 @@ export function PitchPageComponent(props: PitchPageProps) {
             </div>
             <p style={{ color: 'rgb(26,126,127)' }}>{props.funding} in investments have been put towards the project goal of {props.goal}</p>
           </Paper>
-          <div style={{ minHeight: '10vh' }}>
-            <p>Creator: {props.user}</p>
-            <p>Investors: {investorCount}</p>
-            <p>Risk: {props.funding < props.goal / 2 ? <>High</> : <>Low</>}</p>
-            <p>Projected Annual Yield: {props.yield}</p>
-          </div>
-          <Paper elevation={3} style={{ margin: 20, padding: 15 }}>
+
+<div style={{display: 'flex', justifyContent: 'space-evenly'}}>
+          <div style={{
+              margin: 20,
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gridTemplateRows: 'auto',
+              rowGap: 20,
+              columnGap: 80
+            }}>
+              <p>Investors: {investorCount}</p>
+              <p>Risk: {props.funding < props.goal / 2 ? <span style={{color: 'red'}}>High</span> : <span style={{color: 'green'}}>Low</span>}</p>
+              <p>Projected Annual Yield: {props.yield}</p>
+              <p>Location: {props.location}<LocationOn fontSize='small' color='success'/></p>
+              </div>
+              </div>
+          <Paper elevation={1} style={{ margin: 20, padding: 15 }}>
             {props.description}
           </Paper>
+
+          <div style={{ display: 'flex', margin: 20, gap: 10 }}>
+            <Paper elevation={0} style={{ width: '40%' }}>
+              <img style={{ borderRadius: 4 }} width={'100%'} src={`${props.user.imgUrl}`} />
+            </Paper>
+            <div style={{ flexGrow: 1, }}>
+              <p>Creator: {props.user.name}</p>
+              <Rating name="half-rating-read" defaultValue={props.user.rating} precision={0.5} readOnly />
+            </div>
+          </div>
         </Paper>
       </Container>
     </div>
