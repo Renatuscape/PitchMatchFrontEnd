@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { UserParamsType } from "../pages/UserPage";
 import { Button } from "@mui/material";
+import { useAuth } from "../App";
 
 async function deleteUserAsync(id: number): Promise<void> {
 
@@ -12,15 +13,15 @@ async function deleteUserAsync(id: number): Promise<void> {
 }
 
 type DeleteUserProps = {
-    id: string;
+    id: number;
     }
 
 export function DeleteUserButton({id}:DeleteUserProps){
-  
+  const{onLogout}=useAuth();
     const handleDelete = async () => {
         try {
-        await deleteUserAsync(parseInt(id, 10));
-
+        await deleteUserAsync(id);
+        onLogout();
         } catch (error) {
         console.log(error);
         }
