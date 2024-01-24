@@ -33,6 +33,7 @@ export function CreateUser() {
    const [errorMessage, setErrorMessage] = useState<string | null>(null);
    const [confirmedPassword, setConfirmedPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+   const navigate = useNavigate();
 
 
    const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -68,6 +69,9 @@ export function CreateUser() {
       }
    }
 
+   const onClick = () => {
+      navigate('/login');
+   }
    const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -134,9 +138,8 @@ export function CreateUser() {
                </div>
             </div>
             {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-            <Link to={'/login'} style={{ textDecoration: 'none' }}>
-            <button  type="submit">Submit</button>
-            </Link>
+        
+            <button type="submit" onClick={onClick}>Submit</button>
          </form>
       </Container>
    </div>
