@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { PitchCard } from "./PitchCard";
 import { UserSearchCard } from "./UserSearchCard";
 import { Link } from "react-router-dom";
+import { DynamicCard } from "./DynamicCard";
 
 export type UserSearchProps={
     id: number;
@@ -74,13 +75,15 @@ export function SearchBar(){
             <div style={{display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center', marginTop:'15p'}}>
                  {filteredUsers.map((user: UserSearchProps) => (
               <Link key={user.id} to={`/user/${user.id}`}>
-                <UserSearchCard key={user.id} id={user.id} name={user.name} email={user.email} location={user.location} imgUrl={user.imgUrl} />
+                <DynamicCard key={user.id} user={user} />
+                {/* <UserSearchCard key={user.id} id={user.id} name={user.name} email={user.email} location={user.location} imgUrl={user.imgUrl} /> */}
               </Link>
             ))}
 
             {filteredPitchers.map((pitch: PitchSearchProps) => (
               <Link key={pitch.id} to={`/pitch/${pitch.id}`}>
-                <PitchCard key={pitch.id} title={pitch.title} content={pitch.content} imgUrl={pitch.imgUrl}/>
+                <DynamicCard key={pitch.id} pitch={pitch} />
+                {/* <PitchCard key={pitch.id} title={pitch.title} content={pitch.content} imgUrl={pitch.imgUrl}/> */}
               </Link>
             ))}
                 
