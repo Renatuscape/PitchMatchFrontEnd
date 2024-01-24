@@ -5,15 +5,9 @@ import { PitchCard } from "./PitchCard";
 import { UserSearchCard } from "./UserSearchCard";
 import { Link } from "react-router-dom";
 import { DynamicCard } from "./DynamicCard";
+import { User } from "./types";
 
-export type UserSearchProps = {
-  id: number;
-  name: string;
-  email: string;
-  location: string;
-  imgUrl: string;
-  isVerified: boolean;
-}
+
 type PitchSearchProps = {
   id: number;
   title: string;
@@ -22,8 +16,8 @@ type PitchSearchProps = {
 }
 
 export function SearchBar() {
-  const [users, setUsers] = useState<UserSearchProps[]>([]);
-  const [filteredUsers, setFilteredUsers] = useState<UserSearchProps[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [pitchers, setPitchers] = useState<PitchSearchProps[]>([]);
   const [filteredPitchers, setFilteredPitchers] = useState<PitchSearchProps[]>([]);
 
@@ -72,7 +66,7 @@ export function SearchBar() {
         </Paper>
 
         <div style={{ display: 'grid', gap: 10, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center', marginTop: '15p' }}>
-          {filteredUsers.map((user: UserSearchProps) => (
+          {filteredUsers.map((user: User) => (
             <Link key={user.id} to={`/user/${user.id}`}>
               <DynamicCard key={user.id} user={user} />
               {/* <UserSearchCard key={user.id} id={user.id} name={user.name} email={user.email} location={user.location} imgUrl={user.imgUrl} /> */}
@@ -92,7 +86,7 @@ export function SearchBar() {
   </>
 }
 
-export async function getAllUsersAsync(): Promise<UserSearchProps[]> {
+export async function getAllUsersAsync(): Promise<User[]> {
   const res = await fetch("https://pitchmatch.azurewebsites.net/user")
   const resObject = await res.json();
   return resObject;
