@@ -98,7 +98,7 @@ export function UserPageCardBottom({ portfolio, isLogged }: UserPageProps) {
                         {portfolio ? (
                             portfolio.map((pitch: Pitch) => (
                                 
-                                <PitchCard key={pitch.Id + pitch.title} title={pitch.title} content={pitch.description} />
+                                <PitchCard key={pitch.id + pitch.title} title={pitch.title} content={pitch.description} />
                             ))
                         ) : isLogged ? (
                             <PitchCard title="No pitches yet" content="You have no pitches yet. Create one now!" />
