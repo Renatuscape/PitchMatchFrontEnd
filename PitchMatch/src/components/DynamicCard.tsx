@@ -1,5 +1,6 @@
 import { Paper } from "@mui/material";
 import { Pitch, User } from "./types";
+import { LocationOn } from "@mui/icons-material";
 
 type DynamicCardProps = {
     user?: {
@@ -7,6 +8,7 @@ type DynamicCardProps = {
         bio?: string;
         imgUrl: string;
         location?: string;
+        isVerified: boolean;
     }
     pitch?: {
         title: string;
@@ -62,12 +64,14 @@ export function DynamicCard(props: DynamicCardProps) {
                 borderWidth: 1,
                 height: '100%',
                 display: 'flex',
-                justifyContent: 'center',
+                justifyContent: 'space-between',
                 paddingTop: 8,
+                paddingLeft: 5,
+                paddingRight: 5,
                 borderColor:  'rgb(26,126,127)', 
                 backgroundColor: 'rgb(26,126,127, 0.1)',
                 color: 'rgb(26,126,127)',
-                }}>{location}</div>
+                }}>{location} <LocationOn/></div>
         </Paper>
     </>
 }
