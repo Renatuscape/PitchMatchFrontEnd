@@ -135,7 +135,7 @@ export function CreateUser() {
             </div>
             {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
             <Link to={'/login'} style={{ textDecoration: 'none' }}>
-            <button>Submit</button>
+            <button  type="submit">Submit</button>
             </Link>
          </form>
       </Container>
