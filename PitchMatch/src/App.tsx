@@ -18,6 +18,7 @@ import { ForgotPassword } from './ForgotPassword';
 import {LogInFunctionality, getSession, getUserSessionInfo} from './Context/contextPage'
 import React, { useEffect } from 'react';
 import { LogInType, TokenAndId } from './components/types';
+import { MyPage } from './pages/MyPage';
 
 const AuthContext = React.createContext<{
     token: TokenAndId | null;
@@ -82,7 +83,7 @@ function App() {
                                                 </ProtectedRoute>
                                               }
                                                 />
-          <Route path="/edituser/:id" element={ <ProtectedRoute>
+          <Route path="/edituser" element={ <ProtectedRoute>
                                                     <EditPitch/>
                                                 </ProtectedRoute>
                                               }
@@ -90,6 +91,11 @@ function App() {
           <Route path="/pitch/:id" element={ <ProtectedRoute>
                                                     <PitchPage/>
                                                 </ProtectedRoute>
+                                              }
+                                                />
+         <Route path="/mypage" element={ <ProtectedRoute>
+                                                    <MyPage/>
+                                            </ProtectedRoute>
                                               }
                                                 />
         </Routes>
