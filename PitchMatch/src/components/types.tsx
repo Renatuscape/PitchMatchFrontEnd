@@ -6,6 +6,8 @@ export type Pitch = {
     imgUrl: string;
     videoUrl: string;
     location: string;
+    latitude: number;
+    longitude: number;
     goal: number;
     pitchYield: number;
     category: string;
