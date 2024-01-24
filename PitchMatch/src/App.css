@@ -45,7 +45,8 @@
 /* REUSABLE FOOTER CSS */
 .footer-container{
   display:flex;
-  padding-top: 10px;
+  padding-top: 5px;
+  padding-bottom: 10px;
   justify-content: center;
   border-top: solid;
   border-color:  rgba(26, 125, 127, 0.564);
