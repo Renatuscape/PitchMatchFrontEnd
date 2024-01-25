@@ -4,6 +4,7 @@ import { UserPageCardBottom, UserPageCardMiddle, UserPageCardTop, UserPageCardTo
 import { User, Pitch, PersonalData } from "../components/types";
 import { UserParamsType, getUser, gePersonalData, getPitches } from "./UserPage";
 import { useAuth } from "../App";
+import { UserPageComponent } from "../components/UserPageComponent";
 
 export function MyPage(){
   const id= useAuth().token?.userId;
@@ -38,16 +39,7 @@ export function MyPage(){
   return (
     <div className='page-background' style={{padding: 20}}>
       <div>
-        {userPageData ? (
-          <div>
-            <UserPageCardTopMyPage id={userPageData.id} location={userPageData.location} name={userPageData.name} contact={userPageData.contact} soMe={userPageData.contact} cvUrl={userPageData.cvUrl} isVerified={userPageData.isVerified} isLogged={userPageData.isLogged} bio={userPageData.bio} imgUrl={userPageData.imgUrl} portfolio={userPageData.portfolio} rating={userPageData.rating} />
-            <UserPageCardMiddle {...userPageData} />
-            <UserPageCardBottom {...userPageData} />
-          </div>
-        ) : (
-          // Optionally, you can show a loading state or some other message
-          <div>Loading...</div>
-        )}
+      {user && <UserPageComponent user={{id: user.id, name: user.name, contact: user.contact, soMe: user.soMe, cvUrl: user.cvUrl, rating: user.rating, personalData: user.personalData, portfolio: userPortfolio, bio: user.bio, imgUrl: user.imgUrl}} isMyPage={true} />}
       </div>
     </div>
   );

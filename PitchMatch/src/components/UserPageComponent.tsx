@@ -2,7 +2,7 @@ import { Button, Container, Divider, Paper, Rating } from "@mui/material";
 import { PersonalData, Pitch, User } from "./types";
 import { AutoAwesome, LocationOn } from "@mui/icons-material";
 import { DynamicCard } from "./DynamicCard";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type UserPageProps = {
     user?: {
@@ -21,7 +21,13 @@ type UserPageProps = {
 }
 
 export function UserPageComponent({ user, isMyPage }: UserPageProps) {
-
+    const navigate = useNavigate();
+    const onClickEdit = () => {
+        navigate(`/edituser`)
+    }
+    const onClickVerification = () => {
+        navigate(`/verification`)
+    }
     if (!user) return <p>User not found</p>;
     return <>
         <div style={{ minHeight: '80vh', paddingTop: 30, paddingBottom: 30 }}>
@@ -39,7 +45,7 @@ export function UserPageComponent({ user, isMyPage }: UserPageProps) {
                             borderWidth: 1,
                             borderColor: 'rgba(26, 125, 127, 0.564)',
                             padding: 15,
-                            minHeight: '20vw',
+                            minHeight: '20vw'
                         }}>
                             <div style={{
                                 flexGrow: 1,
@@ -51,19 +57,27 @@ export function UserPageComponent({ user, isMyPage }: UserPageProps) {
                             }}>
                                 {/* <img height={'auto'} width={'250'} src={`${user.imgUrl}`} /> */}
                             </div>
-                            <div style={{ flexGrow: 3 }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 15 }}>
-                                    <Rating />
-                                    <p>{user.contact}</p>
-                                    {user.soMe && <Button variant="contained" href={user.soMe} color="success" sx={{ "&:focus": { outline: "none", } }}>SoMe</Button>}
+                            <div style={{ minHeight: '20vh', flexGrow: 3, display: 'flex', flexDirection: 'column', alignContent: 'space-between', justifyContent: 'space-between' }}>
+                                <div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 15 }}>
+                                        <Rating />
+                                        <p>{user.contact}</p>
+                                        {user.soMe && <Button variant="contained" href={user.soMe} color="success" sx={{ "&:focus": { outline: "none", } }}>SoMe</Button>}
+                                    </div>
+                                    <Paper style={{ flexGrow: 2, padding: 5 }}>
+                                        <p>{user.bio}</p>
+                                    </Paper>
                                 </div>
-                                <Paper style={{ flexGrow: 2, padding: 5 }}>
-                                    <p>{user.bio}</p>
-                                </Paper>
+                                {isMyPage && <div style={{alignSelf: 'flex-end'}}>
+                                    <Button variant="contained" color="success" onClick={onClickEdit}>
+                                        Edit</Button>
+                                    <Button style={{marginLeft: 15}} variant="contained" color="success" onClick={onClickVerification}>
+                                        Verification</Button>
+                                </div>}
                             </div>
                         </div>
-
                     </div>
+
                     <div style={{
                         borderTop: 'solid',
                         borderWidth: 1,
@@ -75,9 +89,12 @@ export function UserPageComponent({ user, isMyPage }: UserPageProps) {
                         backgroundColor: 'rgb(26,126,127, 0.1)',
                         color: 'rgb(26,126,127)',
                     }}>
-                        <div style={{ width: '90%', textAlign: 'left', overflow: 'hidden' }}>{user.personalData ? <>{user.personalData.address}</> : <>Unknown location</>}</div>
-                        <LocationOn /></div>
+                        <div style={{ width: '90%', textAlign: 'left', overflow: 'hidden' }}>{user.personalData ? <>{user.personalData.address}</> : <>Unknown location</>}
+                        </div>
+                        <LocationOn />
+                    </div>
                 </Paper>
+
                 <Paper elevation={4} style={{ marginTop: 20, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                     <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '5px 15px', backgroundColor: 'rgb(26,126,127, 0.1)', }}>
                         <h2>Portfolio</h2>
