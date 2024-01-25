@@ -1,7 +1,7 @@
 import React, { FormEvent, useState, useContext } from 'react';
 import { Container, Card, CardHeader, Button, Divider, CardContent, TextField, Grid } from "@mui/material";
 import { Pitch } from './types';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getSession } from '../Context/contextPage';
 import { useAuth } from '../App';
 import { LocationFinder } from './LocationFinder';
@@ -75,6 +75,7 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
   const [latitude, setLatitude] = useState<number>(0);
   const [longitude, setLongitude] = useState<number>(0);
   const [location, setLocation] = useState('');
+  
 
   const handleAddressChange = (address: string) => {
     setRegisteredAddress(address);
@@ -106,7 +107,7 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
         location,
     );
     props.addPitch(createdPitch);
-    navigate('/');
+    navigate(`/pitch/${createdPitch.id}`);
   } catch (error: any) {
          if (error.message) {
             const errorData = JSON.parse(error.message);
