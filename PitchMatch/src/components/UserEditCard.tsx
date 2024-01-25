@@ -1,6 +1,6 @@
 import { Container, Card, CardContent, TextField, CardHeader, Divider, Button, Grid, Typography, Box } from "@mui/material";
 import { style1 } from "./CreatePitchComponent";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate, useParams} from "react-router-dom";
 import { UserParamsType, getUser } from "../pages/UserPage";
 import { DeleteUserButton } from "./DeleteUserComponent";
