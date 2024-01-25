@@ -1,6 +1,6 @@
 import { Container, Card, Box, CardHeader, Button, Divider, CardContent, Grid, Typography } from "@mui/material";
 import StarIcon from '@mui/icons-material/Star';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PitchCard } from "./PitchCard";
 import { UserPageProps } from "../pages/UserPage";
 import { Pitch } from "./types";
@@ -113,35 +113,36 @@ export function UserPageCardBottom({ portfolio, isLogged }: UserPageProps) {
 }
 export function UserPageCardTopMyPage({ name, contact, soMe, cvUrl: cv, isLogged, isVerified, imgUrl, rating, location: address }: UserPageProps) {
     const { token } = useAuth();
+    const navigate = useNavigate();
     const userId = useAuth().token?.userId;
       const isLoggedIn: boolean = !!token;
     const stars = Array.from({ length: 5 }, (_, index) => (
         <StarIcon key={index} color={index < rating ? 'primary' : 'disabled'} />
     ));
+    const onClickEdit = () => {
+        navigate(`/edituser`)
+    }
+     const onClickVerification = () => {
+        navigate(`/verification`)
+    }
+    const onClickDelete = () => {
+        navigate(`/`)
+    }
     return <>
         <Container>
             <Card sx={style1}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <CardHeader title="About me" />
                     <div style={{ marginRight: 15 }}>{isVerified ? <>Verified user <AutoAwesome color='success' fontSize="small" /></> : <>Unverified user</>}</div>
-                    {isLoggedIn &&
-                        <Link to="/edituser">
-                            <Button variant="contained" color="success" sx={{ margin: '0 20px' }}>
+                    {isLoggedIn &&                      
+                            <Button variant="contained" color="success" onClick={onClickEdit} sx={{ margin: '0 20px' }}>
                                 Edit
                             </Button>
-                        </Link>
                     }
                     {isLoggedIn &&
-                        <Link to="/verification">
-                            <Button variant="contained" color="success" sx={{ margin: '0 20px' }}>
+                            <Button variant="contained" color="success" onClick={onClickVerification} sx={{ margin: '0 20px' }}>
                                 Verification
                             </Button>
-                        </Link>
-                    }
-                    {isLoggedIn &&
-                        <Link to="/">
-                            <DeleteUserButton id={userId ?? 0} />
-                        </Link>
                     }
                 </Box>
                 <Divider orientation="horizontal" sx={{}} flexItem />

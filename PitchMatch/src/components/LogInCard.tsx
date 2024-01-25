@@ -49,11 +49,9 @@ export function LogInCard({email,password,onChangeEmail,onChangePassword,passwor
         }}
       />
                     <Link to="/forgottenPassword">Forgot you password?</Link>
-                    <Link to="/mypage">
                         <Button onClick={onSubmit} variant="contained" color="success" sx={{ margin: '0 20px', "&:focus":{outline: "none",}  }}>
                             Log in
                         </Button>
-                    </Link>
                 </CardContent>
             </Card>
         </Container>

@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { UserParamsType } from "../pages/UserPage";
 import { Button } from "@mui/material";
 import { useAuth } from "../App";
@@ -12,16 +12,22 @@ async function deleteUserAsync(id: number): Promise<void> {
   }
 }
 
-type DeleteUserProps = {
-    id: number;
-    }
 
-export function DeleteUserButton({id}:DeleteUserProps){
+
+export function DeleteUserButton(){
+  const userId=useAuth().token?.userId;
+  const navigate = useNavigate();
   const{onLogout}=useAuth();
     const handleDelete = async () => {
         try {
-        await deleteUserAsync(id);
+        await deleteUserAsync(userId!);
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('logInStatus');
+        localStorage.removeItem('expiresIn');
         onLogout();
+        navigate("/");
+    
         } catch (error) {
         console.log(error);
         }
@@ -29,7 +35,7 @@ export function DeleteUserButton({id}:DeleteUserProps){
     
     return (
         <div>
-        <Button type="submit" variant="contained" color="success" sx={{ margin: 2 , "&:focus":{outline: "none",}}}onClick={handleDelete}>Delete</Button>
+        <Button type="submit" variant="contained" color="success" sx={{ margin: 2 , "&:focus":{outline: "none",}}} onClick={handleDelete}>Delete</Button>
         </div>
     );
 }

@@ -10,7 +10,7 @@ export type Pitch = {
     longitude: number;
     goal: number;
     pitchYield: number;
-    category: string;
+    categories: string;
     userId: number;
   };
 

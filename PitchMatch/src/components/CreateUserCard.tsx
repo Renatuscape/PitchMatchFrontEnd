@@ -1,19 +1,21 @@
 import { Container, Card, CardHeader, Divider, CardContent, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function CreateUserCard() {
+    const navigate = useNavigate();
+    const handler = () => {
+        navigate("/createuser");
+    }
+
     return <>
      <Container>
             <Card sx={style2}>
                 <CardHeader title="Create your user" />
                 <Divider orientation="horizontal" />
                 <CardContent>
-                    <Link to="/createuser">
-                        <Button variant="contained" color="success" sx={{ margin: '0 20px', "&:focus":{outline: "none",} }}>
+                        <Button variant="contained" color="success" onClick={handler} sx={{ margin: '0 20px', "&:focus":{outline: "none",} }}>
                             Create User
                         </Button>
-                    </Link>
-                    
                 </CardContent>
             </Card>
         </Container>

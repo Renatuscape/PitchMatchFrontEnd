@@ -1,7 +1,7 @@
 import { Container, Card, CardContent, TextField, CardHeader, Divider, Button, Grid, Typography, Box } from "@mui/material";
 import { style1 } from "./CreatePitchComponent";
-import { FormEvent, useEffect, useState } from "react";
-import { Link, useParams} from "react-router-dom";
+import { FormEvent, useState } from "react";
+import { Link, useNavigate, useParams} from "react-router-dom";
 import { UserParamsType, getUser } from "../pages/UserPage";
 import { DeleteUserButton } from "./DeleteUserComponent";
 import { useAuth } from "../App";
@@ -38,6 +38,7 @@ export function UserEditCard() {
   const{token}=useAuth();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const {id} = useParams<keyof UserParamsType>() as UserParamsType;
+  const navigate = useNavigate();
   const [newUser, setNewUser] = useState<EditUserProps>({
     name: "",
     email: "",
@@ -84,6 +85,10 @@ export function UserEditCard() {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
     }
+
+  const handlerCancel= () => {
+    navigate(`/user/${id}`);
+  }
 
     return (
         <>
@@ -184,14 +189,10 @@ export function UserEditCard() {
                 </form>
               </CardContent>
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
-                <Link to="/">
-                <DeleteUserButton id={parseInt(id,10)}/>
-                </Link>
-                <Link to={`/user/${id}`} style={{ textDecoration: 'none' }}>
-                  <Button variant="contained" color="secondary">
+                <DeleteUserButton />
+                  <Button onClick={handlerCancel} variant="contained" color="secondary">
                     Cancel
                   </Button>
-                </Link>
               </Box>
             </Card>
           </Container>
