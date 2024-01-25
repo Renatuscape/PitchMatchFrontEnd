@@ -37,10 +37,8 @@ export function MyPage(){
   });
     
   return (
-    <div className='page-background' style={{padding: 20}}>
-      <div>
+      <>
       {user && <UserPageComponent user={{id: user.id, name: user.name, contact: user.contact, soMe: user.soMe, cvUrl: user.cvUrl, rating: user.rating, personalData: user.personalData, portfolio: userPortfolio, bio: user.bio, imgUrl: user.imgUrl}} isMyPage={true} />}
-      </div>
-    </div>
+      </>
   );
 }

@@ -98,8 +98,8 @@ export function SearchBar() {
   };
 
   return <>
-    <div className='page-background' style={{ paddingTop: 15, display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center' }}>
-      <Container style={{ alignItems: 'center' }}>
+    <div className='page-background'>
+      <Container maxWidth='md' sx={{ padding: 3, display: 'flex', flexDirection: 'column', gap: 3, justifyContent: 'center', textAlign: 'center' }}>
         <Paper elevation={3} style={{ display: 'flex', padding: '10px', alignItems: 'center' }}>
           <TextField
             fullWidth
@@ -134,21 +134,34 @@ export function SearchBar() {
             <option value="userLocation">Users by location</option>
           </select>
         </Paper>
-        <p>Search coordinates: {coordinates.latitude} - {coordinates.longitude}</p>
-        <div style={{ paddingTop: 20, paddingBottom: 20, display: 'grid', gap: 20, gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto', textAlign: 'center', marginTop: '15p' }}>
-          {filteredUsers.map((user: User) => (
-            <Link key={user.id + user.name} to={`/user/${user.id}`}>
+      </Container>
+      {/* <p>Search coordinates: {coordinates.latitude} - {coordinates.longitude}</p> */}
+      <div style={{
+        display: 'grid',
+        width: 'auto',
+        gap: 20,
+        gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
+        justifyContent: 'center',
+        margin: '15px',
+        marginTop: '0px',
+        paddingBottom: '20px',
+      }}>
+        {filteredUsers.map((user: User) => (
+          <div key={user.id + user.name} style={{ justifySelf: 'center' }}>
+            <Link to={`/user/${user.id}`}>
               <DynamicCard key={user.id + user.name} user={user} />
             </Link>
-          ))}
+          </div>
+        ))}
 
-          {filteredPitches.map((pitch: Pitch) => (
-            <Link key={pitch.id + pitch.title} to={`/pitch/${pitch.id}`}>
+        {filteredPitches.map((pitch: Pitch) => (
+          <div key={pitch.id + pitch.title} style={{ justifySelf: 'center' }}>
+            <Link to={`/pitch/${pitch.id}`}>
               <DynamicCard key={pitch.id + pitch.title} pitch={pitch} />
             </Link>
-          ))}
-        </div>
-      </Container>
+          </div>
+        ))}
+      </div>
     </div>
   </>
 }

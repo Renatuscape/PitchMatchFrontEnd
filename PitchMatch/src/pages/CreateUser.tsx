@@ -76,9 +76,9 @@ export function CreateUser() {
    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setUser({ ...user, [e.target.name]: e.target.value })
    }
-   return <div className='page-background'>
-      <Container maxWidth='md' sx={{ padding: 2, display: 'flex', alignItems: 'flex-end' }}>
-         <Paper elevation={3} style={{ marginBottom: 15, minHeight: '70vh' }}>
+   return     <div className='page-background'>
+   <Container maxWidth='md' sx={{ padding: 3, display: 'flex', flexDirection: 'column', gap: 3, justifyContent: 'center', textAlign: 'center' }}>
+      <Paper elevation={3} style={{ marginBottom: 15, minHeight: '70vh' }}>
          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '5px 15px', backgroundColor: 'rgb(26,126,127, 0.1)', }}>
             <h2>Create User</h2>
             </div>

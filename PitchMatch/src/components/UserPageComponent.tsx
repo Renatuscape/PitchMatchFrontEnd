@@ -30,9 +30,9 @@ export function UserPageComponent({ user, isMyPage }: UserPageProps) {
     }
     if (!user) return <p>User not found</p>;
     return <>
-        <div style={{ minHeight: '80vh', paddingTop: 30, paddingBottom: 30 }}>
-            <Container>
-                <Paper elevation={4} style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+        <div className='page-background'>
+            <Container maxWidth='md' sx={{ padding: 3, display: 'flex', flexDirection: 'column', gap: 3, justifyContent: 'center', textAlign: 'center' }}>
+                <Paper elevation={3}>
                     <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '5px 15px', backgroundColor: 'rgb(26,126,127, 0.1)', }}>
                         <h2>{user.name}</h2>
                         <div style={{ marginBottom: 3, fontWeight: '600' }}>
@@ -68,10 +68,10 @@ export function UserPageComponent({ user, isMyPage }: UserPageProps) {
                                         <p>{user.bio}</p>
                                     </Paper>
                                 </div>
-                                {isMyPage && <div style={{alignSelf: 'flex-end'}}>
+                                {isMyPage && <div style={{ alignSelf: 'flex-end' }}>
                                     <Button variant="contained" color="success" onClick={onClickEdit}>
                                         Edit</Button>
-                                    <Button style={{marginLeft: 15}} variant="contained" color="success" onClick={onClickVerification}>
+                                    <Button style={{ marginLeft: 15 }} variant="contained" color="success" onClick={onClickVerification}>
                                         Verification</Button>
                                 </div>}
                             </div>
@@ -95,7 +95,7 @@ export function UserPageComponent({ user, isMyPage }: UserPageProps) {
                     </div>
                 </Paper>
 
-                <Paper elevation={4} style={{ marginTop: 20, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                <Paper elevation={4} style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                     <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '5px 15px', backgroundColor: 'rgb(26,126,127, 0.1)', }}>
                         <h2>Portfolio</h2>
                     </div>
@@ -110,7 +110,11 @@ export function UserPageComponent({ user, isMyPage }: UserPageProps) {
                     }}>
                         {!user.portfolio && <p>No pitches yet.</p>}
                         {user.portfolio?.map((pitch) => (
-                            <Link key={pitch.id + pitch.title} to={`/pitch/${pitch.id}`}><DynamicCard key={pitch.id} pitch={pitch} /></Link>
+                            <div key={pitch.id + pitch.title} style={{ justifySelf: 'center' }}>
+                                <Link to={`/pitch/${pitch.id}`}>
+                                    <DynamicCard key={pitch.id + pitch.title} pitch={pitch} />
+                                </Link>
+                            </div>
                         ))}
                     </div>
                 </Paper>
