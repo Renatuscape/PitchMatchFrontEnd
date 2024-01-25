@@ -11,7 +11,11 @@ export async function getPitch(id:number):Promise<PitchPageProps>{
    const res = await fetch(`https://pitchmatch.azurewebsites.net/Pitch/${id}?pitchId=${id}`
    )
    const resObject = await res.json();
-   console.log("Fetched data:", resObject);  // Add this line
+   console.log("Fetched data:", resObject);  
+   if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(JSON.stringify(errorData));
+  }// Add this line
    return resObject;
 }
 

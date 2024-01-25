@@ -67,7 +67,7 @@ export function UserEditCard() {
     try {
       const res = await updateUserAsync(newUser, token!.userId);
       setNewUser(res);
-      
+      navigate(`/mypage`);
    } catch (error: any) {
          if (error.message) {
             const errorData = JSON.parse(error.message);
