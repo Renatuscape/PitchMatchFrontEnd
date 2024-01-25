@@ -3,6 +3,12 @@
   padding: 0;
 }
 
+h2 {
+  color: rgb(26,126,127);
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
 /* REUSABLE HEADER CSS */
 .header-container{
   height: 80px;

@@ -30,7 +30,7 @@ export function LogIn() {
 
   return (
     <>
-      <div className="page-background" style={{ height: "700px" }}>
+      <div className="page-background" style={{ height: "75vh" }}>
         <Container>
           <Grid container>
             <Grid item xs={6}>

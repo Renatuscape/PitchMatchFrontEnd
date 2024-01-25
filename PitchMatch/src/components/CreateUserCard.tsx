@@ -1,4 +1,4 @@
-import { Container, Card, CardHeader, Divider, CardContent, Button } from "@mui/material";
+import { Container, Card, CardHeader, Divider, CardContent, Button, Paper } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 
 export function CreateUserCard() {
@@ -8,16 +8,21 @@ export function CreateUserCard() {
     }
 
     return <>
-     <Container>
-            <Card sx={style2}>
-                <CardHeader title="Create your user" />
-                <Divider orientation="horizontal" />
-                <CardContent>
+    <Container maxWidth='md' sx={{ padding: 3, display: 'flex', flexDirection: 'column', gap: 3, justifyContent: 'center', textAlign: 'center' }}>
+      <Paper elevation={3} style={{ marginBottom: 15 }}>
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '5px 15px', backgroundColor: 'rgb(26,126,127, 0.1)', }}>
+          <h2>Create account</h2>
+        </div>
+        <CardContent style={{
+          borderTop: 'solid',
+          borderWidth: 1,
+          borderColor: 'rgba(26, 125, 127, 0.564)',
+        }}>
                         <Button variant="contained" color="success" onClick={handler} sx={{ margin: '0 20px', "&:focus":{outline: "none",} }}>
                             Create User
                         </Button>
                 </CardContent>
-            </Card>
+            </Paper>
         </Container>
      </>
  }
