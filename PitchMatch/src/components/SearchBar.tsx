@@ -142,7 +142,9 @@ export function SearchBar() {
         gap: 20,
         gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
         justifyContent: 'center',
-        margin: '15px',
+        marginBottom: '0',
+        marginLeft: '10%',
+        marginRight: '10%',
         marginTop: '0px',
         paddingBottom: '20px',
       }}>
