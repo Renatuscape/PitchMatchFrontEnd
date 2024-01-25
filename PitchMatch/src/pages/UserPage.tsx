@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { UserPageCardBottom, UserPageCardMiddle, UserPageCardTop } from "../components/UserPageCard";
 import { useParams } from "react-router-dom";
 import { PersonalData, Pitch, User } from "../components/types";
+import { UserPageComponent } from "../components/UserPageComponent";
 
 export type UserPageProps = {
   id: number,
@@ -24,7 +25,7 @@ export type UserParamsType = {
 
 export function UserPage() {
   //const [userPageData, setUserPageData] = useState<UserPageProps>();
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User>()
   const [userPortfolio, setUserPortfolio] = useState<Pitch[]>([]);
   const [personalData, setPersonalData] = useState<PersonalData>();
   const { id } = useParams<keyof UserParamsType>() as UserParamsType;
@@ -54,7 +55,8 @@ export function UserPage() {
   return (
     <div className='page-background' style={{padding: 20}}>
       <div>
-        {userPageData ? (
+      {user && <UserPageComponent user={{id: user.id, name: user.name, contact: user.contact, soMe: user.soMe, cvUrl: user.cvUrl, rating: user.rating, personalData: user.personalData, portfolio: userPortfolio, bio: user.bio, imgUrl: user.imgUrl}} isMyPage={false} />}
+        {/* {userPageData ? (
           <div>
             <UserPageCardTop id={userPageData.id} location={userPageData.location} name={userPageData.name} contact={userPageData.contact} soMe={userPageData.contact} cvUrl={userPageData.cvUrl} isVerified={userPageData.isVerified} isLogged={userPageData.isLogged} bio={userPageData.bio} imgUrl={userPageData.imgUrl} portfolio={userPageData.portfolio} rating={userPageData.rating} />
             <UserPageCardMiddle {...userPageData} />
@@ -63,7 +65,7 @@ export function UserPage() {
         ) : (
           // Optionally, you can show a loading state or some other message
           <div>Loading...</div>
-        )}
+        )} */}
       </div>
     </div>
   );

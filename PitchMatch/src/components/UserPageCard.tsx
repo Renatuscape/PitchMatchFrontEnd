@@ -1,4 +1,4 @@
-import { Container, Card, Box, CardHeader, Button, Divider, CardContent, Grid, Typography } from "@mui/material";
+import { Container, Card, Box, CardHeader, Button, Divider, CardContent, Grid, Typography, Paper } from "@mui/material";
 import StarIcon from '@mui/icons-material/Star';
 import { Link, useNavigate } from "react-router-dom";
 import { PitchCard } from "./PitchCard";
