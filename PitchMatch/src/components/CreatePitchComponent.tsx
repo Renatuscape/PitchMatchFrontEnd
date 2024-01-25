@@ -1,5 +1,5 @@
 import React, { FormEvent, useState, useContext } from 'react';
-import { Container, Card, CardHeader, Button, Divider, CardContent, TextField, Grid, InputAdornment } from "@mui/material";
+import { Container, Card, CardHeader, Button, Divider, CardContent, TextField, Grid, InputAdornment, Paper } from "@mui/material";
 import { Pitch } from './types';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getSession } from '../Context/contextPage';
@@ -9,36 +9,36 @@ import { LocationFinder } from './LocationFinder';
 const API_URL = 'https://pitchmatch.azurewebsites.net/Pitch';
 
 async function createPitch(
-    title: string,
-    summary: string, 
-    description: string,
-    imgUrl: string,
-    videoUrl: string,
-    goal: number,
-    pitchYield: number,
-    categories: string,
-    longitude: number,
-    latitude: number,
-    registeredAddress: string,
-    location: string,
-    ): Promise<Pitch> {
+  title: string,
+  summary: string,
+  description: string,
+  imgUrl: string,
+  videoUrl: string,
+  goal: number,
+  pitchYield: number,
+  categories: string,
+  longitude: number,
+  latitude: number,
+  registeredAddress: string,
+  location: string,
+): Promise<Pitch> {
 
-const res = await fetch(
+  const res = await fetch(
     `${API_URL}`,
     {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         userId: getSession().userId,
-        title, 
-        summary, 
-        description, 
-        imgUrl, 
+        title,
+        summary,
+        description,
+        imgUrl,
         videoUrl,
-        goal, 
-        pitchYield, 
+        goal,
+        pitchYield,
         categories,
         longitude,
         latitude,
@@ -47,9 +47,9 @@ const res = await fetch(
       })
     });
 
-    if (!res.ok) {
-      const errorData = await res.json();
-      throw new Error(JSON.stringify(errorData));
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(JSON.stringify(errorData));
   }
 
   const createdPitch = await res.json();
@@ -57,8 +57,8 @@ const res = await fetch(
 }
 
 export type CreatePitchFormProps = {
-    addPitch: (pitch: Pitch) => void;
-  }
+  addPitch: (pitch: Pitch) => void;
+}
 
 export default function CreatePitchComponent(props: CreatePitchFormProps) {
   const { token } = useAuth();
@@ -75,13 +75,13 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
   const [latitude, setLatitude] = useState<number>(0);
   const [longitude, setLongitude] = useState<number>(0);
   const [location, setLocation] = useState('');
-  
+
 
   const handleAddressChange = (address: string) => {
     setRegisteredAddress(address);
     setLocation(address);
   };
-  
+
 
   const navigate = useNavigate();
 
@@ -91,8 +91,8 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
       console.log('not token found');
       return;
     }
-    try{
-    const createdPitch = await createPitch(
+    try {
+      const createdPitch = await createPitch(
         title,
         summary,
         description,
@@ -105,33 +105,36 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
         latitude,
         registeredAddress,
         location,
-    );
-    props.addPitch(createdPitch);
-    navigate(`/pitch/${createdPitch.id}`);
-  } catch (error: any) {
-         if (error.message) {
-            const errorData = JSON.parse(error.message);
-            if (errorData.errors) {
-               const errorMessages = Object.values(errorData.errors).flat();
-               setErrorMessage(errorMessages.join(' '));
-               return;
-            }
-         }
-         setErrorMessage('An unexpected error occurred.');
+      );
+      props.addPitch(createdPitch);
+      navigate(`/pitch/${createdPitch.id}`);
+    } catch (error: any) {
+      if (error.message) {
+        const errorData = JSON.parse(error.message);
+        if (errorData.errors) {
+          const errorMessages = Object.values(errorData.errors).flat();
+          setErrorMessage(errorMessages.join(' '));
+          return;
+        }
       }
+      setErrorMessage('An unexpected error occurred.');
+    }
   };
 
-const handleFocus = (event:React.FocusEvent<HTMLInputElement>) => {
-    event.target.select();
-}
-  return (
-    <Container>
-      <Card sx={style1}>
-        <CardHeader title="Create Pitch" sx={{ textAlign: 'center' }} />
-        <Divider />
-        <CardContent>
+  return (<div className='page-background'>
+    <Container maxWidth='md' sx={{ padding: 2, display: 'flex', alignItems: 'flex-end' }}>
+      <Paper elevation={3} style={{ marginBottom: 15, minHeight: '70vh' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '5px 15px', backgroundColor: 'rgb(26,126,127, 0.1)', }}>
+          <h2>Create Pitch</h2>
+        </div>
+        <CardContent style={{
+          display: 'flex', flexDirection: 'column',
+          borderTop: 'solid',
+          borderWidth: 1,
+          borderColor: 'rgba(26, 125, 127, 0.564)',
+        }}>
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <Grid container spacing={2}>
+            <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   name="title"
@@ -200,7 +203,7 @@ const handleFocus = (event:React.FocusEvent<HTMLInputElement>) => {
                   onChange={(e) => setGoal(Number(e.target.value))}
                   variant="outlined"
                   margin="normal"
-                  fullWidth  
+                  fullWidth
                 />
               </Grid>
               <Grid item xs={6}>
@@ -227,9 +230,10 @@ const handleFocus = (event:React.FocusEvent<HTMLInputElement>) => {
                 />
               </Grid>
               <Grid item xs={6}>
-              <TextField
+                <TextField
+                  disabled={true}
                   name="location"
-                  label="Location"
+                  label="Choose location on the map below"
                   value={location}
                   InputProps={{
                     readOnly: true,
@@ -240,21 +244,24 @@ const handleFocus = (event:React.FocusEvent<HTMLInputElement>) => {
                 />
               </Grid>
               <Grid item xs={12}>
-              <LocationFinder 
-                onRegisterAddress={handleAddressChange}
-                onLatitudeChange={setLatitude} 
-                onLongitudeChange={setLongitude} 
-              />
+                <Paper elevation={3} style={{ padding: '5px 10px' }}>
+                  <LocationFinder
+                    onRegisterAddress={handleAddressChange}
+                    onLatitudeChange={setLatitude}
+                    onLongitudeChange={setLongitude}
+                  />
+                </Paper>
               </Grid>
-              </Grid>
-              {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-              <Button type="submit" variant="contained" color="primary" sx={{ marginTop: 2, "&:focus": { outline: "none", } }}>
+            </Grid>
+            {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+            <Button type="submit" variant="contained" color="success" sx={{ "&:focus": { outline: "none", } }}>
               Create
-              </Button>
+            </Button>
           </form>
         </CardContent>
-      </Card>
+      </Paper>
     </Container>
+  </div>
   );
 }
 
