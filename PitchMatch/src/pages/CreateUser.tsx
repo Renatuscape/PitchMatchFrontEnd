@@ -127,7 +127,7 @@ export function CreateUser() {
                      </IconButton>
                      </div>
                </div>
-               <div style={{ padding: 20, marginTop: 10, borderRadius: 4, backgroundColor: 'rgb(26,126,127, 0.1)', display: 'flex', flexDirection: 'column', gap: 10 }}>
+               <div style={{ padding: 20, marginTop: 10, borderRadius: 4, backgroundColor: 'rgb(26,126,127, 0.1)', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: 10 }}>
                   <p style={{ paddingBottom: 15 }}>This section is information that other users will be able to see on your profile page when they are logged in. These fields are not required, but will improve your chances of finding a match. You can update your profile with this information later, if you prefer.</p>
                   <div>
                      <label htmlFor="bio"><p>Tell us about yourself!</p></label>
