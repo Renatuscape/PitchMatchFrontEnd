@@ -2,8 +2,9 @@ import { Container, Card, CardContent, TextField, CardHeader, Divider, Button, G
 import { style1 } from "./CreatePitchComponent";
 import { FormEvent, useState } from "react";
 import { Link, useNavigate, useParams} from "react-router-dom";
-import { UserParamsType } from "../pages/UserPage";
+import { UserParamsType, getUser } from "../pages/UserPage";
 import { DeleteUserButton } from "./DeleteUserComponent";
+import { useAuth } from "../App";
 
 type EditUserProps = {
     name: string;
@@ -34,6 +35,7 @@ export async function updateUserAsync(newUser:EditUserProps, id:number ):Promise
 
 
 export function UserEditCard() {
+  const{token}=useAuth();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const {id} = useParams<keyof UserParamsType>() as UserParamsType;
   const navigate = useNavigate();
@@ -47,12 +49,23 @@ export function UserEditCard() {
     imgUrl: "",
     cvUrl: "",
   });
+
+  useEffect(() => {
+    if (!token) {
+      return;
+    }
+
+    getUser(token?.userId).then((res) => setNewUser({
+      ...res,
+      password: ""
+    }));
+  }, [token])
   
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMessage(null);
     try {
-      const res = await updateUserAsync(newUser, parseInt(id, 10));
+      const res = await updateUserAsync(newUser, token!.userId);
       setNewUser(res);
       
    } catch (error: any) {
