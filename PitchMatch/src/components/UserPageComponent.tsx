@@ -2,6 +2,7 @@ import { Button, Container, Divider, Paper, Rating } from "@mui/material";
 import { PersonalData, Pitch, User } from "./types";
 import { AutoAwesome, LocationOn } from "@mui/icons-material";
 import { DynamicCard } from "./DynamicCard";
+import { Link } from "react-router-dom";
 
 type UserPageProps = {
     user?: {
@@ -92,7 +93,7 @@ export function UserPageComponent({ user, isMyPage }: UserPageProps) {
                     }}>
                         {!user.portfolio && <p>No pitches yet.</p>}
                         {user.portfolio?.map((pitch) => (
-                            <DynamicCard key={pitch.id} pitch={pitch} />
+                            <Link key={pitch.id + pitch.title} to={`/pitch/${pitch.id}`}><DynamicCard key={pitch.id} pitch={pitch} /></Link>
                         ))}
                     </div>
                 </Paper>
