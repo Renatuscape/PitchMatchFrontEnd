@@ -35,7 +35,7 @@ export function DeleteUserButton(){
     
     return (
         <div>
-        <Button type="submit" variant="contained" color="success" sx={{ margin: 2 , "&:focus":{outline: "none",}}} onClick={handleDelete}>Delete</Button>
+        <Button type="submit" variant="contained" color="secondary" onClick={handleDelete}>Delete</Button>
         </div>
     );
 }
