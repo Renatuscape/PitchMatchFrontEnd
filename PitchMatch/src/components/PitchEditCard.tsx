@@ -1,4 +1,4 @@
-import { Container, Card, CardHeader, Divider, CardContent, Grid, TextField, Button, Box } from "@mui/material";
+import { Container, Card, CardHeader, Divider, CardContent, Grid, TextField, Button, Box, Paper } from "@mui/material";
 import { useState, useEffect, FormEvent } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { useAuth } from "../App";
@@ -7,6 +7,7 @@ import { UserParamsType } from "../pages/UserPage";
 import { style1 } from "./CreatePitchComponent";
 import { LocationFinder } from "./LocationFinder";
 import { PitchPageProps } from "./PitchPageComponent";
+import { DeletePitchButton } from "./DeletePitchComponent";
 
 type EditPitchProps = {
   title: string;
@@ -158,11 +159,17 @@ const handleFieldChange = (fieldName: string, value: any) => {
   }
 
 return (
-    <Container>
-      <Card sx={style1}>
-        <CardHeader title="Edit"  />
-        <Divider />
-        <CardContent>
+<div className='page-background'>
+        <Container maxWidth='md' sx={{ padding: 3, display: 'flex', flexDirection: 'column', gap: 3 }}>
+            <Paper elevation={3} style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '5px 15px', backgroundColor: 'rgb(26,126,127, 0.1)', }}>
+                    <h2>Edit your pitch</h2>
+                </div>
+        <CardContent style={{
+                    display: 'flex', borderTop: 'solid',
+                    borderWidth: 1,
+                    borderColor: 'rgba(26, 125, 127, 0.564)',
+                }}>
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -305,17 +312,21 @@ return (
               </Grid>
               </Grid>
               {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-              <Button type="submit" variant="contained" color="success" sx={{ marginTop: 2, "&:focus": { outline: "none", } }}>
+              <div  style={{display: 'flex', justifyContent: 'space-between'}}>
+              <Button type="submit" variant="contained" color="success" sx={{"&:focus": { outline: "none", } }}>
               Save
               </Button>
-          </form>
-           <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
-                  <Button onClick={handleCancel} variant="contained" color="success">
+              <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10}}>
+              <Button onClick={handleCancel} variant="contained" color="success" sx={{"&:focus": { outline: "none", } }}>
                      Cancel
                    </Button>
-                  </Box>
+                   <DeletePitchButton id={parseInt(id)} />
+                   </div>
+              </div>
+          </form>
         </CardContent>
-      </Card>
+      </Paper>
     </Container>
+    </div>
   );
 }

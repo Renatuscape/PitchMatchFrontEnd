@@ -155,8 +155,6 @@ export function PitchPageComponent(props: PitchPageProps) {
           <div style={{ padding: 10, display: 'flex', justifyContent: 'space-between', backgroundColor: 'rgb(26,126,127)' }}>
             <div style={{ display: 'flex', alignItems: 'center', height: 35, gap: 10 }}>
               <div style={{ marginLeft: 5, color: 'lightgreen', fontSize: '130%' }}>{props.categories}</div>
-              {token && isOwner && <DeletePitchButton id={props.id} />}
-              {token && isOwner && (<Button variant="contained" onClick={handleEditClick} color="secondary">Edit</Button>)}
             </div>
             {!isOwner && (
                 <Button
@@ -169,6 +167,7 @@ export function PitchPageComponent(props: PitchPageProps) {
                   Interested
                 </Button>
               )}
+                            {token && isOwner && (<Button variant="contained" onClick={handleEditClick} color="secondary">Edit</Button>)}
           </div>
 
           <Paper elevation={1} style={{ width: 'auto', margin: '20px', paddingTop: 5, paddingBottom: 15, textAlign: 'center' }}>
