@@ -56,9 +56,6 @@ export function PitchPageComponent(props: PitchPageProps) {
     setProgress(calculateProgress());
   }, [props.funding, props.goal]);
 
-  const editHandler = () => {
-    return <Navigate to={`/editpitch/${token?.userId}`} />
-  }
 
   const uniqueInvestorCount = props.investments ? new Set(props.investments.map(inv => inv.UserId)).size : 0;
 
@@ -161,15 +158,17 @@ export function PitchPageComponent(props: PitchPageProps) {
               {token && isOwner && <DeletePitchButton id={props.id} />}
               {token && isOwner && (<Button variant="contained" onClick={handleEditClick} color="secondary">Edit</Button>)}
             </div>
-            <Button
-              variant="contained"
-              color="success"
-              size="large"
-              onClick={handleInterestClick}
-              disabled={hasClickedInterested} // Disable the button after it's clicked
-            >
-              Interested
-            </Button>
+            {!isOwner && (
+                <Button
+                  variant="contained"
+                  color="success"
+                  size="large"
+                  onClick={handleInterestClick}
+                  disabled={hasClickedInterested}
+                >
+                  Interested
+                </Button>
+              )}
           </div>
 
           <Paper elevation={1} style={{ width: 'auto', margin: '20px', paddingTop: 5, paddingBottom: 15, textAlign: 'center' }}>
