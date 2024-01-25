@@ -153,6 +153,10 @@ const handleFieldChange = (fieldName: string, value: any) => {
     }
   };
 
+  const handleCancel = () => {
+    navigate(`/pitch/${id}`);
+  }
+
 return (
     <Container>
       <Card sx={style1}>
@@ -240,9 +244,9 @@ return (
                   name="goal"
                   label="Goal Capital"
                   type="number"
-                  value={goal}
+                  value={goal.toString()}
                   onChange={(e) => {
-                                    setGoal(parseInt(e.target.value,10));
+                                    setGoal(Number(e.target.value));
                                     handleFieldChange("title", e.target.value);
                                 }}
                   variant="outlined"
@@ -255,9 +259,9 @@ return (
                   name="pitchYield"
                   label="Projected annual yield"
                   type="number"
-                  value={pitchYield}
+                  value={pitchYield.toString()}
                   onChange={(e) => {
-                                    setPitchYield(parseInt(e.target.value,10));
+                                    setPitchYield(Number(e.target.value));
                                     handleFieldChange("title", e.target.value);
                                 }}
                   variant="outlined"
@@ -306,11 +310,9 @@ return (
               </Button>
           </form>
            <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
-          {token && <Link to={`/pitch/${token.userId}`} style={{ margin:'2',textDecoration: 'none' }}>
-                  <Button variant="contained" color="success">
+                  <Button onClick={handleCancel} variant="contained" color="success">
                      Cancel
                    </Button>
-           </Link>}
                   </Box>
         </CardContent>
       </Card>

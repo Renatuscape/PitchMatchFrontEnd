@@ -1,5 +1,5 @@
 import React, { FormEvent, useState, useContext } from 'react';
-import { Container, Card, CardHeader, Button, Divider, CardContent, TextField, Grid } from "@mui/material";
+import { Container, Card, CardHeader, Button, Divider, CardContent, TextField, Grid, InputAdornment } from "@mui/material";
 import { Pitch } from './types';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getSession } from '../Context/contextPage';
@@ -121,6 +121,9 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
       }
   };
 
+const handleFocus = (event:React.FocusEvent<HTMLInputElement>) => {
+    event.target.select();
+}
   return (
     <Container>
       <Card sx={style1}>
@@ -193,11 +196,11 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
                   name="goal"
                   label="Goal Capital"
                   type="number"
-                  value={goal}
+                  value={goal.toString()}
                   onChange={(e) => setGoal(Number(e.target.value))}
                   variant="outlined"
                   margin="normal"
-                  fullWidth
+                  fullWidth  
                 />
               </Grid>
               <Grid item xs={6}>
@@ -205,7 +208,7 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
                   name="pitchYield"
                   label="Projected annual yield"
                   type="number"
-                  value={pitchYield}
+                  value={pitchYield.toString()}
                   onChange={(e) => setPitchYield(Number(e.target.value))}
                   variant="outlined"
                   margin="normal"
