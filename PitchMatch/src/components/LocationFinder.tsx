@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     APIProvider,
     Map,
@@ -51,6 +51,7 @@ export function LocationFinder({ onRegisterAddress, onLatitudeChange, onLongitud
             } else {
                 setAddress("Address not found");
             }
+
         } catch (error) {
             console.error("Error fetching address:", error);
             setAddress("Error fetching address");
@@ -84,7 +85,6 @@ export function LocationFinder({ onRegisterAddress, onLatitudeChange, onLongitud
 
                 setMarkerPosition(newMarkerPosition);
                 setAddress(data.results[0].formatted_address); // Update the address state here
-
                 setMapCenter(newMarkerPosition);
             } else {
                 setAddress("Address not found");
@@ -95,10 +95,20 @@ export function LocationFinder({ onRegisterAddress, onLatitudeChange, onLongitud
         }
     };
 
+    useEffect(() => {
+        handleRegisterAddress();
+    }, [address]);
+
     const handleRegisterAddress = () => {
-        onRegisterAddress(address);
-        onLatitudeChange(markerPosition.lat);
-        onLongitudeChange(markerPosition.lng);
+        if (address === null || address === "Address not found" || address === "Error fetching coordinates for the entered address") {
+            console.log('Address not found');
+        }
+        else {
+            onRegisterAddress(address);
+            onLatitudeChange(markerPosition.lat);
+            onLongitudeChange(markerPosition.lng);
+        }
+
     };
 
     return (
@@ -106,7 +116,7 @@ export function LocationFinder({ onRegisterAddress, onLatitudeChange, onLongitud
             <div style={{ display: 'flex', margin: '10px 0px 0px 0px' }}>
                 <input style={{ flexGrow: '8', height: 20, padding: 10, fontSize: '100%', margin: '0px 10px 0px 0px' }}
                     type="text"
-                    placeholder="Enter an address"
+                    placeholder="Find location by entering a search term or clicking on the map"
                     value={inputAddress}
                     onChange={handleInputChange}
                 />
@@ -125,14 +135,10 @@ export function LocationFinder({ onRegisterAddress, onLatitudeChange, onLongitud
                 </Map>
             </div>
             {/* <p>Lat: {markerPosition.lat}, Lng: {markerPosition.lng}</p> */}
-            
-            {address && <div style={{display: 'flex', flexDirection: 'column', textAlign: 'center'}}>
-            <h2 style={{ margin: 'auto', marginBottom: 10 }}>{address}</h2>
-                <Button
-                    onClick={handleRegisterAddress}
-                    sx={{ backgroundColor: "rgb(26,126,127)", color: "lightgreen" }}>Register this address
-                </Button>
-                </div>}
+
+            {/* {address && <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
+                <h2 style={{ margin: 'auto', marginBottom: 10 }}>{address}</h2>
+            </div>} */}
         </APIProvider>
     );
 }
