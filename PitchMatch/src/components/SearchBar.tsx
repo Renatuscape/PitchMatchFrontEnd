@@ -117,7 +117,7 @@ export function SearchBar() {
             }} />
           <select
             style={{
-              width: '20%',
+              width: '30%',
               height: '40px',
               paddingLeft: '15px',
               marginLeft: '10px',

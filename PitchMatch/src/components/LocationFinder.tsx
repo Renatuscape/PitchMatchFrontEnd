@@ -16,7 +16,7 @@ interface LocationFinderProps {
 }
 
 export function LocationFinder({ onRegisterAddress, onLatitudeChange, onLongitudeChange }: LocationFinderProps) {
-    const initialPosition = { lat: 60.76696785977024, lng: 11.075835828837834 };
+    const initialPosition = { lat: 59.9493, lng: 10.7652 };
     const [markerPosition, setMarkerPosition] = useState(initialPosition);
     const [mapCenter, setMapCenter] = useState(initialPosition);
     const [address, setAddress] = useState('');
@@ -116,7 +116,7 @@ export function LocationFinder({ onRegisterAddress, onLatitudeChange, onLongitud
             <div style={{ display: 'flex', margin: '10px 0px 0px 0px' }}>
                 <input style={{ flexGrow: '8', height: 20, padding: 10, fontSize: '100%', margin: '0px 10px 0px 0px' }}
                     type="text"
-                    placeholder="Find location by entering a search term or clicking on the map"
+                    placeholder="Search or click on the map"
                     value={inputAddress}
                     onChange={handleInputChange}
                 />
@@ -134,11 +134,6 @@ export function LocationFinder({ onRegisterAddress, onLatitudeChange, onLongitud
                     </AdvancedMarker>
                 </Map>
             </div>
-            {/* <p>Lat: {markerPosition.lat}, Lng: {markerPosition.lng}</p> */}
-
-            {/* {address && <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
-                <h2 style={{ margin: 'auto', marginBottom: 10 }}>{address}</h2>
-            </div>} */}
         </APIProvider>
     );
 }

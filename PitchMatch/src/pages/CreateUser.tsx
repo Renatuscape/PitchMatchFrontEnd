@@ -1,5 +1,5 @@
 import { AutoAwesome, Visibility, VisibilityOff } from "@mui/icons-material";
-import { Button, Container, IconButton, Paper } from "@mui/material";
+import { Button, Container, IconButton, InputAdornment, Paper, TextField } from "@mui/material";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -76,82 +76,135 @@ export function CreateUser() {
    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setUser({ ...user, [e.target.name]: e.target.value })
    }
-   return     <div className='page-background'>
-   <Container maxWidth='md' sx={{ padding: 3, display: 'flex', flexDirection: 'column', gap: 3, justifyContent: 'center', textAlign: 'center' }}>
-      <Paper elevation={3} style={{ marginBottom: 15, minHeight: '70vh' }}>
-         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '5px 15px', backgroundColor: 'rgb(26,126,127, 0.1)', }}>
-            <h2>Create User</h2>
+   return <div className='page-background'>
+      <Container maxWidth='md' sx={{ padding: 3, display: 'flex', flexDirection: 'column', gap: 3, justifyContent: 'center', textAlign: 'center' }}>
+         <Paper elevation={3} style={{ marginBottom: 15, minHeight: '70vh' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '5px 15px', backgroundColor: 'rgb(26,126,127, 0.1)', }}>
+               <h2>Create User</h2>
             </div>
             <form onSubmit={onSubmit} style={{
                display: 'flex', flexDirection: 'column', gap: 10,
-               padding: 15,
+               padding: '15px',
                borderTop: 'solid',
                borderWidth: 1,
                borderColor: 'rgba(26, 125, 127, 0.564)',
-               }}>
-               <div className='form-input-container'>
-                  <label htmlFor='name'>Full name</label>
-                  <input value={user.name} onChange={handleChange} id='name' name='name' type='text' />
-               </div>
-               <div className='form-input-container'>
-                  <label htmlFor="email">Email address</label>
-                  <input value={user.email} onChange={handleChange} id='email' name='email' type='email' />
-               </div>
-               <div className='form-input-container'>
-                  <label htmlFor="password">Password</label>
-                  <div style={{ margin: 0, display: 'flex', width:'60.4%', justifyContent: 'space-between'}}>
-                     <input
-                        value={user.password}
-                        onChange={handleChange}
-                        id='password'
-                        name='password'
-                        type={showPassword ? 'text' : 'password'}
-                     />
-                     <IconButton style={{ flexGrow: 0, borderStyle: 'solid', margin: 0, marginLeft: 0, marginRight: '5px', padding: 0 }} onClick={handleTogglePasswordVisibility}>
-                        {showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
-                     </IconButton>
-                  </div>
-               </div>
-               <div className='form-input-container'>
-                  <label htmlFor="confirmPassword">Confirm password</label>
-                  <div style={{ margin: 0, display: 'flex', width:'60.4%', justifyContent: 'space-between'}}>
-                    <input
-                     value={confirmedPassword}
-                     onChange={(e) => setConfirmedPassword(e.target.value)}
-                     id='confirmedPassword'
-                     name='confirmPassword'
-                     type={showPassword ? 'text' : 'password'}
-                  />
-                                       <IconButton style={{ flexGrow: 0, borderStyle: 'solid', margin: 0, marginLeft: 0, marginRight: '5px', padding: 0 }} onClick={handleTogglePasswordVisibility}>
-                        {showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
-                     </IconButton>
-                     </div>
-               </div>
+            }}>
+               <TextField
+                  label='Full name'
+                  variant="outlined"
+                  margin="none"
+                  fullWidth
+                  value={user.name}
+                  onChange={handleChange}
+                  id='name'
+                  name='name'
+                  type='text'
+                  required/>
+                  
+               <TextField
+                  label='Email address'
+                  variant="outlined"
+                  margin="none"
+                  fullWidth
+                  value={user.email} onChange={handleChange}
+                  id='email'
+                  name='email'
+                  type='email'
+                  required
+               />
+               <TextField
+                  label='Password'
+                  variant="outlined"
+                  margin="none"
+                  fullWidth
+                  value={user.password}
+                  onChange={handleChange}
+                  id='password'
+                  name='password'
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  InputProps={{
+                     endAdornment: (
+                        <InputAdornment position="end">
+                           <IconButton onClick={() => handleTogglePasswordVisibility()}>
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                           </IconButton>
+                        </InputAdornment>
+                     ),
+                  }}
+               />
+               <TextField
+                  label='Confirm password'
+                  variant="outlined"
+                  margin="none"
+                  fullWidth
+                  value={confirmedPassword}
+                  onChange={(e) => setConfirmedPassword(e.target.value)}
+                  id='confirmedPassword'
+                  name='confirmPassword'
+                  required
+                  type={showPassword ? 'text' : 'password'}
+                  InputProps={{
+                     endAdornment: (
+                        <InputAdornment position="end">
+                           <IconButton onClick={() => handleTogglePasswordVisibility()}>
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                           </IconButton>
+                        </InputAdornment>
+                     ),
+                  }}
+               />
                <div style={{ padding: 20, marginTop: 10, borderRadius: 4, backgroundColor: 'rgb(26,126,127, 0.1)', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <h2>Optional information</h2>
                   <p style={{ paddingBottom: 15 }}>This section is information that other users will be able to see on your profile page when they are logged in. These fields are not required, but will improve your chances of finding a match. You can update your profile with this information later, if you prefer.</p>
                   <div>
-                     <label htmlFor="bio"><p>Tell us about yourself!</p></label>
-                     <textarea value={user.bio} onChange={handleChange} id='bio' name='bio' style={{ width: '100%' }} />
+                  <TextField
+                  label='Tell us about yourself'
+                  variant="outlined"
+                  margin="none"
+                  fullWidth
+                  multiline rows={4}
+                  sx={{backgroundColor: 'white'}}
+                  value={user.bio} onChange={handleChange} id='bio' name='bio' style={{ width: '100%' }} />
                   </div>
                   <div>
-                     <label htmlFor="contact"><p>If you want other users to contact you directly, share your information here. If you leave it blank, other users will only be able to contact you through a pitch</p></label>
-                     <input value={user.contact} onChange={handleChange} id='contact' name='contact' type='text' />
+                  <TextField
+                  label='Share a phone number or email on your profile'
+                  variant="outlined"
+                  margin="none"
+                  sx={{backgroundColor: 'white'}}
+                  fullWidth
+                  value={user.contact} onChange={handleChange} id='contact' name='contact' type='text' />
                   </div>
                   <div>
-                     <label htmlFor="soMe"><p>Share a link to your favourite social media</p></label>
-                     <input value={user.soMe} onChange={handleChange} id='soMe' name='soMe' type='text' />
+                  <TextField
+                  label='Link to your favourite social media profile'
+                  variant="outlined"
+                  margin="none"
+                  sx={{backgroundColor: 'white'}}
+                  fullWidth
+                  value={user.soMe} onChange={handleChange} id='soMe' name='soMe' type='text' />
                   </div>
                   <div>
-                     <label htmlFor='imgUrl'><p>Link us to a picture of your beautiful self</p></label>
-                     <input value={user.imgUrl} onChange={handleChange} id='imgUrl' name='imgUrl' type='text' />
+                  <TextField
+                  label='Link to a profile picture'
+                  variant="outlined"
+                  margin="none"
+                  style={{backgroundColor: 'white'}}
+                  fullWidth
+                  value={user.imgUrl} onChange={handleChange} id='imgUrl' name='imgUrl' type='text' />
                   </div>
                   <div>
-                     <label htmlFor='cvUrl'><p>A link to your CV will improve your matches</p></label>
-                     <input value={user.cvUrl} onChange={handleChange} id='cvUrl' name='cvUrl' type='text' />
+                  <TextField
+                  label='Link to your CV'
+                  variant="outlined"
+                  margin="none"
+                  style={{backgroundColor: 'white'}}
+                  fullWidth value={user.cvUrl} onChange={handleChange} id='cvUrl' name='cvUrl' type='text' />
                   </div>
                </div>
                {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-               <Button variant='contained' color={'success'} type="submit" sx={{backgroundColor: "rgb(26,126,127)", color: "lightgreen"}}>Submit</Button>
+               <Button variant='contained' color={'success'} type="submit" sx={{ backgroundColor: "rgb(26,126,127)", color: "lightgreen" }}>Submit</Button>
             </form>
          </Paper>
       </Container>

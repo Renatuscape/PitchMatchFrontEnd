@@ -9,6 +9,10 @@ h2 {
   letter-spacing: 2px;
 }
 
+h3{
+  color:  rgb(85, 156, 154);
+}
+
 /* REUSABLE HEADER CSS */
 .header-container{
   height: 80px;
