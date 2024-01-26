@@ -62,6 +62,7 @@ export function UserEditCard() {
   }, [token])
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    console.log("handleSubmit");
     e.preventDefault();
     setErrorMessage(null);
     try {
@@ -70,6 +71,7 @@ export function UserEditCard() {
       navigate(`/mypage`);
     } catch (error: any) {
       if (error.message) {
+        console.log(JSON.stringify(error.message));
         const errorData = JSON.parse(error.message);
         if (errorData.errors) {
           const errorMessages = Object.values(errorData.errors).flat();
@@ -87,7 +89,7 @@ export function UserEditCard() {
   }
 
   const handlerCancel = () => {
-    navigate(`/user/${id}`);
+    navigate(`/user/${token?.userId}`);
   }
 
   return (
@@ -189,9 +191,8 @@ export function UserEditCard() {
                   <Grid item xs={12}>
                   </Grid>
                 </Grid>
-              </form>
-            </CardContent>
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: 10}}>
+                
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: 10}}>
               <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "rgb(26,126,127)", color: "lightgreen"}}>
                 Save Changes
               </Button>
@@ -202,6 +203,8 @@ export function UserEditCard() {
               <DeleteUserButton />
               </div>
             </div>
+              </form>
+            </CardContent>
           </Paper>
         </Container>
       </div>
