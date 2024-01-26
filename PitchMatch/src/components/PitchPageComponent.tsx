@@ -44,6 +44,9 @@ export function PitchPageComponent(props: PitchPageProps) {
   const [progress, setProgress] = useState(0);
   const [funding, setFunding] = useState(props.funding);
 
+  const onClickToCreator = () => {
+      navigate(`/user/${props.userId}`)
+  }
 
   console.log("PitchPageComponent props:", props);
 
@@ -207,9 +210,17 @@ export function PitchPageComponent(props: PitchPageProps) {
             <Paper elevation={0} style={{ width: '40%' }}>
               <img style={{ borderRadius: 4 }} width={'100%'} src={`${props.user.imgUrl}`} />
             </Paper>
-            <div style={{ flexGrow: 1, }}>
-              <p>Creator: {props.user.name}</p>
-              <Rating name="half-rating-read" defaultValue={props.user.rating} precision={0.5} readOnly />
+            <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'left' }}>
+              <p style={{marginBottom: 5}}>About the creator</p>
+              <button
+              style={{textAlign: 'left', backgroundColor: 'white', border: 'none', padding: 0, margin: 0}}
+              onClick={onClickToCreator}>
+                <h2>{props.user.name}</h2>
+              </button>
+              <Rating style={{padding: '10px 0'}} size='large' name="half-rating-read" defaultValue={props.user.rating} precision={0.5} readOnly />
+              <Paper style={{overflow: 'hidden', padding: 15}}>
+                <p>{props.user.bio}</p>
+              </Paper>
             </div>
           </div>
         </Paper>

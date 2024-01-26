@@ -49,13 +49,15 @@ export function UserPageComponent({ user, isMyPage }: UserPageProps) {
                         }}>
                             <div style={{
                                 flexGrow: 1,
-                                width: '250px', overflow: 'hidden',
-                                backgroundImage: "url(" + `${user.imgUrl}` + ")",
-                                backgroundPosition: 'top',
-                                backgroundSize: '100%',
-                                backgroundRepeat: 'no-repeat'
+                                width: '250px',
+                                overflow: 'hidden',
+                                // borderRadius: '4px',
+                                // backgroundImage: "url(" + `${user.imgUrl}` + ")",
+                                // backgroundPosition: 'top',
+                                // backgroundSize: '100%',
+                                // backgroundRepeat: 'no-repeat'
                             }}>
-                                {/* <img height={'auto'} width={'250'} src={`${user.imgUrl}`} /> */}
+                                <img style={{  borderRadius: '4px',}}height={'auto'} width={'100%'} src={`${user.imgUrl}`} />
                             </div>
                             <div style={{ minHeight: '20vh', flexGrow: 3, display: 'flex', flexDirection: 'column', alignContent: 'space-between', justifyContent: 'space-between' }}>
                                 <div>
