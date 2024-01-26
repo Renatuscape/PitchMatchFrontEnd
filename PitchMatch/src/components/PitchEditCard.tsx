@@ -121,7 +121,7 @@ const handleFieldChange = (fieldName: string, value: any) => {
     setErrorMessage(null);
 
     try {
-      const res = await updatePitchAsync(
+      await updatePitchAsync(
         {
           title,
           summary,

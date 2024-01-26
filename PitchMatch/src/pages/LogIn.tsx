@@ -2,7 +2,7 @@ import { CreateUserCard } from "../components/CreateUserCard";
 import { Container, Grid } from "@mui/material";
 import { LogInCard } from "../components/LogInCard";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { LogInType, TokenAndId } from "../components/types";
 import { useAuth } from "../App";
 
@@ -16,12 +16,13 @@ export function LogIn() {
   const [password, setPassword] = React.useState<string>("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handlerSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const userInfo: LogInType = { email: email, password: password };
 
-    onLogin(userInfo);
+    onLogin(userInfo, location.state?.from || "/");
   };
 
   const handleTogglePasswordVisibility = () => {
