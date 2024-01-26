@@ -16,7 +16,7 @@ interface LocationFinderProps {
 }
 
 export function LocationFinder({ onRegisterAddress, onLatitudeChange, onLongitudeChange }: LocationFinderProps) {
-    const initialPosition = { lat: 60.76696785977024, lng: 11.075835828837834 };
+    const initialPosition = { lat: 59.9493, lng: 10.7652 };
     const [markerPosition, setMarkerPosition] = useState(initialPosition);
     const [mapCenter, setMapCenter] = useState(initialPosition);
     const [address, setAddress] = useState('');
