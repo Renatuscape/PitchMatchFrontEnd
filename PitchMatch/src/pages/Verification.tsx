@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { Button, Container, Paper, TextField } from '@mui/material';
 import { LocationFinder } from '../components/LocationFinder';
-import { getSession} from '../Context/contextPage';
+import { getSession } from '../Context/contextPage';
 import { DeletePersonalData } from '../components/DeletePersonalData';
 import { useNavigate } from 'react-router-dom';
 
@@ -85,64 +85,64 @@ export function Verificaiton() {
 
   return <div className='page-background'>
     <Container maxWidth='md' sx={{ paddingTop: 5, paddingBottom: 5, minHeight: '70vh' }}>
-    <Paper elevation={3} style={{ marginBottom: 15, minHeight: '70vh' }}>
-    <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '5px 15px', backgroundColor: 'rgb(26,126,127, 0.1)', }}>
-        <h2>
-          User Verification
-        </h2>
+      <Paper elevation={3} style={{ marginBottom: 15, minHeight: '70vh' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '5px 15px', backgroundColor: 'rgb(26,126,127, 0.1)', }}>
+          <h2>
+            User Verification
+          </h2>
         </div>
         <div style={{
-               display: 'flex', flexDirection: 'column', gap: 10,
-               padding: '15px',
-               borderTop: 'solid',
-               borderWidth: 1,
-               borderColor: 'rgba(26, 125, 127, 0.564)'}}>
+          display: 'flex', flexDirection: 'column', gap: 10,
+          padding: '15px',
+          borderTop: 'solid',
+          borderWidth: 1,
+          borderColor: 'rgba(26, 125, 127, 0.564)'
+        }}>
           <Paper elevation={2} style={{ padding: 10, margin: 5 }}>
-          <p>Get verified and increase your chances of a good deal! It's an easy, three-step process. At PitchMatch, we try to create a safe, stress-free experience, and we only recommend collaborations with verified users.</p>
+            <p>Get verified and increase your chances of a good deal! It's an easy, three-step process. At PitchMatch, we try to create a safe, stress-free experience, and we only recommend collaborations with verified users.</p>
           </Paper>
-          <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding:10 }}>
-          <h3>
-            Confirm your personal details
+          <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 10 }}>
+            <h3>
+              Confirm your personal details
             </h3>
-          <TextField
-                  label='Phone number'
-                  variant="outlined"
-                  margin="normal"
-                  fullWidth
-                value={phoneNumber}
-                placeholder='Enter your phone number here.'
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                type='text'
-                />
             <TextField
-                  label='Personal number'
-                  variant="outlined"
-                  margin="normal"
-                  fullWidth
-                value={personalNumber}
-                placeholder='Enter your personal number here.'
-                onChange={(e) => setPersonalNumber(e.target.value)}
-                type='text'
-                />
+              label='Phone number'
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              value={phoneNumber}
+              placeholder='Enter your phone number here.'
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              type='text'
+            />
             <TextField
-                  label='Find your address on the map'
-                  variant="outlined"
-                  margin="normal"
-                  fullWidth
-                  placeholder='Find your address on the map below.'
-                  disabled={true}
-                  value={registeredAddress}
-                   />
-            <Button type="submit" variant="contained" color="success" sx={{ backgroundColor: "rgb(26,126,127)", color: "lightgreen" , marginTop: 2,"&:focus": { outline: "none", } }}>Verify me!</Button>
+              label='Personal number'
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              value={personalNumber}
+              placeholder='Enter your personal number here.'
+              onChange={(e) => setPersonalNumber(e.target.value)}
+              type='text'
+            />
+            <TextField
+              label='Find your address on the map'
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              placeholder='Find your address on the map below.'
+              disabled={true}
+              value={registeredAddress}
+            />
+            <Button type="submit" variant="contained" color="success" sx={{ backgroundColor: "rgb(26,126,127)", color: "lightgreen", marginTop: 2, "&:focus": { outline: "none", } }}>Verify me!</Button>
             {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
           </form>
 
-          <Paper elevation={4} style={{ padding: 10, margin: 10 }}>
-            <h3 style={{ borderBottom: 'solid', borderWidth: 1, marginLeft: -10, marginRight: -10, padding: 10, paddingTop: 0 }}>Find your address</h3>
+          <Paper elevation={4} style={{ padding: '0 10px', margin: 10 }}>
             <LocationFinder onRegisterAddress={setRegisteredAddress} onLatitudeChange={setLatitude} onLongitudeChange={setLongitude} />
           </Paper>
+          <DeletePersonalData />
         </div>
-        <DeletePersonalData />
       </Paper>
     </Container>
   </div>
