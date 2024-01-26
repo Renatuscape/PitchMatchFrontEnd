@@ -145,9 +145,8 @@ export function Verificaiton() {
           <Paper elevation={4} style={{ padding: '0 10px', margin: 10 }}>
             <LocationFinder onRegisterAddress={setRegisteredAddress} onLatitudeChange={setLatitude} onLongitudeChange={setLongitude} />
           </Paper>
-          <DeletePersonalData />
+          <DeletePersonalData onClick={onClickHandlerDeleteData}/>
         </div>
-       <DeletePersonalData onClick={onClickHandlerDeleteData}/>
       </Paper>
     </Container>
   </div>
