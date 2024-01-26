@@ -3,7 +3,7 @@ import { Button, Container, Paper } from '@mui/material';
 import { LocationFinder } from '../components/LocationFinder';
 import { getSession} from '../Context/contextPage';
 import { DeletePersonalData } from '../components/DeletePersonalData';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 type CreatePersonalDataProps = {
   phoneNumber: string;
@@ -30,6 +30,7 @@ async function createPersonalDataAsync(personalData: CreatePersonalDataProps): P
 
   return response.json();
 }
+
 
 export function Verificaiton() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -82,6 +83,9 @@ export function Verificaiton() {
       setErrorMessage('An unexpected error occurred.');
     }
   }
+  const onClickHandlerDeleteData= ()=>{
+    navigate("/mypage");
+  }
 
   return <div className='page-background'>
     <Container maxWidth='md' sx={{ paddingTop: 5, paddingBottom: 5, minHeight: '70vh' }}>
@@ -129,7 +133,7 @@ export function Verificaiton() {
             <LocationFinder onRegisterAddress={setRegisteredAddress} onLatitudeChange={setLatitude} onLongitudeChange={setLongitude} />
           </Paper>
         </div>
-        <DeletePersonalData />
+       <DeletePersonalData onClick={onClickHandlerDeleteData}/>
       </Paper>
     </Container>
   </div>
