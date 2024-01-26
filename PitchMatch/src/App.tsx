@@ -1,6 +1,6 @@
 import './App.css'
 import ResponsiveAppBar from './components/ResponsiveAppBar';
-import { BrowserRouter,  Navigate,  Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter,  Navigate,  Routes, useLocation, useNavigate } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { About } from './pages/About';
@@ -23,7 +23,7 @@ import { MyPage } from './pages/MyPage';
 const AuthContext = React.createContext<{
     token: TokenAndId | null;
     // onLogin: (tokenAndId: TokenAndId) => void;
-    onLogin: (user: LogInType) => void;
+    onLogin: (user: LogInType, from: string) => void;
     onLogout: () => void;
 } | undefined>(undefined);
 
@@ -31,20 +31,22 @@ type ProtectedRouteProps = {
     children?: JSX.Element;
 }
 
+function ProtectedRoute(props: ProtectedRouteProps) {
+  const location = useLocation();
+
+    const isLoggedIn = localStorage.getItem('logInStatus') === 'true' ? true : false;
+
+    if (!isLoggedIn) {
+        return <Navigate to="/login" replace state={{from: location}}/>
+    }
+            return <>
+        {props.children}
+    </>
+}
 
 function App() {
     const [token, setToken] = React.useState<TokenAndId | null>(null);
-    function ProtectedRoute(props: ProtectedRouteProps) {
 
-        const isLoggedIn = localStorage.getItem('logInStatus') === 'true' ? true : false;
- 
-        if (!isLoggedIn) {
-            return <Navigate to="/login"/>
-        }
-                return <>
-            {props.children}
-        </>
-    }
 
   return (
     <>
@@ -115,7 +117,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setToken(getSession())
   }, [])
 
-const handleLogin = async (user: LogInType) => {
+const handleLogin = async (user: LogInType, from: string) => {
    const response = await fetch(`https://pitchmatch.azurewebsites.net/Login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -136,7 +138,7 @@ const handleLogin = async (user: LogInType) => {
   localStorage.setItem("logInStatus", `${LoginResponse.IsLogged}`);
   localStorage.setItem("expiresIn", `${LoginResponse.expiresIn}`);
   setToken(LoginResponse);
-  navigate('/');
+  navigate(from);
 };
   const handleLogout = () => {
     setToken(null);
