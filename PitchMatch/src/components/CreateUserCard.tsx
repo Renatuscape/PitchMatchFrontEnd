@@ -18,9 +18,11 @@ export function CreateUserCard() {
           borderWidth: 1,
           borderColor: 'rgba(26, 125, 127, 0.564)',
         }}>
+          <div style={{display: 'flex', flexDirection: 'column'}}>
                         <Button variant="contained" color="success" onClick={handler} sx={{ margin: '0 20px', "&:focus":{outline: "none",} }}>
                             Create User
                         </Button>
+                        </div>
                 </CardContent>
             </Paper>
         </Container>

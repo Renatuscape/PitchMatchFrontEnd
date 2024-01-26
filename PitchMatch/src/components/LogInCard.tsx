@@ -52,10 +52,12 @@ export function LogInCard({ email, password, onChangeEmail, onChangePassword, pa
               ),
             }}
           />
+          <div style={{display: 'flex', flexDirection: 'column'}}>
           <Link to="/forgottenPassword">Forgot you password?</Link>
-          <Button onClick={onSubmit} variant="contained" color="success" sx={{marginTop: 2, "&:focus": { outline: "none", } }}>
+          <Button onClick={onSubmit} variant="contained" color="success" sx={{marginTop: 2, marginLeft: 2, marginRight: 2, "&:focus": { outline: "none", } }}>
             Log in
           </Button>
+          </div>
         </CardContent>
       </Paper>
     </Container>
