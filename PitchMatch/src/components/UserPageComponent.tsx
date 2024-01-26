@@ -66,7 +66,7 @@ export function UserPageComponent({ user, isMyPage }: UserPageProps) {
                                         <p>{user.contact}</p>
                                         {user.soMe && <Button variant="contained" href={user.soMe} color="success" sx={{backgroundColor: "rgb(26,126,127)", color: "lightgreen", "&:focus": { outline: "none", } }}>SoMe</Button>}
                                     </div>
-                                    <Paper style={{ flexGrow: 2, padding: 5 }}>
+                                    <Paper style={{ flexGrow: 2, padding: 5, textAlign: 'left'}}>
                                         <p>{user.bio}</p>
                                     </Paper>
                                 </div>
