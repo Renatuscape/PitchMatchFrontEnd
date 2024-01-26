@@ -62,16 +62,16 @@ export function UserPageComponent({ user, isMyPage }: UserPageProps) {
                                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 15 }}>
                                         <Rating />
                                         <p>{user.contact}</p>
-                                        {user.soMe && <Button variant="contained" href={user.soMe} color="success" sx={{ "&:focus": { outline: "none", } }}>SoMe</Button>}
+                                        {user.soMe && <Button variant="contained" href={user.soMe} color="success" sx={{backgroundColor: "rgb(26,126,127)", color: "lightgreen", "&:focus": { outline: "none", } }}>SoMe</Button>}
                                     </div>
                                     <Paper style={{ flexGrow: 2, padding: 5 }}>
                                         <p>{user.bio}</p>
                                     </Paper>
                                 </div>
                                 {isMyPage && <div style={{ alignSelf: 'flex-end' }}>
-                                    <Button variant="contained" color="success" onClick={onClickEdit}>
+                                    <Button variant="contained" color="success" onClick={onClickEdit} sx={{backgroundColor: "rgb(26,126,127)", color: "lightgreen"}}>
                                         Edit</Button>
-                                    <Button style={{ marginLeft: 15 }} variant="contained" color="success" onClick={onClickVerification}>
+                                    <Button style={{ marginLeft: 15 }} variant="contained" color="success" onClick={onClickVerification} sx={{backgroundColor: "rgb(26,126,127)", color: "lightgreen"}}>
                                         Verification</Button>
                                 </div>}
                             </div>

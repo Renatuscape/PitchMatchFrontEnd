@@ -192,11 +192,11 @@ export function UserEditCard() {
               </form>
             </CardContent>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: 10}}>
-              <Button type="submit" variant="contained" color="success">
+              <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "rgb(26,126,127)", color: "lightgreen"}}>
                 Save Changes
               </Button>
               <div style={{display:'flex', gap: 10}}>
-              <Button onClick={handlerCancel} variant="contained" color="success">
+              <Button onClick={handlerCancel} variant="contained" color="success" sx={{backgroundColor: "rgb(26,126,127)", color: "lightgreen"}}>
                 Cancel
               </Button>
               <DeleteUserButton />

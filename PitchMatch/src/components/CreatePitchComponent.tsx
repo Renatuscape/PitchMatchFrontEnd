@@ -254,7 +254,7 @@ export default function CreatePitchComponent(props: CreatePitchFormProps) {
               </Grid>
             </Grid>
             {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-            <Button type="submit" variant="contained" color="success" sx={{ "&:focus": { outline: "none", } }}>
+            <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "rgb(26,126,127)", color: "lightgreen", "&:focus": { outline: "none", } }}>
               Create
             </Button>
           </form>

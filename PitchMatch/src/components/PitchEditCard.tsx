@@ -313,11 +313,11 @@ return (
               </Grid>
               {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
               <div  style={{display: 'flex', justifyContent: 'space-between'}}>
-              <Button type="submit" variant="contained" color="success" sx={{"&:focus": { outline: "none", } }}>
+              <Button type="submit" variant="contained" color="success" sx={{backgroundColor: "rgb(26,126,127)", color: "lightgreen", "&:focus": { outline: "none", } }}>
               Save
               </Button>
               <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10}}>
-              <Button onClick={handleCancel} variant="contained" color="success" sx={{"&:focus": { outline: "none", } }}>
+              <Button onClick={handleCancel} variant="contained" color="success" sx={{backgroundColor: "rgb(26,126,127)", color: "lightgreen", "&:focus": { outline: "none", } }}>
                      Cancel
                    </Button>
                    <DeletePitchButton id={parseInt(id)} />

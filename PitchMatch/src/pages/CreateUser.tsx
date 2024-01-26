@@ -151,7 +151,7 @@ export function CreateUser() {
                   </div>
                </div>
                {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-               <Button variant='contained' color={'success'} type="submit">Submit</Button>
+               <Button variant='contained' color={'success'} type="submit" sx={{backgroundColor: "rgb(26,126,127)", color: "lightgreen"}}>Submit</Button>
             </form>
          </Paper>
       </Container>

@@ -163,6 +163,8 @@ export function PitchPageComponent(props: PitchPageProps) {
                   size="large"
                   onClick={handleInterestClick}
                   disabled={hasClickedInterested}
+                  style={{fontWeight: 'bolder'}}
+                  sx={{color: "rgb(26,126,127)", backgroundColor: "lightgreen"}}
                 >
                   Interested
                 </Button>
