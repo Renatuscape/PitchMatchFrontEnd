@@ -17,7 +17,7 @@ type EditPitchProps = {
   videoUrl: string;
   location: string;
   goal: number;
-  pitchYield: number;
+  yield: number;
   categories: string;
   latitude: number;
   longitude: number;
@@ -130,7 +130,7 @@ const handleFieldChange = (fieldName: string, value: any) => {
           videoUrl,
           location,
           goal,
-          pitchYield,
+          yield: pitchYield,
           categories,
           latitude,
           longitude,

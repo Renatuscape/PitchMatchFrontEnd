@@ -38,7 +38,7 @@ async function createPitch(
         imgUrl,
         videoUrl,
         goal,
-        pitchYield,
+        yield: pitchYield,
         categories,
         longitude,
         latitude,
