@@ -12,13 +12,17 @@ async function deletePersonalDataAsync(id: number): Promise<void> {
         console.log('Successfully deleted personal data.');
     }
 }
+type DeletePersonalDataProps = {
+  onClick: () => void;
+}
 
-export function DeletePersonalData() {
+export function DeletePersonalData({onClick }: DeletePersonalDataProps) {
 
     const userId = getSession().userId
     const handleDelete = async () => {
         try {
             await deletePersonalDataAsync(userId);
+            onClick();
 
         } catch (error) {
             console.log(error);
