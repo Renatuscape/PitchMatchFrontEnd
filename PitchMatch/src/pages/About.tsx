@@ -39,9 +39,7 @@ export function About() {
                     By creating or funding local initiatives with us, you will build experiences and opportunities that establish lasting bonds.
                     PitchMatch doesn't just bring people together - it builds communities.
                 </p>
-                <Paper elevation={3} style={{padding: 10, height: 250, margin: 'auto', marginTop: 20, marginBottom: 25, width: '60%', textAlign: 'center'}}>
-                    <p style={{marginTop: '110px'}}>[A beautiful picture of us]</p>
-                </Paper>
+                    <img style={{height: 250, margin: 'auto', marginTop: 20, marginBottom: 25, textAlign: 'center', borderRadius:'4px'}} src='images/beautifulPictureOfTeam.jpeg' alt="Picture of the team" />
             </Paper>
         </Container>
     </div>
