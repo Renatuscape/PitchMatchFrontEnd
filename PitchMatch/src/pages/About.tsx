@@ -1,4 +1,5 @@
 import { Container, Paper } from "@mui/material";
+import beautufullPictureOfTeam from '../images/beautifulPictureOfTeam.jpeg';
 
 export function About() {
     return <div className='page-background'>
@@ -39,7 +40,7 @@ export function About() {
                     By creating or funding local initiatives with us, you will build experiences and opportunities that establish lasting bonds.
                     PitchMatch doesn't just bring people together - it builds communities.
                 </p>
-                    <img style={{height: 250, margin: 'auto', marginTop: 20, marginBottom: 25, textAlign: 'center', borderRadius:'4px'}} src='images/beautifulPictureOfTeam.jpeg' alt="Picture of the team" />
+                    <img style={{height: 250, margin: 'auto', marginTop: 20, marginBottom: 25, textAlign: 'center', borderRadius:'4px'}} src='/images/beautifulPictureOfTeam.jpeg' alt="Picture of the team" />
             </Paper>
         </Container>
     </div>
